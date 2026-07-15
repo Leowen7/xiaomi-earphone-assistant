@@ -1,0 +1,21 @@
+{
+  "category": "earphone",
+  "required_fields": [
+    "product_id",
+    "product_name",
+    "brand",
+    "model",
+    "reference_price",
+    "wearing_type",
+    "single_weight_g",
+    "single_battery_h",
+    "total_battery_h",
+    "anc_supported",
+    "waterproof",
+    "bluetooth_version",
+    "dual_device",
+    "low_latency",
+    "source_url",
+    "update_date"
+  ]
+}

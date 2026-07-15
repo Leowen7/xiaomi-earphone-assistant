@@ -1,0 +1,23 @@
+{
+  "commuting": {
+    "anc_supported": 0.3,
+    "total_battery_h": 0.25,
+    "single_weight_g": 0.15,
+    "dual_device": 0.15,
+    "reference_price": 0.15
+  },
+  "sports": {
+    "waterproof": 0.3,
+    "single_weight_g": 0.25,
+    "wearing_type": 0.2,
+    "total_battery_h": 0.15,
+    "reference_price": 0.1
+  },
+  "gaming": {
+    "low_latency": 0.35,
+    "bluetooth_version": 0.2,
+    "total_battery_h": 0.15,
+    "single_weight_g": 0.15,
+    "reference_price": 0.15
+  }
+}
