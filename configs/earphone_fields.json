@@ -1,21 +1,146 @@
 {
+  "schema_version": "1.0",
   "category": "earphone",
+  "category_label": "耳机",
+  "id_prefix": "EAR",
   "required_fields": [
     "product_id",
     "product_name",
     "brand",
+    "category",
+    "product_level",
+    "wearing_type",
+    "source_url",
+    "update_date"
+  ],
+  "optional_fields": [
     "model",
     "reference_price",
-    "wearing_type",
+    "release_date",
     "single_weight_g",
     "single_battery_h",
     "total_battery_h",
     "anc_supported",
+    "anc_depth_db",
+    "transparency_mode",
     "waterproof",
     "bluetooth_version",
     "dual_device",
     "low_latency",
-    "source_url",
-    "update_date"
-  ]
+    "codec",
+    "driver_size_mm",
+    "wireless_charging",
+    "suitable_scenarios",
+    "manual_available",
+    "data_status",
+    "missing_fields",
+    "remarks"
+  ],
+  "enums": {
+    "brand": [
+      "Xiaomi",
+      "REDMI"
+    ],
+    "category": [
+      "earphone"
+    ],
+    "product_level": [
+      "入门",
+      "中端",
+      "高端",
+      "开放式"
+    ],
+    "wearing_type": [
+      "入耳式",
+      "半入耳式",
+      "开放式",
+      "耳夹式",
+      "骨传导",
+      "待核验"
+    ],
+    "scenario": [
+      "daily",
+      "commuting",
+      "sports",
+      "gaming"
+    ],
+    "data_status": [
+      "完整",
+      "部分缺失",
+      "待核验"
+    ],
+    "manual_available": [
+      "是",
+      "否",
+      "待核验"
+    ]
+  },
+  "boolean_fields": [
+    "anc_supported",
+    "transparency_mode",
+    "dual_device",
+    "low_latency",
+    "wireless_charging"
+  ],
+  "numeric_fields": {
+    "reference_price": {
+      "unit": "CNY",
+      "min": 0
+    },
+    "single_weight_g": {
+      "unit": "g",
+      "min": 0
+    },
+    "single_battery_h": {
+      "unit": "hour",
+      "min": 0
+    },
+    "total_battery_h": {
+      "unit": "hour",
+      "min": 0
+    },
+    "anc_depth_db": {
+      "unit": "dB",
+      "min": 0
+    },
+    "driver_size_mm": {
+      "unit": "mm",
+      "min": 0
+    }
+  },
+  "missing_value_policy": {
+    "raw_excel": "待核验",
+    "processed_json": null,
+    "unknown_numeric_must_not_be_zero": true
+  },
+  "normalization_rules": {
+    "price": "去除人民币符号、元、起、约等文本，保留数值",
+    "weight": "统一转换为克，仅保留数值",
+    "battery": "统一转换为小时，仅保留数值",
+    "boolean_true_aliases": [
+      "支持",
+      "是",
+      "有",
+      "√",
+      "true",
+      "True",
+      "1"
+    ],
+    "boolean_false_aliases": [
+      "不支持",
+      "否",
+      "无",
+      "×",
+      "false",
+      "False",
+      "0"
+    ],
+    "unknown_aliases": [
+      "待核验",
+      "未知",
+      "暂无数据",
+      "",
+      null
+    ]
+  }
 }
