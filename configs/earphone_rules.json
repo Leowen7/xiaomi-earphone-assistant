@@ -1,23 +1,102 @@
 {
-  "commuting": {
-    "anc_supported": 0.3,
-    "total_battery_h": 0.25,
-    "single_weight_g": 0.15,
-    "dual_device": 0.15,
-    "reference_price": 0.15
+  "schema_version": "1.0",
+  "description": "耳机场景权重配置（任务14个性化推荐 v4.2.1）",
+  "weight_adjust_delta": 0.2,
+  "scenarios": {
+    "daily": {
+      "label": "日常使用",
+      "description": "价格、重量、佩戴方式与续航均衡",
+      "weights": {
+        "reference_price": 0.25,
+        "single_weight_g": 0.25,
+        "wearing_type": 0.15,
+        "total_battery_h": 0.15,
+        "codec": 0.10,
+        "bluetooth_version": 0.05,
+        "anc_supported": 0.05
+      }
+    },
+    "commuting": {
+      "label": "通勤出行",
+      "description": "主动降噪、续航、重量与双设备连接优先",
+      "weights": {
+        "anc_supported": 0.30,
+        "total_battery_h": 0.20,
+        "single_weight_g": 0.15,
+        "dual_device": 0.15,
+        "reference_price": 0.10,
+        "bluetooth_version": 0.10
+      }
+    },
+    "sports": {
+      "label": "运动健身",
+      "description": "防水等级、重量、佩戴方式与续航优先",
+      "weights": {
+        "waterproof": 0.30,
+        "single_weight_g": 0.20,
+        "wearing_type": 0.20,
+        "total_battery_h": 0.15,
+        "reference_price": 0.10,
+        "anc_supported": 0.05
+      }
+    },
+    "gaming": {
+      "label": "游戏娱乐",
+      "description": "低延迟、蓝牙版本、续航与重量优先",
+      "weights": {
+        "low_latency": 0.35,
+        "bluetooth_version": 0.20,
+        "total_battery_h": 0.15,
+        "single_weight_g": 0.15,
+        "reference_price": 0.15
+      }
+    }
   },
-  "sports": {
-    "waterproof": 0.3,
-    "single_weight_g": 0.25,
-    "wearing_type": 0.2,
-    "total_battery_h": 0.15,
-    "reference_price": 0.1
+  "numeric_thresholds": {
+    "reference_price": {
+      "min": 50,
+      "max": 2000,
+      "higher_is_better": false
+    },
+    "single_weight_g": {
+      "min": 3,
+      "max": 15,
+      "higher_is_better": false
+    },
+    "total_battery_h": {
+      "min": 15,
+      "max": 50,
+      "higher_is_better": true
+    },
+    "anc_depth_db": {
+      "min": 20,
+      "max": 50,
+      "higher_is_better": true
+    },
+    "bluetooth_version": {
+      "min": 5.0,
+      "max": 5.4,
+      "higher_is_better": true
+    }
   },
-  "gaming": {
-    "low_latency": 0.35,
-    "bluetooth_version": 0.2,
-    "total_battery_h": 0.15,
-    "single_weight_g": 0.15,
-    "reference_price": 0.15
+  "enum_scores": {
+    "wearing_type": {
+      "开放式": 0.3,
+      "半入耳式": 0.5,
+      "入耳式": 0.7,
+      "耳夹式": 0.4,
+      "骨传导": 0.3,
+      "待核验": 0.0
+    },
+    "waterproof": {
+      "IPX8": 0.9,
+      "IP68": 0.9,
+      "IP55": 0.5,
+      "IP54": 0.5,
+      "IPX5": 0.3,
+      "IPX4": 0.3,
+      "无": 0.0,
+      "待核验": 0.0
+    }
   }
 }
