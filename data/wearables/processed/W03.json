@@ -1,0 +1,101 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W03",
+  "product_name": "REDMI Watch 5",
+  "product_category": "smart_watch",
+  "brand": "REDMI",
+  "series": "Watch 5",
+  "variant": "standard",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/redmi-watch-5/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "REDMI Watch 5 是REDMI旗下智能手表，搭载2.07英寸方形AMOLED大屏，分辨率为432×514，HBM亮度最高1500nits。支持Android 8.0及以上、iOS 12.0及以上系统，具备蓝牙通话、5ATM防水、内置五星GNSS定位、150+运动模式，以及心率、血氧、睡眠和压力监测。表体约33.5g（不含表带），尺寸约47.5×41.1×11.3mm（不含表带及凸起部分），适用于日常通勤、运动记录和健康管理等场景。",
+  "target_users": [
+    "日常智能穿戴用户",
+    "运动健身爱好者",
+    "健康关注者",
+    "户外运动人群",
+    "大屏智能手表需求用户"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "运动健身记录",
+    "全天健康监测",
+    "户外跑步与健走",
+    "泳池及近岸浅水活动",
+    "睡眠质量监测",
+    "蓝牙通话",
+    "紧急联系人呼叫"
+  ],
+  "wearable_specs": {
+    "display_size_in": 2.07,
+    "display_type": "AMOLED",
+    "screen_resolution": "432×514",
+    "max_brightness_nits": 1500,
+    "battery_life_typical_days": 24,
+    "battery_life_heavy_days": null,
+    "charging_time_minutes": 60,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": true,
+    "nfc_support": false,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "内置GPS、Galileo、GLONASS、BeiDou、QZSS五星GNSS定位",
+      "150+运动模式",
+      "18种水上运动",
+      "10门腕上跑步课程",
+      "泳池游泳与开放水域游泳",
+      "户外跑步、室内跑步和健走自动暂停"
+    ],
+    "system_compatibility": "Android 8.0及以上、iOS 12.0及以上",
+    "weight_g": 33.5,
+    "dimensions_mm": "47.5×41.1×11.3",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/redmi-watch-5/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/redmi-watch-5/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.sports_features",
+        "usage_scenarios"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-521474/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+  "reviewer": "张静雯",
+"status": "approved",
+    "notes": "1.REDMI Watch 5全球标准版；2.官方规格页标注典型使用最长24天，未给出独立的重度使用天数，因此battery_life_heavy_days填写null，不使用其他型号或AOD数据代替；3.完整充电时间约60分钟；4.官方标注支持150+运动模式，sports_modes_count统一填150；5.表体重量约33.5g，不含包装内表带；尺寸不含表带与凸起部分；6.全球标准版官方产品页和规格页未标注NFC，nfc_support按false记录；7.该型号为内置五星GNSS，官方未标注双频L1+L5，因此不写双频定位；8.三种标准配色均标配TPU表带，其他表带需另购；9.原manual_url访问为404，未找到可验证的官方说明书直链，故填写null。"
+  },
+  "data_updated_at": "2026-07-21"
+}

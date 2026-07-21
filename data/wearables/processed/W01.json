@@ -1,0 +1,104 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W01",
+  "product_name": "Xiaomi Watch S4 41mm",
+  "product_category": "smart_watch",
+  "brand": "Xiaomi",
+  "series": "Watch S4",
+  "variant": "41mm",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-watch-s4-41mm/",
+  "manual_url": "https://xiaomi-b2c-i18n-upload.azams0.mi-fds.com/xiaomi-b2c-i18n-upload/User-Guide-Upload-mi.com/Wearables/65118&65121&65123&66177-Xiaomi%20Watch%20S4%2041mm-Balck&Green&White&Gold-UserGuide-GL.pdf",
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Watch S4 41mm 是小米推出的时尚智能手表，专为细手腕用户打造，采用41mm精致纤薄表盘，搭载1.32英寸AMOLED高清视网膜大屏，1500nits HBM峰值亮度。内置小米澎湃OS 3，支持Android 8.0及以上、iOS 14.0及以上系统。具备蓝牙通话、NFC、5ATM防水、内置GNSS定位、150+运动模式、全天心率/血氧/睡眠/压力健康监测等核心功能，表体约32g，不含表带，表体厚约9.5mm（不含凸起部分），满足日常佩戴、运动健身、健康管理等多场景需求。",
+  "target_users": [
+    "时尚穿搭人群",
+    "运动健身爱好者",
+    "健康关注者",
+    "商务办公人士",
+    "户外出行人群",
+    "细手腕用户"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "运动健身记录",
+    "全天健康监测",
+    "商务会议使用",
+    "户外徒步出行",
+    "游泳等浅水域活动",
+    "睡眠质量改善",
+    "女性生理周期管理",
+    "SOS紧急求助"
+  ],
+  "wearable_specs": {
+    "display_size_in": 1.32,
+    "display_type": "AMOLED",
+    "screen_resolution": "466×466",
+    "max_brightness_nits": 1500,
+    "battery_life_typical_days": 8,
+    "battery_life_heavy_days": 3,
+    "charging_time_minutes": 60,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": true,
+    "nfc_support": true,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "双频L1+L5五星GNSS精准定位",
+      "运动vlog功能",
+      "专业滑雪模式",
+      "心率广播",
+      "游泳专属模式",
+      "户外跑步/骑行专项记录",
+      "跌倒检测"
+    ],
+    "system_compatibility": "Android 8.0及以上、iOS 14.0及以上",
+    "weight_g": 32,
+    "dimensions_mm": "41.2×41.2×9.5",
+    "strap_material": "氟橡胶、真皮、米兰尼斯钢带（不同版本标配）"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-s4-41mm/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-s4-41mm/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.battery_life_heavy_days",
+        "wearable_specs.charging_time_minutes"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-608032/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+    "reviewer": "张静雯",
+    "status": "approved",
+    "notes": "1.智能手表，小尺寸；2.官方产品页标注轻度使用最长8天、正常使用最长4天、重度使用最长3天；完整充电时间约60分钟；官方标注支持150+运动模式，sports_modes_count统一填150；3.表体重量32g不含表带，机身尺寸不含表带与心率传感器凸起；4.NFC功能可用性会随销售地区存在差异；5.内置双频L1+L5五星GNSS定位信息放入sports_features；"
+  },
+  "data_updated_at": "2026-07-21"
+}

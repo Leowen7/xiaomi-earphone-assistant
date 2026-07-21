@@ -1,0 +1,111 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W04",
+  "product_name": "REDMI Watch 5 Lite",
+  "product_category": "smart_watch",
+  "brand": "REDMI",
+  "series": "Watch 5",
+  "variant": "Lite",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/redmi-watch-5-lite/",
+  "manual_url": "https://www.mi.com/global/support/user-guide-pdf/sk/redmi-watch-5-lite/",
+  "official_price": null,
+  "currency": null,
+  "product_summary": "REDMI Watch 5 Lite 是REDMI旗下轻量智能手表，搭载1.96英寸方形AMOLED屏幕，分辨率为410×502，最高亮度600nits。支持Android 8.0及以上、iOS 12.0及以上系统，具备蓝牙通话、5ATM防水、内置五星GNSS定位、160种运动模式，并支持心率、血氧、睡眠和压力监测。典型使用续航最长18天，重度使用最长12天；表体约29.2g（不含包装内表带），尺寸约48.1×39.2×10.6mm（不含表带及凸起部分），适用于日常通勤、运动记录和健康管理等场景。",
+  "target_users": [
+    "日常智能穿戴用户",
+    "运动健身爱好者",
+    "健康关注者",
+    "学生群体",
+    "轻量手表需求用户"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "运动健身记录",
+    "全天健康监测",
+    "户外跑步与骑行",
+    "泳池及近岸浅水活动",
+    "睡眠质量监测",
+    "蓝牙通话"
+  ],
+  "wearable_specs": {
+    "display_size_in": 1.96,
+    "display_type": "AMOLED",
+    "screen_resolution": "410×502",
+    "max_brightness_nits": 600,
+    "battery_life_typical_days": 18,
+    "battery_life_heavy_days": 12,
+    "charging_time_minutes": 120,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": true,
+    "nfc_support": false,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 160,
+    "sports_features": [
+      "内置GPS、Galileo、GLONASS、BeiDou、QZSS五星GNSS定位",
+      "160种运动模式",
+      "专业跑步课程",
+      "部分运动模式支持热身指导",
+      "泳池游泳模式",
+      "户外跑步、健走与户外骑行记录"
+    ],
+    "system_compatibility": "Android 8.0及以上、iOS 12.0及以上",
+    "weight_g": 29.2,
+    "dimensions_mm": "48.1×39.2×10.6",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/redmi-watch-5-lite/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/redmi-watch-5-lite/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.battery_life_heavy_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.sports_modes_count",
+        "wearable_specs.sports_features"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-483618/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "manual_url"
+      ],
+      "source_url": "https://www.mi.com/global/support/user-guide-pdf/sk/redmi-watch-5-lite/",
+      "source_type": "manual",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+    "reviewer": "张静雯",
+    "status": "approved",
+    "notes": "1.REDMI Watch 5 Lite全球标准版；2.官方标注典型使用最长18天、重度使用最长12天、AOD使用最长7天；3.官方表述完整充电少于2小时，charging_time_minutes按上限120分钟归一化记录；4.官方FAQ明确列出160种运动模式，因此sports_modes_count填写160，而不是按150+取150；5.表体重量约29.2g，不含包装内表带；机身尺寸不含表带与凸起部分；6.该型号支持内置GPS、Galileo、GLONASS、BeiDou、QZSS五星GNSS；7.GLOBAL官方产品页、规格页和FAQ均未标注NFC，nfc_support按false记录；8.该型号屏幕最高亮度为600nits，max_brightness_nits填写600；9.黑色和浅金色标准版本均标配TPU表带，其他彩色TPU表带需另购；10.原manual_url返回404，已替换为小米GLOBAL官方用户指南页面。"
+  },
+  "data_updated_at": "2026-07-21"
+}

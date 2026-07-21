@@ -1,0 +1,129 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W07",
+  "product_name": "Xiaomi Watch 2 Pro",
+  "product_category": "smart_watch",
+  "brand": "Xiaomi",
+  "series": "Watch 2",
+  "variant": "Pro",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-watch-2-pro/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Watch 2 Pro 是搭载 Wear OS by Google 的高端智能手表，采用不锈钢机身，配备1.43英寸AMOLED圆形屏幕，分辨率466×466，最高亮度600nits。仅支持Android 8.0及以上且具备GMS的智能手机，不支持iOS和Android Go设备。支持蓝牙通话、Google Wallet NFC支付、5ATM防水、L1+L5双频五星GNSS定位、161种运动模式，以及心率、血氧、睡眠、压力、体成分和皮肤温度监测。BT版典型续航最长65小时，LTE版最长55小时；表体约54.5g（不含表带），尺寸约47.6×45.9×11.8mm（厚度不含心率传感器）。",
+  "target_users": [
+    "Android智能手机用户",
+    "Wear OS应用需求用户",
+    "商务与高端穿戴用户",
+    "运动健身爱好者",
+    "健康精细化监测需求用户",
+    "LTE独立通信需求用户（LTE版本）"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "商务会议使用",
+    "运动健身记录",
+    "全天健康监测",
+    "Google Maps腕上导航",
+    "Google Wallet银行卡支付",
+    "泳池及近岸浅水活动",
+    "LTE独立通话与联网（LTE版本）"
+  ],
+  "wearable_specs": {
+    "display_size_in": 1.43,
+    "display_type": "AMOLED",
+    "screen_resolution": "466×466",
+    "max_brightness_nits": 600,
+    "battery_life_typical_days": 2.7,
+    "battery_life_heavy_days": 1,
+    "charging_time_minutes": 45,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": true,
+    "nfc_support": true,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 161,
+    "sports_features": [
+      "L1+L5双频GPS、Galileo、GLONASS、BeiDou、QZSS五星GNSS定位",
+      "161种运动模式",
+      "泳池及近岸浅水运动记录",
+      "体成分测量",
+      "皮肤温度监测",
+      "支持Mi Fitness、Strava与Suunto运动数据生态"
+    ],
+    "system_compatibility": "仅支持Android 8.0及以上且具备GMS 21.30.12及以上的智能手机；不支持iOS和Android Go设备",
+    "weight_g": 54.5,
+    "dimensions_mm": "47.6×45.9×11.8",
+    "strap_material": "氟橡胶或真皮（不同配色版本标配）"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "product_summary",
+        "target_users",
+        "usage_scenarios",
+        "wearable_specs.sports_modes_count",
+        "wearable_specs.sports_features",
+        "wearable_specs.nfc_support"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-2-pro/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.display_size_in",
+        "wearable_specs.display_type",
+        "wearable_specs.screen_resolution",
+        "wearable_specs.max_brightness_nits",
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.water_resistance",
+        "wearable_specs.positioning_type",
+        "wearable_specs.system_compatibility",
+        "wearable_specs.weight_g",
+        "wearable_specs.dimensions_mm",
+        "wearable_specs.strap_material"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-2-pro/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.battery_life_heavy_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.system_compatibility",
+        "wearable_specs.water_resistance"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-42562/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "usage_scenarios",
+        "product_summary"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-515587/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+"reviewer": "张静雯",
+"status": "approved",
+    "notes": "1.Xiaomi Watch 2 Pro存在BT版和LTE版，当前文件统一描述该产品系列；2.官方规格页标注屏幕最高亮度600nits，原1500nits属于其他型号参数；3.BT版典型续航最长65小时，换算约2.7天；LTE版最长55小时，约2.3天；battery_life_typical_days按续航更长的BT版上限2.7记录；4.官方FAQ标注重度使用约24小时，battery_life_heavy_days填写1；5.规格页标注充电约45分钟，FAQ另有约1小时表述；charging_time_minutes优先采用规格页的45分钟，并记录为约值；6.仅支持Android 8.0及以上且具备指定GMS版本的手机，不支持iOS和Android Go；7.产品页对比表给出161种运动模式，因此sports_modes_count填写161；8.NFC主要用于Google Wallet银行卡支付，可用性受国家、地区、银行和卡组织支持情况影响；9.LTE版支持eSIM独立通话和联网，BT版不支持eSIM，且具体功能取决于运营商；10.表体重量约54.5g，不含表带；厚度不含心率传感器；11.银色版本标配棕色真皮表带，黑色版本标配黑色氟橡胶表带；12.官方页面未标注蓝宝石玻璃、钛金属钢带、运动vlog、心率广播、跌倒检测等内容，故不保留；13.原manual_url无法作为可验证的GLOBAL官方说明书直链，故填写null。"
+  },
+  "data_updated_at": "2026-07-21"
+}

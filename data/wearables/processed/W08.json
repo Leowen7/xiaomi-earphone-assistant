@@ -1,0 +1,123 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W08",
+  "product_name": "Xiaomi Watch S3",
+  "product_category": "smart_watch",
+  "brand": "Xiaomi",
+  "series": "Watch S3",
+  "variant": "standard",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-watch-s3/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Watch S3 是小米S系列智能手表，配备1.43英寸AMOLED圆形屏幕，分辨率为466×466，最高亮度600nits，并支持60Hz刷新率和256级自动亮度调节。支持Android 8.0及以上、iOS 12.0及以上系统，具备蓝牙通话、NFC、5ATM防水、内置L1+L5双频五星GNSS定位、150+运动模式，以及心率、血氧、睡眠和压力监测。典型使用续航最长15天，重度使用最长8天；表体约44g（不含表带），尺寸约47×47×12mm（不含表带及心率传感器凸起部分），适用于日常通勤、运动健身和健康管理等场景。",
+  "target_users": [
+    "时尚穿搭人群",
+    "运动健身爱好者",
+    "健康关注者",
+    "商务办公人士",
+    "户外出行人群",
+    "长续航智能手表需求用户"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "运动健身记录",
+    "全天健康监测",
+    "商务会议使用",
+    "户外跑步与骑行",
+    "专业滑雪记录",
+    "泳池及近岸浅水活动",
+    "睡眠质量监测",
+    "NFC支付使用（视地区可用性）",
+    "跌倒检测与紧急求助"
+  ],
+  "wearable_specs": {
+    "display_size_in": 1.43,
+    "display_type": "AMOLED",
+    "screen_resolution": "466×466",
+    "max_brightness_nits": 600,
+    "battery_life_typical_days": 15,
+    "battery_life_heavy_days": 8,
+    "charging_time_minutes": 70,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": true,
+    "nfc_support": true,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "L1+L5双频GPS、Galileo、GLONASS、BeiDou、QZSS五星GNSS定位",
+      "150+运动模式",
+      "10门腕上跑步课程",
+      "跑步、健走、划船机、椭圆机、骑行和跳绳自动识别",
+      "专业滑雪模式与滑雪轨迹地图",
+      "泳池及近岸浅水运动记录",
+      "跌倒检测与紧急求助"
+    ],
+    "system_compatibility": "Android 8.0及以上、iOS 12.0及以上",
+    "weight_g": 44,
+    "dimensions_mm": "47×47×12",
+    "strap_material": "氟橡胶（标准包装）"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "product_summary",
+        "target_users",
+        "usage_scenarios",
+        "wearable_specs.max_brightness_nits",
+        "wearable_specs.sports_modes_count",
+        "wearable_specs.sports_features"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-s3/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.display_size_in",
+        "wearable_specs.display_type",
+        "wearable_specs.screen_resolution",
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.water_resistance",
+        "wearable_specs.positioning_type",
+        "wearable_specs.bluetooth_call",
+        "wearable_specs.nfc_support",
+        "wearable_specs.system_compatibility",
+        "wearable_specs.weight_g",
+        "wearable_specs.dimensions_mm",
+        "wearable_specs.strap_material"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-s3/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.battery_life_heavy_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.sports_features",
+        "usage_scenarios"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-91530/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+"reviewer": "张静雯",
+"status": "approved",
+    "notes": "1.Xiaomi Watch S3全球标准版；2.官方标注Android典型使用最长15天，iOS典型使用最长14.5天，重度使用最长8天，AOD使用最长5天；battery_life_typical_days按Android上限15记录，battery_life_heavy_days填写8；3.完整充电时间约70分钟，5分钟快充在典型使用条件下可使用最长2天；4.官方产品页标注150+运动模式，sports_modes_count按字段统一规则填写150；5.表体重量约44g，不含表带；尺寸不含表带与心率传感器凸起部分；6.标准包装内为黑色或银色氟橡胶表带，真皮及其他表带、表圈附件需另购；7.NFC及Mastercard支付可用性因地区、银行和卡组织而异；8.内置L1+L5双频五星GNSS，支持10门跑步课程、六类运动自动识别、专业滑雪、浅水运动记录及跌倒检测；9.原规格来源使用UK页面，已改为GLOBAL规格页；原FAQ链接错误，已改为Xiaomi Watch S3官方FAQ；10.原manual_url访问返回404，未找到可稳定验证的GLOBAL官方说明书直链，因此填写null。"
+  },
+  "data_updated_at": "2026-07-21"
+}
