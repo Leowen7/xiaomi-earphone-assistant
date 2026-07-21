@@ -1,0 +1,59 @@
+{
+  "schema_version": "2.0",
+  "product_id": "",
+  "product_name": "",
+  "product_category": "smart_band",
+  "brand": "Xiaomi",
+  "series": null,
+  "variant": null,
+  "source_region": "GLOBAL",
+  "official_url": "",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "",
+  "target_users": [],
+  "usage_scenarios": [],
+  "wearable_specs": {
+    "display_size_in": null,
+    "display_type": null,
+    "screen_resolution": null,
+    "max_brightness_nits": null,
+    "battery_life_typical_days": null,
+    "battery_life_heavy_days": null,
+    "charging_time_minutes": null,
+    "water_resistance": null,
+    "positioning_type": null,
+    "bluetooth_call": null,
+    "nfc_support": null,
+    "heart_rate_monitoring": null,
+    "blood_oxygen_monitoring": null,
+    "sleep_monitoring": null,
+    "stress_monitoring": null,
+    "sports_modes_count": null,
+    "sports_features": [],
+    "system_compatibility": null,
+    "weight_g": null,
+    "dimensions_mm": null,
+    "strap_material": null
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "wearable_specs"
+      ],
+      "source_url": "",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "",
+    "reviewer": null,
+    "status": "draft",
+    "notes": ""
+  },
+  "data_updated_at": "2026-07-21"
+}
