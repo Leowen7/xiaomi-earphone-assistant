@@ -1,0 +1,67 @@
+{
+  "schema_version": "2.0",
+  "product_id": "B03",
+  "product_name": "Xiaomi Smart Band 9 Pro",
+  "product_category": "smart_band",
+  "brand": "Xiaomi",
+  "series": null,
+  "variant": null,
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-smart-band-9-pro/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Smart Band 9 Pro是一款配备1.74英寸AMOLED触控显示屏的智能手环，采用铝合金边框和高强度纤维聚合物外壳设计，最高亮度1200尼特。支持GNSS定位，配备5ATM防水等级和线性马达，具备心率、血氧、睡眠和压力监测功能，续航最长21天。",
+  "target_users": [],
+  "usage_scenarios": [],
+  "wearable_specs": {
+    "display_size_in": 1.74,
+    "display_type": "AMOLED",
+    "screen_resolution": "336 × 480",
+    "max_brightness_nits": 1200,
+    "battery_life_typical_days": 21,
+    "battery_life_heavy_days": 8,
+    "charging_time_minutes": 75,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": null,
+    "nfc_support": null,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "gnss_tracking",
+      "swim_tracking",
+      "running_courses"
+    ],
+    "system_compatibility": "Android 8.0 and above; iOS 12 and above",
+    "weight_g": 24.5,
+    "dimensions_mm": "43.27 × 32.49 × 10.8",
+    "strap_material": "TPU / Calfskin"
+  },
+  "source_records": [
+    {
+      "field_scope": ["basic_info", "wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-9-pro/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": ["wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-9-pro/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "赵阳",
+    "reviewer": "张静雯",
+    "status": "approved" ,
+    "notes": "1. weight_g=24.5g（不含表带）；2. dimensions_mm不含心率凸台；3. nfc_support=null，GLOBAL官方未明确标注NFC；4. battery_life_typical_days：官方典型使用续航为21天；AOD模式续航为10天；重度使用续航为8天；5. stress_monitoring=true（官方标注all-day stress tracking）；6. sports_modes_count：官方表述为150+ sports modes，本字段按最低明确数量150记录；7. sports_features包含GNSS追踪、游泳追踪、跑步课程等官方明确支持的功能；8. 支持BeiDou、GPS、GLONASS、Galileo、QZSS五大卫星系统；9. 只使用GLOBAL官方来源，未使用中国区数据。"
+  },
+  "data_updated_at": "2026-07-21"
+}

@@ -1,0 +1,67 @@
+{
+  "schema_version": "2.0",
+  "product_id": "B07",
+  "product_name": "Xiaomi Smart Band 8",
+  "product_category": "smart_band",
+  "brand": "Xiaomi",
+  "series": null,
+  "variant": null,
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-smart-band-8/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Smart Band 8是一款配备1.62英寸AMOLED触摸屏的智能手环，最高亮度600尼特，支持5ATM防水，具备心率、血氧、睡眠和压力监测功能，提供Pebble mode（豆形模式）和跑步课程，续航最长16天。",
+  "target_users": [],
+  "usage_scenarios": [],
+  "wearable_specs": {
+    "display_size_in": 1.62,
+    "display_type": "AMOLED",
+    "screen_resolution": "192 × 490",
+    "max_brightness_nits": 600,
+    "battery_life_typical_days": 16,
+    "battery_life_heavy_days": null,
+    "charging_time_minutes": 60,
+    "water_resistance": "5ATM",
+    "positioning_type": null,
+    "bluetooth_call": null,
+    "nfc_support": null,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "swim_tracking",
+      "pebble_mode",
+      "running_courses"
+    ],
+    "system_compatibility": "Android 6.0 and above; iOS 12 and above",
+    "weight_g": 27,
+    "dimensions_mm": "48 × 22.5 × 10.99",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": ["basic_info", "wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": ["wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "赵阳",
+    "reviewer": "张静雯",
+    "status": "approved" ,
+    "notes": "1. weight_g=27g（含腕带）；2. positioning_type=null，官方未标注支持GNSS；3. nfc_support=null，官方未明确标注NFC；4. blood_oxygen_monitoring=true（官方标注SpO2追踪）；5. stress_monitoring=true（官方标注stress measurement）；6. sports_modes_count：官方表述为150+ fitness modes，本字段按最低明确数量150记录；7. sports_features包含游泳追踪、豆形模式（Pebble mode）、跑步课程等官方明确支持的功能；8. system_compatibility最低支持Android 6.0。"
+  },
+  "data_updated_at": "2026-07-21"
+}
