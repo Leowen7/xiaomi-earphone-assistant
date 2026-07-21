@@ -1,0 +1,116 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W05",
+  "product_name": "REDMI Watch 5 Active",
+  "product_category": "smart_watch",
+  "brand": "REDMI",
+  "series": "Watch 5",
+  "variant": "Active",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/redmi-watch-5-active/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "REDMI Watch 5 Active 是REDMI旗下大屏入门智能手表，搭载2.0英寸方形LCD屏幕，分辨率为320×385，支持60Hz刷新率。兼容Android 8.0及以上、iOS 12.0及以上系统，具备双麦克风降噪蓝牙通话、5ATM防水、手机辅助定位、142种运动模式，并支持心率、血氧、睡眠和压力监测。典型使用续航最长18天，重度使用最长12天；表体约30.6g（不含包装内表带），尺寸约49.1×40.4×11.4mm（不含表带及凸起部分），适用于日常通勤、基础运动记录、健康管理和蓝牙通话等场景。",
+  "target_users": [
+    "预算敏感型智能手表用户",
+    "大屏显示需求用户",
+    "日常运动记录用户",
+    "健康关注者",
+    "蓝牙通话需求用户"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "基础运动记录",
+    "全天健康监测",
+    "蓝牙通话",
+    "户外跑步与骑行（需连接手机定位）",
+    "泳池及近岸浅水活动佩戴（不支持游泳运动记录）",
+    "睡眠质量监测"
+  ],
+  "wearable_specs": {
+    "display_size_in": 2.0,
+    "display_type": "LCD",
+    "screen_resolution": "320×385",
+    "max_brightness_nits": null,
+    "battery_life_typical_days": 18,
+    "battery_life_heavy_days": 12,
+    "charging_time_minutes": 120,
+    "water_resistance": "5ATM",
+    "positioning_type": "connected_phone",
+    "bluetooth_call": true,
+    "nfc_support": false,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 142,
+    "sports_features": [
+      "142种运动模式",
+      "自动识别跑步、健走、骑行、椭圆机、划船机和跳绳",
+      "户外跑步、健走、户外骑行、徒步和越野跑需使用手机定位数据",
+      "支持徒步、越野跑、滑雪等多类运动模式",
+      "不支持独立卫星定位",
+      "不支持游泳运动记录"
+    ],
+    "system_compatibility": "Android 8.0及以上、iOS 12.0及以上",
+    "weight_g": 30.6,
+    "dimensions_mm": "49.1×40.4×11.4",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "wearable_specs",
+        "target_users",
+        "usage_scenarios"
+      ],
+      "source_url": "https://www.mi.com/global/product/redmi-watch-5-active/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.display_size_in",
+        "wearable_specs.display_type",
+        "wearable_specs.screen_resolution",
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.water_resistance",
+        "wearable_specs.bluetooth_call",
+        "wearable_specs.system_compatibility",
+        "wearable_specs.weight_g",
+        "wearable_specs.dimensions_mm",
+        "wearable_specs.strap_material"
+      ],
+      "source_url": "https://www.mi.com/global/product/redmi-watch-5-active/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.battery_life_heavy_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.positioning_type",
+        "wearable_specs.sports_modes_count",
+        "wearable_specs.sports_features",
+        "wearable_specs.nfc_support",
+        "usage_scenarios"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-483511/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+    "reviewer": "张静雯",
+    "status": "approved" ,
+    "notes": "1.REDMI Watch 5 Active全球标准版，定位为大屏入门智能手表，不是内置GNSS户外专业款；2.官方规格为2.0英寸方形LCD屏幕，分辨率320×385、60Hz刷新率；3.GLOBAL官方产品页、规格页和FAQ未公布可核验的nits亮度，因此max_brightness_nits填写null；第三方评测提及约500nits，但不作为官方字段依据；4.官方标注典型使用最长18天、重度使用最长12天；完整充电少于2小时，charging_time_minutes按上限120分钟归一化记录；5.官方FAQ明确列出142种运动模式，因此sports_modes_count填写142；6.该产品没有GPS硬件，不支持独立卫星定位，运动轨迹依赖Mi Fitness APP和手机定位，positioning_type填写connected_phone；7.GLOBAL官方产品页、规格页和FAQ均未标注NFC，nfc_support按false记录；8.产品具有5ATM防水，可用于泳池和近岸浅水环境，但官方明确说明不支持游泳运动记录；9.表体重量约30.6g，不含包装内表带；尺寸不含表带及凸起部分；10.标准表带为TPU，颜色为黑色或银色；11.原manual_url访问返回404，未找到可验证的GLOBAL官方说明书直链，因此填写null。"
+  },
+  "data_updated_at": "2026-07-21"
+}

@@ -1,0 +1,108 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W02",
+  "product_name": "Xiaomi Watch S4",
+  "product_category": "smart_watch",
+  "brand": "Xiaomi",
+  "series": "Watch S4",
+  "variant": "standard",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-watch-s4/",
+  "manual_url": "https://xiaomi-b2c-i18n-upload.azams0.mi-fds.com/xiaomi-b2c-i18n-upload/User-Guide-Upload-mi.com/Wearables/58895&58893&58891-Xiaomi-Watch-S4-Black&Silver-Rainbow-UserGuide-GL.pdf",
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Watch S4 是小米推出的S系列旗舰智能手表，采用47.3mm圆形表盘，搭载1.43英寸AMOLED显示屏，支持1500nits HBM亮度与2200nits局部峰值亮度，刷新率60Hz。内置小米澎湃OS 2，支持Android 8.0及以上、iOS 14.0及以上系统。具备蓝牙通话、NFC、5ATM防水、内置双频GNSS定位、150+运动模式，并支持心率、血氧、睡眠和压力监测。表体约44.5g（不含表带），厚约12mm（不含表带及凸起部分），适用于日常佩戴、运动健身和健康管理等场景。",
+  "target_users": [
+    "时尚穿搭人群",
+    "运动健身爱好者",
+    "健康关注者",
+    "商务办公人士",
+    "户外出行人群",
+    "旗舰智能手表需求用户"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "运动健身记录",
+    "全天健康监测",
+    "商务会议使用",
+    "户外徒步出行",
+    "游泳等浅水域活动",
+    "睡眠质量改善",
+    "女性生理周期管理",
+    "SOS紧急求助",
+    "NFC支付使用（视地区可用性）"
+  ],
+  "wearable_specs": {
+    "display_size_in": 1.43,
+    "display_type": "AMOLED",
+    "screen_resolution": "466×466",
+    "max_brightness_nits": 2200,
+    "battery_life_typical_days": 15,
+    "battery_life_heavy_days": 5,
+    "charging_time_minutes": 60,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": true,
+    "nfc_support": true,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "双频L1+L5五星GNSS精准定位",
+      "腕上专业跑步课程",
+      "跑步姿态分析",
+      "AI跑步路线规划",
+      "专业滑雪模式",
+      "泳池游泳与开放水域游泳",
+      "户外跑步与户外骑行记录",
+      "滑雪跌倒检测与紧急求助"
+    ],
+    "system_compatibility": "Android 8.0及以上、iOS 14.0及以上",
+    "weight_g": 44.5,
+    "dimensions_mm": "47.3×47.3×12",
+    "strap_material": "氟橡胶；Rainbow版另含尼龙表带"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-s4/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-s4/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.battery_life_heavy_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.weight_g",
+        "wearable_specs.dimensions_mm"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-517264/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+  "reviewer": "张静雯",
+"status": "approved",
+    "notes": "1.智能手表，S系列；2.官方标注典型使用约15天；AOD模式约5天；持续心率、血氧和压力监测等重度使用下约5天，battery_life_heavy_days按5记录；完整充电时间约60分钟，快充5分钟可使用约2天；3.官方标注支持150+运动模式，sports_modes_count统一填150；4.max_brightness_nits按官方局部峰值亮度2200填写，HBM亮度为1500nits；5.表体重量约44.5g，不含表带；机身尺寸不含表带与凸起部分；6.黑色版和银色版标配氟橡胶表带，Rainbow版另含尼龙表带；其他表带与表圈套装需另购；7.NFC功能及支付可用性会随销售地区存在差异；8.内置双频L1+L5五星GNSS定位信息放入sports_features。"
+  },
+  "data_updated_at": "2026-07-21"
+}

@@ -1,0 +1,120 @@
+{
+  "schema_version": "2.0",
+  "product_id": "W06",
+  "product_name": "Xiaomi Watch 2",
+  "product_category": "smart_watch",
+  "brand": "Xiaomi",
+  "series": "Watch 2",
+  "variant": "standard",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-watch-2/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Watch 2 是搭载 Wear OS by Google 的智能手表，配备1.43英寸AMOLED圆形屏幕，分辨率为466×466，最高亮度600nits。仅兼容Android 8.0及以上、具备Google移动服务的智能手机，不支持iOS和Android Go设备。支持蓝牙通话、Google Wallet NFC银行卡支付、5ATM防水、内置L1+L5双频五星GNSS定位、161种运动模式，以及心率、血氧、睡眠和压力监测。典型续航最长65小时，表体约36.8g（不含表带），尺寸约47.5×45.9×11.8mm（厚度不含心率传感器），适合Android用户的日常通勤、运动记录和智能应用场景。",
+  "target_users": [
+    "Android智能手机用户",
+    "Wear OS应用需求用户",
+    "运动健身爱好者",
+    "健康关注者",
+    "Google生态服务用户"
+  ],
+  "usage_scenarios": [
+    "日常通勤佩戴",
+    "运动健身记录",
+    "全天健康监测",
+    "蓝牙通话",
+    "Google Maps腕上导航",
+    "Google Wallet银行卡支付",
+    "户外跑步与滑雪",
+    "泳池及近岸浅水活动",
+    "跌倒检测与紧急求助"
+  ],
+  "wearable_specs": {
+    "display_size_in": 1.43,
+    "display_type": "AMOLED",
+    "screen_resolution": "466×466",
+    "max_brightness_nits": 600,
+    "battery_life_typical_days": 2.7,
+    "battery_life_heavy_days": null,
+    "charging_time_minutes": 50,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": true,
+    "nfc_support": true,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 161,
+    "sports_features": [
+      "L1+L5双频GPS、Galileo、GLONASS、BeiDou、QZSS五星GNSS定位",
+      "161种运动模式",
+      "专业滑雪模式与滑雪轨迹地图",
+      "泳池及近岸浅水运动记录",
+      "跌倒检测与紧急求助",
+      "支持Strava与Suunto等运动应用"
+    ],
+    "system_compatibility": "仅支持Android 8.0及以上且具备GMS/Google Play Store的智能手机；不支持iOS、Android Go及无Google Play Store的设备",
+    "weight_g": 36.8,
+    "dimensions_mm": "47.5×45.9×11.8",
+    "strap_material": "TPU；部分版本标配真皮或再生编织表带"
+  },
+  "source_records": [
+    {
+      "field_scope": [
+        "basic_info",
+        "product_summary",
+        "target_users",
+        "usage_scenarios",
+        "wearable_specs.sports_modes_count",
+        "wearable_specs.sports_features",
+        "wearable_specs.nfc_support"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-2/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.display_size_in",
+        "wearable_specs.display_type",
+        "wearable_specs.screen_resolution",
+        "wearable_specs.max_brightness_nits",
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.water_resistance",
+        "wearable_specs.positioning_type",
+        "wearable_specs.system_compatibility",
+        "wearable_specs.weight_g",
+        "wearable_specs.dimensions_mm",
+        "wearable_specs.strap_material"
+      ],
+      "source_url": "https://www.mi.com/global/product/xiaomi-watch-2/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": [
+        "wearable_specs.battery_life_typical_days",
+        "wearable_specs.battery_life_heavy_days",
+        "wearable_specs.charging_time_minutes",
+        "wearable_specs.nfc_support",
+        "wearable_specs.water_resistance"
+      ],
+      "source_url": "https://www.mi.com/global/support/faq/details/KA-106411/",
+      "source_type": "support_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "王梓璁",
+    "reviewer": "张静雯",
+"status": "approved",
+    "notes": "1.Xiaomi Watch 2为Wear OS by Google智能手表，不是Xiaomi Watch 2 Pro；2.官方规格页标注最高亮度600nits，原1500nits属于其他型号参数；3.官方标注典型使用最长65小时，换算为约2.7天，battery_life_typical_days填写2.7；官方未提供独立重度使用续航，battery_life_heavy_days填写null；4.规格页标注充电约45分钟，官方FAQ标注约50分钟，均为约值；为避免低估，charging_time_minutes按FAQ较保守值50记录；5.仅支持Android 8.0及以上且具备GMS/Google Play Store的手机，不支持iOS、Android Go及无Google Play Store设备；6.官方产品对比表明确列出161种运动模式，sports_modes_count填写161；7.NFC仅支持通过Google Wallet绑定银行卡支付，不支持门禁卡等其他NFC服务，且支付可用性受国家、地区、银行和卡组织支持情况影响；8.表体重量约36.8g，不含表带；厚度不含心率传感器；9.不同配色可能标配TPU、真皮或再生编织表带；10.原manual_url访问返回404，未找到可验证的GLOBAL官方说明书直链，因此填写null。"
+  },
+  "data_updated_at": "2026-07-21"
+}
