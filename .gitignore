@@ -20,3 +20,5 @@ vector_store/*.faiss
 vector_store/*.index
 .ipynb_checkpoints/
 !.gitkeep
+.downloads/
+~$*.xlsx
