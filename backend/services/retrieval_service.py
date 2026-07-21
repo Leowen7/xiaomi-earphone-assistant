@@ -1,17 +1,22 @@
-"""说明书检索服务接口。
+"""说明书检索服务适配层。
 
-当前文件先定义任务19所需要的统一调用格式。
-AJ15XIAOMI-17完成后，旦同学的FAISS检索代码应接入
-search_manuals() 函数。
+将 AJ15XIAOMI-17 提供的 FAISS 检索函数，
+接入现有后端问答流程使用的 search_manuals 接口。
 """
 
 from __future__ import annotations
 
 from typing import Any
 
+from ..retrieval_service import (
+    INDEX_PATH,
+    METADATA_PATH,
+    search_manual,
+)
+
 
 class KnowledgeBaseNotReadyError(RuntimeError):
-    """说明书知识库尚未准备完成。"""
+    """说明书知识库文件尚未准备完成。"""
 
 
 def search_manuals(
@@ -19,22 +24,45 @@ def search_manuals(
     query: str,
     top_k: int = 3,
 ) -> list[dict[str, Any]]:
-    """检索指定耳机说明书中的相关片段。
+    """检索指定产品的说明书片段。"""
 
-    Args:
-        product_id: 耳机产品编号，例如 EAR006。
-        query: 用户提出的问题。
-        top_k: 返回的相关片段数量，取值范围为1到5。
+    if not INDEX_PATH.exists():
+        raise KnowledgeBaseNotReadyError(
+            f"FAISS索引不存在：{INDEX_PATH}"
+        )
 
-    Returns:
-        说明书检索结果列表。每条结果至少应包含：
-        product_id、chunk_id、source_file、page、
-        section、content、score。
+    if not METADATA_PATH.exists():
+        raise KnowledgeBaseNotReadyError(
+            f"知识库元数据不存在：{METADATA_PATH}"
+        )
 
-    Raises:
-        KnowledgeBaseNotReadyError:
-            当AJ15XIAOMI-17尚未完成或知识库文件不存在时抛出。
-    """
-    raise KnowledgeBaseNotReadyError(
-        "说明书知识库尚未完成，待AJ15XIAOMI-17合并后开放问答服务"
-    )
+    try:
+        results = search_manual(
+            query=query,
+            product_id=product_id,
+            top_k=top_k,
+        )
+    except (FileNotFoundError, OSError) as exc:
+        raise KnowledgeBaseNotReadyError(
+            f"说明书知识库加载失败：{exc}"
+        ) from exc
+
+    normalized_results: list[dict[str, Any]] = []
+
+    for result in results:
+        item = dict(result)
+
+        page_start = item.get("page_start")
+        page_end = item.get("page_end")
+
+        if item.get("page") is None:
+            if page_start is None:
+                item["page"] = None
+            elif page_end in (None, page_start):
+                item["page"] = page_start
+            else:
+                item["page"] = f"{page_start}-{page_end}"
+
+        normalized_results.append(item)
+
+    return normalized_results
