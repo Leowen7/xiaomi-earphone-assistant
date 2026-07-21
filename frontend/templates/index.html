@@ -1,20 +1,1805 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>小米耳机智能助手</title>
-  <link rel="stylesheet" href="/static/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小米智能助手</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif; 
+        }
+        :root {
+            --brand-primary: #FF6900;
+            --brand-light: #FFF5EE;
+            --brand-hover: #FFF0E5;
+            --text-primary: #1D1D1F;
+            --text-secondary: #666666;
+            --text-tertiary: #8E8E93;
+            --text-quaternary: #C7C7CC;
+            --bg-page: #F2F2F5;
+            --bg-window: #FFFFFF;
+            --bg-sidebar: #F8F8FA;
+            --bg-gray: #F2F2F7;
+            --border-light: rgba(0,0,0,0.06);
+            --border-separator: #E5E5EA;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-pill: 24px;
+            --shadow-xs: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+            --shadow-window: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        body { 
+            background: var(--bg-page); 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            color: var(--text-primary);
+        }
+
+    .app-container {
+    width: min(1100px, calc(100vw - 20px));
+    height: min(760px, calc(100vh - 20px));
+    background: var(--bg-window);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-window);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+        .app-header {
+            height: 60px;
+            padding: 0 24px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .app-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--brand-primary), transparent 70%);
+            opacity: 0.3;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            background: var(--brand-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 2px 6px rgba(255, 105, 0, 0.25);
+        }
+        .brand-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .brand-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .category-tag {
+            font-size: 12px;
+            padding: 2px 8px;
+            background: var(--brand-light);
+            color: var(--brand-primary);
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+        }
+        .online-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #34C759;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        .app-body {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+        min-height: 0;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-menu {
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .nav-item {
+            padding: 11px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-weight: 500;
+            position: relative;
+            border-left: 3px solid transparent;
+        }
+        .nav-item:hover {
+            background: var(--bg-gray);
+            color: var(--text-primary);
+        }
+        .nav-item.active {
+            background: var(--brand-light);
+            color: var(--brand-primary);
+            border-left-color: var(--brand-primary);
+            font-weight: 600;
+        }
+        .nav-icon {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-section {
+            padding: 16px 12px;
+            border-top: 1px solid var(--border-light);
+        }
+        .section-title {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding: 0 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* P1: 快捷提问图标改成橙色 */
+        .quick-question {
+            padding: 10px 12px;
+            background: transparent;
+            border-bottom: 1px solid var(--border-separator);
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 0;
+        }
+        .quick-question:last-child {
+            border-bottom: none;
+        }
+        .quick-question:hover {
+            background: var(--brand-light);
+            color: var(--brand-primary);
+            padding-left: 16px;
+        }
+        .quick-question-icon {
+            font-size: 12px;
+            color: var(--brand-primary);
+            opacity: 0.6;
+        }
+
+        .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: white;
+    position: relative;
+    min-height: 0;
+}
+    .content-panel {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.2s ease;
+    min-height: 0;
+}
+        .content-panel.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+        .chat-messages {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overscroll-behavior: contain;
+}
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #D1D1D6;
+            border-radius: 3px;
+        }
+
+        .welcome-section {
+            margin-bottom: 24px;
+        }
+        .welcome-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            min-height: 32px;
+        }
+        /* 打字机光标 */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 24px;
+            background: var(--brand-primary);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .welcome-subtitle {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 1.2s forwards;
+        }
+        .welcome-hint {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 14px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 1.4s forwards;
+        }
+        .hot-questions {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 14px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 1.6s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* P1: 卡片hover加橙色边框光晕 */
+        .hot-card {
+            padding: 18px;
+            background: white;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-card);
+            border: 1px solid transparent;
+        }
+        .hot-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(255, 105, 0, 0.15);
+        }
+        .hot-card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--brand-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--brand-primary);
+        }
+        .hot-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .hot-card-desc {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+
+        /* P1: 连续消息间距缩小，不重复显示名字 */
+        .message {
+            display: flex;
+            gap: 10px;
+            max-width: 70%;
+            animation: fadeInUp 0.3s ease;
+        }
+        .message + .message.bot {
+            margin-top: -4px;
+        }
+        .message + .message.user {
+            margin-top: -4px;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        .avatar.bot {
+            background: var(--brand-primary);
+            color: white;
+        }
+        .avatar.user {
+            background: #E5E5EA;
+            color: var(--text-secondary);
+        }
+        .message-body {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-width: 100%;
+        }
+        .message-name {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            padding: 0 4px;
+            font-weight: 500;
+        }
+        .message.user .message-name {
+            display: none;
+        }
+        .message-bubble {
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.6;
+            word-break: break-word;
+            max-width: 100%;
+        }
+        .message.bot .message-bubble {
+            background: var(--bg-gray);
+            color: var(--text-primary);
+            border-top-left-radius: 6px;
+        }
+        .message.bot.continuous .message-bubble {
+            border-top-left-radius: 18px;
+        }
+        .message.user .message-bubble {
+            background: var(--brand-primary);
+            color: white;
+            border-top-right-radius: 6px;
+            box-shadow: 0 2px 6px rgba(255, 105, 0, 0.2);
+        }
+        .message.user.continuous .message-bubble {
+            border-top-right-radius: 18px;
+        }
+        .message-time {
+            font-size: 11px;
+            color: var(--text-quaternary);
+            text-align: right;
+            padding: 2px 4px 0;
+        }
+
+        .skeleton-bubble {
+            padding: 14px;
+            width: 200px;
+        }
+        .skeleton-line {
+            height: 12px;
+            background: linear-gradient(90deg, #F0F0F0 25%, #E0E0E0 50%, #F0F0F0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .skeleton-line:last-child {
+            margin-bottom: 0;
+            width: 70%;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .chat-input-area {
+            padding: 16px 32px 20px;
+            background: #FAFAFA;
+            flex-shrink: 0;
+        }
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 8px 8px 16px;
+            background: white;
+            border-radius: var(--radius-pill);
+            box-shadow: var(--shadow-xs);
+            transition: all 0.2s;
+        }
+        .input-wrapper:focus-within {
+            box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.1);
+        }
+        .input-actions {
+            display: flex;
+            gap: 6px;
+            color: var(--text-tertiary);
+            font-size: 18px;
+        }
+        .input-actions span {
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        .input-actions span:hover {
+            color: var(--brand-primary);
+            background: var(--brand-light);
+        }
+        #chatInput {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 14px;
+            resize: none;
+            line-height: 1.6;
+            max-height: 100px;
+            font-family: inherit;
+            color: var(--text-primary);
+            padding: 6px 0;
+        }
+        .send-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #D1D1D6;
+            color: white;
+            border: none;
+            cursor: not-allowed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .send-btn.active {
+            background: var(--brand-primary);
+            cursor: pointer;
+            transform: scale(1);
+            box-shadow: 0 2px 6px rgba(255, 105, 0, 0.25);
+        }
+        .send-btn.active:hover {
+            transform: scale(1.08);
+        }
+        .input-hint {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .compare-container {
+            padding: 28px 32px;
+            overflow-y: auto;
+            height: 100%;
+        }
+        .compare-selector {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 20px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+        }
+        .category-select {
+            width: 120px;
+            padding: 11px 14px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            outline: none;
+            background: white;
+            box-shadow: var(--shadow-xs);
+            color: var(--text-primary);
+        }
+        .compare-select {
+            flex: 1;
+            padding: 11px 14px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            outline: none;
+            background: white;
+            box-shadow: var(--shadow-xs);
+            color: var(--text-primary);
+        }
+        .compare-select:focus, .category-select:focus {
+            box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.15);
+        }
+        .vs-text {
+            font-weight: 700;
+            color: var(--text-tertiary);
+            font-size: 15px;
+        }
+        .compare-btn {
+            padding: 11px 26px;
+            background: var(--brand-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(255, 105, 0, 0.2);
+        }
+        .compare-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 105, 0, 0.25);
+        }
+
+        .compare-table-wrapper {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            background: white;
+        }
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .compare-table th, .compare-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+            font-size: 14px;
+        }
+        .compare-table th {
+            background: var(--brand-light);
+            color: var(--brand-primary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+        .compare-table tr:hover td {
+            background: #FAFAFA;
+        }
+        .param-name {
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-secondary);
+            width: 120px;
+        }
+        .best-value {
+            color: #34C759;
+            font-weight: 600;
+        }
+        .ai-summary-btn {
+            margin-top: 16px;
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 1px solid var(--brand-primary);
+            color: var(--brand-primary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .ai-summary-btn:hover {
+            background: var(--brand-light);
+        }
+
+        .recommend-container {
+            padding: 28px 32px;
+            overflow-y: auto;
+            height: 100%;
+        }
+        .recommend-form {
+            background: var(--bg-gray);
+            padding: 24px;
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag-option {
+            padding: 7px 16px;
+            background: white;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-xs);
+        }
+        .tag-option:hover {
+            color: var(--brand-primary);
+            box-shadow: var(--shadow-sm);
+        }
+        .tag-option.selected {
+            background: var(--brand-primary);
+            color: white;
+            box-shadow: 0 2px 6px rgba(255, 105, 0, 0.25);
+        }
+        .recommend-submit {
+            width: 100%;
+            padding: 13px;
+            background: var(--brand-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(255, 105, 0, 0.2);
+        }
+        .recommend-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(255, 105, 0, 0.28);
+        }
+
+        .recommend-results {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .product-card {
+            padding: 20px;
+            border-radius: var(--radius-md);
+            display: flex;
+            gap: 16px;
+            transition: all 0.25s;
+            background: white;
+            box-shadow: var(--shadow-sm);
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .product-image {
+            width: 80px;
+            height: 80px;
+            background: var(--brand-light);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        .product-info {
+            flex: 1;
+        }
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .product-category {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+        .match-score {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #34C759;
+        }
+        .score-bar {
+            width: 60px;
+            height: 6px;
+            background: #E5E5EA;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #34C759, #30D158);
+            border-radius: 3px;
+        }
+        .product-price {
+            color: var(--brand-primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+        .feature-tag {
+            padding: 2px 8px;
+            background: #F0FDF4;
+            color: #34C759;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            background: var(--bg-gray);
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        .action-btn.primary {
+            background: var(--brand-primary);
+            color: white;
+        }
+        .action-btn:hover {
+            opacity: 0.85;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+
+        /* ===== 多品类与RAG来源展示 ===== */
+        .category-switcher {
+            display: flex;
+            gap: 8px;
+            padding: 4px;
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 10px;
+        }
+        .category-button {
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .category-button:hover {
+            background: rgba(255, 105, 0, 0.08);
+            color: var(--brand-primary);
+        }
+        .category-button.active {
+            background: var(--brand-primary);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(255, 105, 0, 0.2);
+        }
+        .category-button .category-state {
+            margin-left: 4px;
+            font-size: 10px;
+            opacity: 0.72;
+        }
+        .nav-item.disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .chat-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .chat-product-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+        .chat-product-label {
+            color: var(--text-secondary);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        .chat-product-select {
+            min-width: 240px;
+            max-width: 420px;
+            padding: 8px 34px 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: #fff;
+            color: var(--text-primary);
+            font-size: 13px;
+            outline: none;
+        }
+        .chat-product-select:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.08);
+        }
+        .chat-product-hint {
+            color: var(--text-tertiary);
+            font-size: 12px;
+            text-align: right;
+        }
+        .construction-banner {
+            margin: 48px auto;
+            max-width: 620px;
+            padding: 36px;
+            border: 1px dashed rgba(255, 105, 0, 0.35);
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255, 105, 0, 0.06), rgba(255, 255, 255, 0.9));
+            text-align: center;
+        }
+        .construction-icon {
+            font-size: 48px;
+            margin-bottom: 14px;
+        }
+        .construction-title {
+            font-size: 20px;
+            font-weight: 650;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .construction-text {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .source-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .source-card {
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.88);
+            overflow: hidden;
+        }
+        .source-card summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 11px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .source-card summary::-webkit-details-marker {
+            display: none;
+        }
+        .source-score {
+            color: var(--brand-primary);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .source-meta {
+            padding: 0 12px 8px;
+            color: var(--text-tertiary);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+        .source-content {
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 11px 12px 13px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+        .message-bubble .answer-text {
+            white-space: pre-wrap;
+            line-height: 1.75;
+        }
+        .message-bubble .answer-title {
+            font-size: 12px;
+            font-weight: 650;
+            color: var(--brand-primary);
+            margin: 12px 0 4px;
+        }
+        @media (max-width: 900px) {
+            .category-switcher {
+                display: none;
+            }
+            .chat-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .chat-product-select {
+                width: 100%;
+                min-width: 0;
+            }
+            .chat-product-hint {
+                text-align: left;
+            }
+        }
+
+    </style>
 </head>
 <body>
-  <main class="container">
-    <h1>小米耳机智能助手</h1>
-    <p>第一阶段：产品对比、个性化推荐、说明书问答。</p>
-    <div class="cards">
-      <section><h2>产品对比</h2><p>选择两款耳机查看参数差异。</p></section>
-      <section><h2>智能推荐</h2><p>根据预算、场景和偏好推荐产品。</p></section>
-      <section><h2>使用问答</h2><p>依据说明书回答配对、充电和重置问题。</p></section>
+    <div class="app-container">
+        <div class="app-header">
+            <div class="header-left">
+                <div class="brand-logo">MI</div>
+                <div class="brand-title-group">
+                    <div class="brand-title" id="brandTitle">小米智能产品助手</div>
+                    <div class="category-tag" id="categoryTag">耳机</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="category-switcher" id="categorySwitcher" aria-label="产品品类切换">
+                    <button class="category-button active" data-category="earphone">🎧 耳机</button>
+                    <button class="category-button" data-category="smart_band">⌚ 智能手环<span class="category-state">预留</span></button>
+                    <button class="category-button" data-category="smart_watch">🕒 智能手表<span class="category-state">预留</span></button>
+                </div>
+                <div class="online-status">
+                    <span class="status-dot"></span>
+                    在线服务中
+                </div>
+            </div>
+        </div>
+
+        <div class="app-body">
+            <div class="sidebar">
+                <div class="nav-menu">
+                    <div class="nav-item active" data-panel="chat">
+                        <span class="nav-icon">💬</span>
+                        <span>智能问答</span>
+                    </div>
+                    <div class="nav-item" data-panel="compare">
+                        <span class="nav-icon">⚖️</span>
+                        <span>产品对比</span>
+                    </div>
+                    <div class="nav-item" data-panel="recommend">
+                        <span class="nav-icon">🎯</span>
+                        <span>智能推荐</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-title">快捷提问</div>
+                    <div id="quickQuestionsList"></div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-title">使用帮助</div>
+                    <div class="quick-question">
+                        <span class="quick-question-icon">●</span>
+                        <span>产品说明书</span>
+                    </div>
+                    <div class="quick-question">
+                        <span class="quick-question-icon">●</span>
+                        <span>联系人工客服</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="content-panel active" id="chat">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatBox">
+                            <div class="welcome-section">
+                                <div class="welcome-title" id="welcomeTitle"></div>
+                                <div class="welcome-subtitle" id="welcomeSubtitle">专注于小米耳机产品，帮你解答说明书问题、对比参数、智能选购</div>
+                                <div class="welcome-hint">你可以从下面这些开始：</div>
+                                <div class="hot-questions" id="hotQuestions"></div>
+                            </div>
+                        </div>
+
+                        <div class="chat-input-area">
+                            <div class="chat-toolbar">
+                                <div class="chat-product-group">
+                                    <span class="chat-product-label">当前产品</span>
+                                    <select class="chat-product-select" id="chatProductSelect" disabled>
+                                        <option value="">正在加载产品...</option>
+                                    </select>
+                                </div>
+                                <div class="chat-product-hint" id="chatProductHint">说明书问答需要先选择具体产品</div>
+                            </div>
+                            <div class="input-wrapper">
+                                <div class="input-actions">
+                                    <span title="语音输入">🎤</span>
+                                    <span title="图片">🖼️</span>
+                                </div>
+                                <textarea id="chatInput" placeholder="输入你的问题，比如：降噪耳机哪款好？" rows="1"></textarea>
+                                <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+                            </div>
+                            <div class="input-hint">AI 生成内容仅供参考，以官方信息为准</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-panel" id="compare">
+                    <div class="compare-container">
+                        <div class="compare-selector">
+                            <select class="compare-select" id="model1" disabled>
+                                <option value="">加载中...</option>
+                            </select>
+                            <span class="vs-text">VS</span>
+                            <select class="compare-select" id="model2" disabled>
+                                <option value="">加载中...</option>
+                            </select>
+                            <button class="compare-btn" id="compareBtn" onclick="compareProducts()">开始对比</button>
+                        </div>
+                        <div id="compareResult">
+                            <div class="empty-state">👆 选择品类和两款产品开始参数对比</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-panel" id="recommend">
+                    <div class="recommend-container">
+                        <div class="recommend-form">
+                            <div class="form-group">
+                                <div class="form-label">使用场景</div>
+                                <div class="tag-group" data-group="scenario">
+                                    <div class="tag-option selected" data-value="daily">日常使用</div>
+                                    <div class="tag-option" data-value="commuting">通勤办公</div>
+                                    <div class="tag-option" data-value="sports">运动健身</div>
+                                    <div class="tag-option" data-value="gaming">游戏娱乐</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">预算上限（元）</div>
+                                <div class="tag-group" data-group="budget">
+                                    <div class="tag-option" data-value="1000">1000以内</div>
+                                    <div class="tag-option selected" data-value="500">500以内</div>
+                                    <div class="tag-option" data-value="300">300以内</div>
+                                    <div class="tag-option" data-value="">不限制</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">加分偏好（可选）</div>
+                                <div class="tag-group" data-group="preferences">
+                                    <div class="tag-option" data-value="lightweight">轻便优先</div>
+                                    <div class="tag-option" data-value="long_battery">续航优先</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label">必须条件（可选）</div>
+                                <div class="tag-group" data-group="must_have">
+                                    <div class="tag-option" data-value="anc">支持降噪</div>
+                                    <div class="tag-option" data-value="waterproof">防水防汗</div>
+                                    <div class="tag-option" data-value="low_latency">低延迟</div>
+                                    <div class="tag-option" data-value="dual_device">双设备</div>
+                                </div>
+                            </div>
+                            <button class="recommend-submit" onclick="getRecommend()">帮我推荐最合适的产品</button>
+                        </div>
+                        <div class="recommend-results" id="recommendResult">
+                            <div class="empty-state">👆 选择你的需求，一键获取个性化推荐</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </main>
+
+    <script>
+        // ========== 多品类配置：手环和手表先预留入口 ==========
+        const CATEGORY_CONFIG = {
+            earphone: {
+                name: '耳机',
+                assistantName: '小米耳机智能助手',
+                icon: '🎧',
+                enabled: true,
+                backendCategory: 'earphone',
+                subtitle: '专注于小米耳机产品，帮你解答说明书问题、对比参数、智能选购',
+                placeholders: [
+                    '输入说明书问题，比如：怎么恢复出厂设置？',
+                    '输入说明书问题，比如：如何连接手机？',
+                    '输入说明书问题，比如：充电盒怎么充电？',
+                    '输入说明书问题，比如：如何切换降噪模式？'
+                ],
+                quickQuestions: [
+                    ['怎么恢复出厂设置？', '恢复出厂设置'],
+                    ['如何连接手机？', '连接与配对'],
+                    ['耳机和充电盒怎么充电？', '充电方法'],
+                    ['如何使用触控操作？', '功能与操作']
+                ],
+                hotQuestions: [
+                    ['🔄', '恢复出厂设置', '查询重置步骤与指示灯状态', '怎么恢复出厂设置？'],
+                    ['📱', '连接手机', '查询首次配对和自动回连', '如何连接手机？'],
+                    ['🔋', '充电方法', '查询耳机和充电盒充电说明', '耳机和充电盒怎么充电？'],
+                    ['👆', '触控操作', '查询音乐、通话和降噪操作', '如何使用触控操作？']
+                ]
+            },
+            smart_band: {
+                name: '智能手环',
+                assistantName: '小米智能手环助手',
+                icon: '⌚',
+                enabled: false,
+                subtitle: '智能手环数据、说明书问答、对比与推荐能力正在接入',
+                placeholders: ['智能手环知识库正在接入中']
+            },
+            smart_watch: {
+                name: '智能手表',
+                assistantName: '小米智能手表助手',
+                icon: '🕒',
+                enabled: false,
+                subtitle: '智能手表数据、说明书问答、对比与推荐能力正在接入',
+                placeholders: ['智能手表知识库正在接入中']
+            }
+        };
+
+        // 同源请求：本地、演示和部署时不再修改主机地址。
+        const API_BASE = '/api';
+        let currentCategory = 'earphone';
+        let productList = [];
+        let lastMessageRole = null;
+        let placeholderIndex = 0;
+        let placeholderTimer = null;
+        let isSending = false;
+
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatBox = document.getElementById('chatBox');
+        const chatProductSelect = document.getElementById('chatProductSelect');
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        function formatAnswer(answer) {
+            return escapeHtml(answer).replace(/\n/g, '<br>');
+        }
+
+        function formatPage(source) {
+            if (source.page !== undefined && source.page !== null && source.page !== '') {
+                return `第${escapeHtml(source.page)}页`;
+            }
+            const start = source.page_start;
+            const end = source.page_end;
+            if (start === undefined || start === null) return '页码未知';
+            return end && end !== start ? `第${start}-${end}页` : `第${start}页`;
+        }
+
+        function renderSources(sources = []) {
+            if (!Array.isArray(sources) || sources.length === 0) return '';
+            const cards = sources.map((source, index) => {
+                const score = typeof source.score === 'number'
+                    ? `${Math.round(source.score * 100)}%相关`
+                    : '相关片段';
+                return `
+                    <details class="source-card" ${index === 0 ? 'open' : ''}>
+                        <summary>
+                            <span>来源 ${index + 1} · ${escapeHtml(source.section || '说明书片段')}</span>
+                            <span class="source-score">${score}</span>
+                        </summary>
+                        <div class="source-meta">
+                            产品：${escapeHtml(source.product_name || source.product_id || '未知')}<br>
+                            文件：${escapeHtml(source.source_file || '未知')} · ${formatPage(source)}
+                        </div>
+                        <div class="source-content">${escapeHtml(source.content || '暂无原文')}</div>
+                    </details>`;
+            }).join('');
+            return `<div class="answer-title">说明书来源</div><div class="source-list">${cards}</div>`;
+        }
+
+        function renderWelcome() {
+            const config = CATEGORY_CONFIG[currentCategory];
+            lastMessageRole = null;
+            if (!config.enabled) {
+                chatBox.innerHTML = `
+                    <div class="construction-banner">
+                        <div class="construction-icon">${config.icon}</div>
+                        <div class="construction-title">${config.name}能力正在接入</div>
+                        <div class="construction-text">
+                            已为${config.name}预留问答、产品对比与智能推荐入口。<br>
+                            数据与知识库完成验收后，可直接在本页面开放。
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            chatBox.innerHTML = `
+                <div class="welcome-section">
+                    <div class="welcome-title" id="welcomeTitle"></div>
+                    <div class="welcome-subtitle" id="welcomeSubtitle">${escapeHtml(config.subtitle)}</div>
+                    <div class="welcome-hint">你可以从下面这些开始：</div>
+                    <div class="hot-questions" id="hotQuestions"></div>
+                </div>`;
+            renderHotQuestions();
+            initGreeting();
+        }
+
+        function renderQuickQuestions() {
+            const config = CATEGORY_CONFIG[currentCategory];
+            const container = document.getElementById('quickQuestionsList');
+            if (!config.enabled) {
+                container.innerHTML = `
+                    <div class="quick-question" onclick="showConstructionNotice()">
+                        <span class="quick-question-icon">●</span>
+                        <span>${config.name}数据接入中</span>
+                    </div>`;
+                return;
+            }
+            container.innerHTML = config.quickQuestions.map(([question, label]) => `
+                <div class="quick-question" onclick="quickAsk('${escapeHtml(question)}')">
+                    <span class="quick-question-icon">●</span>
+                    <span>${escapeHtml(label)}</span>
+                </div>`).join('');
+        }
+
+        function renderHotQuestions() {
+            const config = CATEGORY_CONFIG[currentCategory];
+            const container = document.getElementById('hotQuestions');
+            if (!container || !config.enabled) return;
+            container.innerHTML = config.hotQuestions.map(([icon, title, desc, question]) => `
+                <div class="hot-card" onclick="quickAsk('${escapeHtml(question)}')">
+                    <div class="hot-card-icon">${icon}</div>
+                    <div class="hot-card-title">${escapeHtml(title)}</div>
+                    <div class="hot-card-desc">${escapeHtml(desc)}</div>
+                </div>`).join('');
+        }
+
+        function typeWriter(element, text, speed = 55) {
+            if (!element) return;
+            element.textContent = '';
+            let i = 0;
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+            element.appendChild(cursor);
+            function type() {
+                if (i < text.length) {
+                    element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+                    i += 1;
+                    setTimeout(type, speed);
+                } else {
+                    setTimeout(() => cursor.remove(), 900);
+                }
+            }
+            setTimeout(type, 180);
+        }
+
+        function initGreeting() {
+            const config = CATEGORY_CONFIG[currentCategory];
+            const hour = new Date().getHours();
+            let greeting = '你好';
+            if (hour < 12) greeting = '早上好';
+            else if (hour < 18) greeting = '下午好';
+            else greeting = '晚上好';
+            typeWriter(document.getElementById('welcomeTitle'), `${greeting}，我是${config.assistantName} 👋`);
+        }
+
+        function startPlaceholderRotation() {
+            clearInterval(placeholderTimer);
+            placeholderIndex = 0;
+            const config = CATEGORY_CONFIG[currentCategory];
+            const placeholders = config.placeholders || ['请输入问题'];
+            chatInput.placeholder = placeholders[0];
+            placeholderTimer = setInterval(() => {
+                placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+                chatInput.placeholder = placeholders[placeholderIndex];
+            }, 4000);
+        }
+
+        function setNavEnabled(enabled) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.panel !== 'chat') {
+                    item.classList.toggle('disabled', !enabled);
+                }
+            });
+            if (!enabled) switchPanel('chat');
+        }
+
+        function switchPanel(panelId) {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.panel === panelId));
+            document.querySelectorAll('.content-panel').forEach(p => p.classList.toggle('active', p.id === panelId));
+        }
+
+        async function switchCategory(category) {
+            if (!CATEGORY_CONFIG[category]) return;
+            currentCategory = category;
+            const config = CATEGORY_CONFIG[category];
+            document.querySelectorAll('.category-button').forEach(button => {
+                button.classList.toggle('active', button.dataset.category === category);
+            });
+            document.getElementById('brandTitle').textContent = '小米智能产品助手';
+            document.getElementById('categoryTag').textContent = config.name;
+            renderQuickQuestions();
+            renderWelcome();
+            startPlaceholderRotation();
+            setNavEnabled(config.enabled);
+            chatInput.disabled = !config.enabled;
+            sendBtn.disabled = !config.enabled;
+            document.getElementById('chatProductHint').textContent = config.enabled
+                ? '说明书问答需要先选择具体产品'
+                : `${config.name}知识库正在接入`;
+
+            if (config.enabled) {
+                await loadProducts();
+            } else {
+                productList = [];
+                populateSelects();
+            }
+        }
+
+        function showConstructionNotice() {
+            const config = CATEGORY_CONFIG[currentCategory];
+            alert(`${config.name}数据和知识库正在接入，当前先开放耳机功能。`);
+        }
+
+        async function loadProducts() {
+            const config = CATEGORY_CONFIG[currentCategory];
+            chatProductSelect.disabled = true;
+            chatProductSelect.innerHTML = '<option value="">正在加载产品...</option>';
+            try {
+                const response = await fetch(`${API_BASE}/products?category=${encodeURIComponent(config.backendCategory)}`);
+                const data = await response.json();
+                if (!response.ok || !data.success || !Array.isArray(data.products)) {
+                    throw new Error(data.message || '获取产品列表失败');
+                }
+                productList = data.products;
+                populateSelects();
+            } catch (error) {
+                console.error(error);
+                productList = [];
+                populateSelects();
+                document.getElementById('chatProductHint').textContent = '产品列表加载失败，请确认后端已启动';
+            }
+        }
+
+        function populateSelects() {
+            const config = CATEGORY_CONFIG[currentCategory];
+            const productLabel = config.name;
+            const options = productList.map(product =>
+                `<option value="${escapeHtml(product.product_id)}">${escapeHtml(product.product_name)}</option>`
+            ).join('');
+
+            chatProductSelect.innerHTML = `<option value="">请选择具体${productLabel}</option>${options}`;
+            chatProductSelect.disabled = !config.enabled || productList.length === 0;
+
+            const model1 = document.getElementById('model1');
+            const model2 = document.getElementById('model2');
+            model1.innerHTML = `<option value="">选择第一款${productLabel}</option>${options}`;
+            model2.innerHTML = `<option value="">选择第二款${productLabel}</option>${options}`;
+            model1.disabled = !config.enabled || productList.length === 0;
+            model2.disabled = !config.enabled || productList.length === 0;
+        }
+
+        document.querySelectorAll('.category-button').forEach(button => {
+            button.addEventListener('click', () => switchCategory(button.dataset.category));
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (item.classList.contains('disabled')) return;
+                switchPanel(item.dataset.panel);
+            });
+        });
+
+        chatInput.addEventListener('input', () => {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
+            sendBtn.classList.toggle('active', !!chatInput.value.trim() && !isSending);
+        });
+
+        chatInput.addEventListener('keydown', event => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function quickAsk(question) {
+            if (!CATEGORY_CONFIG[currentCategory].enabled) {
+                showConstructionNotice();
+                return;
+            }
+            chatInput.value = question;
+            chatInput.dispatchEvent(new Event('input'));
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            if (isSending) return;
+            const config = CATEGORY_CONFIG[currentCategory];
+            if (!config.enabled) {
+                showConstructionNotice();
+                return;
+            }
+            const question = chatInput.value.trim();
+            if (!question) return;
+            const productId = chatProductSelect.value;
+            if (!productId) {
+                appendMessage('bot', '请先在输入框上方选择一个具体耳机，再进行说明书问答。');
+                chatProductSelect.focus();
+                return;
+            }
+
+            appendMessage('user', question);
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            isSending = true;
+            sendBtn.disabled = true;
+            sendBtn.classList.remove('active');
+            const loadingId = appendSkeletonLoading();
+
+            try {
+                const response = await fetch(`${API_BASE}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                    body: JSON.stringify({ product_id: productId, question, top_k: 3 })
+                });
+                const data = await response.json();
+                removeLoading(loadingId);
+                if (!response.ok || !data.success) {
+                    appendMessage('bot', `抱歉，${data.message || '问答请求失败'}。`);
+                    return;
+                }
+                appendAnswer(data.answer || '暂无答案', data.sources || []);
+            } catch (error) {
+                console.error(error);
+                removeLoading(loadingId);
+                appendMessage('bot', '无法连接后端服务，请确认 Flask 已在 127.0.0.1:5000 启动。');
+            } finally {
+                isSending = false;
+                sendBtn.disabled = false;
+            }
+        }
+
+        function appendMessage(role, content) {
+            const isContinuous = lastMessageRole === role;
+            const config = CATEGORY_CONFIG[currentCategory];
+            const message = document.createElement('div');
+            message.className = `message ${role} ${isContinuous ? 'continuous' : ''}`;
+            const nameHtml = isContinuous ? '' : `<div class="message-name">${role === 'bot' ? escapeHtml(config.assistantName) : '我'}</div>`;
+            message.innerHTML = `
+                <div class="avatar ${role}">${role === 'bot' ? 'MI' : '我'}</div>
+                <div class="message-body">
+                    ${nameHtml}
+                    <div class="message-bubble"><div class="answer-text">${formatAnswer(content)}</div></div>
+                </div>`;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            lastMessageRole = role;
+        }
+
+        function appendAnswer(answer, sources) {
+            const isContinuous = lastMessageRole === 'bot';
+            const config = CATEGORY_CONFIG[currentCategory];
+            const message = document.createElement('div');
+            message.className = `message bot ${isContinuous ? 'continuous' : ''}`;
+            const nameHtml = isContinuous ? '' : `<div class="message-name">${escapeHtml(config.assistantName)}</div>`;
+            message.innerHTML = `
+                <div class="avatar bot">MI</div>
+                <div class="message-body">
+                    ${nameHtml}
+                    <div class="message-bubble">
+                        <div class="answer-text">${formatAnswer(answer)}</div>
+                        ${renderSources(sources)}
+                    </div>
+                </div>`;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            lastMessageRole = 'bot';
+        }
+
+        function appendSkeletonLoading() {
+            const isContinuous = lastMessageRole === 'bot';
+            const config = CATEGORY_CONFIG[currentCategory];
+            const id = `loading-${Date.now()}`;
+            const message = document.createElement('div');
+            message.className = `message bot ${isContinuous ? 'continuous' : ''}`;
+            message.id = id;
+            const nameHtml = isContinuous ? '' : `<div class="message-name">${escapeHtml(config.assistantName)}</div>`;
+            message.innerHTML = `
+                <div class="avatar bot">MI</div>
+                <div class="message-body">
+                    ${nameHtml}
+                    <div class="message-bubble skeleton-bubble">
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line"></div>
+                    </div>
+                </div>`;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            lastMessageRole = 'bot';
+            return id;
+        }
+
+        function removeLoading(id) {
+            document.getElementById(id)?.remove();
+        }
+
+        // ========== 对比功能：当前耳机可用，手环/手表入口预留 ==========
+        async function compareProducts() {
+            if (!CATEGORY_CONFIG[currentCategory].enabled) return showConstructionNotice();
+            const firstId = document.getElementById('model1').value;
+            const secondId = document.getElementById('model2').value;
+            if (!firstId || !secondId) return alert(`请选择两款${CATEGORY_CONFIG[currentCategory].name}`);
+            if (firstId === secondId) return alert(`请选择两款不同的${CATEGORY_CONFIG[currentCategory].name}`);
+
+            const button = document.getElementById('compareBtn');
+            const resultDiv = document.getElementById('compareResult');
+            button.textContent = '对比中...';
+            button.disabled = true;
+            resultDiv.innerHTML = '<div class="empty-state">加载中...</div>';
+            try {
+                const response = await fetch(`${API_BASE}/compare`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                    body: JSON.stringify({ product_ids: [firstId, secondId] })
+                });
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                    resultDiv.innerHTML = `<div class="empty-state">❌ ${escapeHtml(data.message || '对比失败')}</div>`;
+                    return;
+                }
+                renderCompareResult(data);
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="empty-state">❌ 无法连接后端服务</div>';
+            } finally {
+                button.textContent = '开始对比';
+                button.disabled = false;
+            }
+        }
+
+        function renderCompareResult(data) {
+            const { products = [], comparison = [], advantages = {} } = data;
+            if (products.length < 2) {
+                document.getElementById('compareResult').innerHTML = '<div class="empty-state">暂无完整对比结果</div>';
+                return;
+            }
+            const [first, second] = products;
+            let html = `<div class="compare-table-wrapper"><table class="compare-table"><thead><tr>
+                <th class="param-name">参数项</th>
+                <th>${escapeHtml(first.product_name)}</th>
+                <th>${escapeHtml(second.product_name)}</th>
+                </tr></thead><tbody>`;
+            comparison.forEach(item => {
+                const firstValue = item.display_values?.[first.product_id] ?? '—';
+                const secondValue = item.display_values?.[second.product_id] ?? '—';
+                const firstBest = advantages?.[first.product_id]?.some(value => value.includes(item.label));
+                const secondBest = advantages?.[second.product_id]?.some(value => value.includes(item.label));
+                html += `<tr>
+                    <td class="param-name">${escapeHtml(item.label)}</td>
+                    <td class="${firstBest ? 'best-value' : ''}">${escapeHtml(firstValue)}${item.unit ? ` ${escapeHtml(item.unit)}` : ''}</td>
+                    <td class="${secondBest ? 'best-value' : ''}">${escapeHtml(secondValue)}${item.unit ? ` ${escapeHtml(item.unit)}` : ''}</td>
+                </tr>`;
+            });
+            html += '</tbody></table></div>';
+            const firstAdvantages = advantages?.[first.product_id] || [];
+            const secondAdvantages = advantages?.[second.product_id] || [];
+            html += `<div style="margin-top:16px;padding:16px;background:#F8F8FA;border-radius:8px;font-size:13px;">
+                <div style="margin-bottom:8px;"><strong>💡 ${escapeHtml(first.product_name)} 优势：</strong>${escapeHtml(firstAdvantages.join('、') || '无明显优势')}</div>
+                <div><strong>💡 ${escapeHtml(second.product_name)} 优势：</strong>${escapeHtml(secondAdvantages.join('、') || '无明显优势')}</div>
+            </div>`;
+            document.getElementById('compareResult').innerHTML = html;
+        }
+
+        // ========== 推荐功能 ==========
+        document.querySelectorAll('.tag-group').forEach(group => {
+            group.querySelectorAll('.tag-option').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    if (!CATEGORY_CONFIG[currentCategory].enabled) return;
+                    const multi = ['preferences', 'must_have'].includes(group.dataset.group);
+                    if (multi) tag.classList.toggle('selected');
+                    else {
+                        group.querySelectorAll('.tag-option').forEach(item => item.classList.remove('selected'));
+                        tag.classList.add('selected');
+                    }
+                });
+            });
+        });
+
+        async function getRecommend() {
+            if (!CATEGORY_CONFIG[currentCategory].enabled) return showConstructionNotice();
+            const scenario = document.querySelector('[data-group="scenario"] .tag-option.selected')?.dataset.value || 'daily';
+            const budgetValue = document.querySelector('[data-group="budget"] .tag-option.selected')?.dataset.value;
+            const budget_max = budgetValue ? Number.parseInt(budgetValue, 10) : null;
+            const preferences = [...document.querySelectorAll('[data-group="preferences"] .tag-option.selected')].map(item => item.dataset.value);
+            const must_have = [...document.querySelectorAll('[data-group="must_have"] .tag-option.selected')].map(item => item.dataset.value);
+            const resultDiv = document.getElementById('recommendResult');
+            resultDiv.innerHTML = '<div class="empty-state">推荐中...</div>';
+            try {
+                const response = await fetch(`${API_BASE}/recommend`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                    body: JSON.stringify({ scenario, budget_max, preferences, must_have, top_k: 3 })
+                });
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                    const suggestion = Array.isArray(data.suggestions) && data.suggestions.length
+                        ? `<div style="margin-top:12px;color:#8E8E93;">💡 建议：${escapeHtml(data.suggestions.join('、'))}</div>`
+                        : '';
+                    resultDiv.innerHTML = `<div class="empty-state">❌ ${escapeHtml(data.message || '暂无符合条件的产品')}${suggestion}</div>`;
+                    return;
+                }
+                renderRecommendResult(data);
+            } catch (error) {
+                resultDiv.innerHTML = '<div class="empty-state">❌ 无法连接后端服务</div>';
+            }
+        }
+
+        function renderRecommendResult(data) {
+            const recommendations = data.recommendations || [];
+            if (!recommendations.length) {
+                document.getElementById('recommendResult').innerHTML = '<div class="empty-state">暂无推荐结果</div>';
+                return;
+            }
+            const html = recommendations.map(recommendation => {
+            const rawScore = Number(recommendation.score ?? 0);
+
+const scorePercent = Math.max(
+    0,
+    Math.min(
+        100,
+        rawScore <= 1 ? rawScore * 100 : rawScore
+    )
+);
+
+const scoreText = scorePercent.toFixed(1);
+
+const scoreColor = scorePercent >= 80
+    ? '#34C759'
+    : scorePercent >= 60
+        ? '#FF9500'
+        : '#8E8E93';
+                const tags = [
+                    ...(recommendation.reasons || []).slice(0, 3).map(reason => `<span class="feature-tag">✅ ${escapeHtml(reason)}</span>`),
+                    ...(recommendation.limitations || []).slice(0, 2).map(limit => `<span class="feature-tag" style="background:#FFF5F5;color:#FF3B30;">⚠️ ${escapeHtml(limit)}</span>`)
+                ].join('');
+                const badges = ['🥇', '🥈', '🥉'];
+                return `<div class="product-card" style="border-left:4px solid ${scoreColor};">
+                    <div class="product-image">${CATEGORY_CONFIG[currentCategory].icon}</div>
+                    <div class="product-info">
+                        <div class="product-header"><div>
+                            <div class="product-name">${badges[recommendation.rank - 1] || '⭐'} ${escapeHtml(recommendation.product_name)}</div>
+                            <div class="product-category">¥${escapeHtml(recommendation.reference_price ?? '—')} · ${escapeHtml(recommendation.wearing_type || '未知佩戴方式')}</div>
+                        </div><div class="match-score" style="color:${scoreColor};">
+                            <div class="score-bar"><div class="score-fill" style="width:${scorePercent}%;background:linear-gradient(90deg,${scoreColor},${scoreColor}88);"></div></div>
+                            ${scoreText}% 匹配
+                        </div></div>
+                        <div class="product-features">${tags}</div>
+                        <div class="product-actions">
+                            <button class="action-btn primary" onclick="askAboutProduct('${escapeHtml(recommendation.product_id)}')">问说明书</button>
+                            <button class="action-btn" onclick="switchToCompare('${escapeHtml(recommendation.product_id)}')">加入对比</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            document.getElementById('recommendResult').innerHTML = html;
+        }
+
+        function askAboutProduct(productId) {
+            switchPanel('chat');
+            chatProductSelect.value = productId;
+            chatInput.focus();
+        }
+
+        function switchToCompare(productId) {
+            switchPanel('compare');
+            document.getElementById('model1').value = productId;
+            const other = productList.find(product => product.product_id !== productId);
+            if (other) document.getElementById('model2').value = other.product_id;
+        }
+
+        // 初始化耳机品类；手环、手表入口已保留。
+        switchCategory('earphone');
+    </script>
 </body>
 </html>
