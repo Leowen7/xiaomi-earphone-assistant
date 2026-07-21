@@ -1,0 +1,67 @@
+{
+  "schema_version": "2.0",
+  "product_id": "B06",
+  "product_name": "Xiaomi Smart Band 8 Pro",
+  "product_category": "smart_band",
+  "brand": "Xiaomi",
+  "series": null,
+  "variant": null,
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-smart-band-8-pro/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Smart Band 8 Pro是一款配备1.74英寸AMOLED彩色方块屏幕的智能手环，最高亮度600尼特。支持GNSS定位，配备5ATM防水等级和289mAh大容量电池，具备心率、血氧、睡眠和压力监测功能，续航最长14天。",
+  "target_users": [],
+  "usage_scenarios": [],
+  "wearable_specs": {
+    "display_size_in": 1.74,
+    "display_type": "AMOLED",
+    "screen_resolution": "336 × 480",
+    "max_brightness_nits": 600,
+    "battery_life_typical_days": 14,
+    "battery_life_heavy_days": null,
+    "charging_time_minutes": 80,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": null,
+    "nfc_support": null,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "gnss_tracking",
+      "swim_tracking",
+      "running_courses"
+    ],
+    "system_compatibility": "Android 8.0 and above; iOS 12 and above",
+    "weight_g": 22.5,
+    "dimensions_mm": "46 × 33.35 × 9.99",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": ["basic_info", "wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8-pro/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": ["wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8-pro/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "赵阳",
+    "reviewer": "张静雯",
+    "status": "approved" ,
+    "notes": "1. weight_g约22.5克（不含表带）；2. nfc_support=null，GLOBAL官方规格页仅标注GNSS，未明确标注NFC；3. battery_life_typical_days=14；4. stress_monitoring=true（官方标注all-day stress tracking）；5. sports_modes_count：官方表述为150+ sports modes，本字段按最低明确数量150记录；6. sports_features包含GNSS追踪、游泳追踪、跑步课程等官方明确支持的功能；7. 蓝牙版本5.3。"
+  },
+  "data_updated_at": "2026-07-21"
+}

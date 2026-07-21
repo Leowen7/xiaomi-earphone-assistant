@@ -1,0 +1,63 @@
+{
+  "schema_version": "2.0",
+  "product_id": "B08",
+  "product_name": "Xiaomi Smart Band 8 Active",
+  "product_category": "smart_band",
+  "brand": "Xiaomi",
+  "series": null,
+  "variant": null,
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-smart-band-8-active/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Smart Band 8 Active是一款配备1.47英寸TFT显示屏的入门级智能手环，支持心率、血氧、睡眠追踪和压力水平测量，提供50+健身模式，续航最长14天。",
+  "target_users": [],
+  "usage_scenarios": [],
+  "wearable_specs": {
+    "display_size_in": 1.47,
+    "display_type": "TFT",
+    "screen_resolution": "172 × 320",
+    "max_brightness_nits": null,
+    "battery_life_typical_days": 14,
+    "battery_life_heavy_days": 6,
+    "charging_time_minutes": null,
+    "water_resistance": "5ATM",
+    "positioning_type": null,
+    "bluetooth_call": null,
+    "nfc_support": null,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 50,
+    "sports_features": [],
+    "system_compatibility": "Android 8.0 and above; iOS 12 and above",
+    "weight_g": 14.9,
+    "dimensions_mm": "42.81 × 25.42 × 9.99",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": ["basic_info", "wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8-active/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": ["wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8-active/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "赵阳",
+    "reviewer": "张静雯",
+    "status": "approved" ,
+    "notes": "1. weight_g=14.9g（无绑带）；2. Active入门版，display_type为TFT（非AMOLED）；3. max_brightness_nits=null，GLOBAL官方规格页表述为\"Max > 450 nits\"，即最大亮度高于450尼特。由于该字段只接受精确数字，无法表达\">450\"，因此填写null，不能将450视为精确最大亮度；4. battery_life_typical_days：官方典型使用续航为14天；重度使用续航为6天；5. charging_time_minutes=null，GLOBAL官方规格页表述为\"Less than 120 minutes\"，即充电时间小于120分钟。由于该字段只接受精确数字，无法表达\"<120\"，因此填写null，不代表官方没有提供信息；6. sports_modes_count：GLOBAL官方表述为50+ fitness modes，本字段按最低明确数量50记录；7. sports_features=[]，官方未明确标注符合P2-2字段字典标准枚举的特色运动功能，5ATM防水仅代表防水等级不能直接推断游泳数据追踪，填写空数组并在notes说明；8. 蓝牙版本5.1 BLE；9. 支持女性健康追踪功能。"
+  },
+  "data_updated_at": "2026-07-21"
+}

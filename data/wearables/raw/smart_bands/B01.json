@@ -1,0 +1,68 @@
+{
+  "schema_version": "2.0",
+  "product_id": "B01",
+  "product_name": "Xiaomi Smart Band 10 Pro NFC",
+  "product_category": "smart_band",
+  "brand": "Xiaomi",
+  "series": null,
+  "variant": "NFC",
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-smart-band-10-pro-nfc/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Smart Band 10 Pro NFC是一款配备1.74英寸AMOLED显示屏的智能手环，采用9.7mm超薄设计。搭载2000尼特峰值亮度和1500尼特HBM亮度显示屏，支持NFC功能，具备独立GNSS五卫星定位、5ATM防水等级，支持心率、血氧、睡眠和压力监测，续航最长15天。",
+  "target_users": [],
+  "usage_scenarios": [],
+  "wearable_specs": {
+    "display_size_in": 1.74,
+    "display_type": "AMOLED",
+    "screen_resolution": "480 × 336",
+    "max_brightness_nits": 2000,
+    "battery_life_typical_days": 15,
+    "battery_life_heavy_days": null,
+    "charging_time_minutes": null,
+    "water_resistance": "5ATM",
+    "positioning_type": "built_in_gnss",
+    "bluetooth_call": null,
+    "nfc_support": true,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 150,
+    "sports_features": [
+      "gnss_tracking",
+      "swim_tracking",
+      "heart_rate_broadcast",
+      "running_courses"
+    ],
+    "system_compatibility": "Android 8.0 and above; iOS 14 and above",
+    "weight_g": 21.6,
+    "dimensions_mm": "42.83 × 32.16 × 9.7",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": ["basic_info", "wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-10-pro-nfc/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": ["wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-10-pro-nfc/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "赵阳",
+    "reviewer": "张静雯",
+    "status": "approved" ,
+    "notes": "1. variant为NFC版；2. weight_g=21.6g为Standard版，陶瓷版为28.7g；3. dimensions_mm为Standard版尺寸，陶瓷版为43.96 × 33.36 × 9.7mm；4. nfc_support=true，基于官方标注；5. battery_life_typical_days：GLOBAL官方表述为Normal usage 15 days，本字段按正常/典型使用续航记录为15天；Light usage为21天，AOD usage为8天。官方未单独提供Heavy usage数据，因此battery_life_heavy_days填写null；6. sports_modes_count：官方表述为150+ sports modes，本字段按最低明确数量150记录；7. sports_features包含GNSS追踪、游泳追踪、心率广播、跑步课程等官方明确支持的功能；8. charging_time_minutes官方未提供，填写null。"
+  },
+  "data_updated_at": "2026-07-21"
+}

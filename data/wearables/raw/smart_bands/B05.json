@@ -1,0 +1,63 @@
+{
+  "schema_version": "2.0",
+  "product_id": "B05",
+  "product_name": "Xiaomi Smart Band 9 Active",
+  "product_category": "smart_band",
+  "brand": "Xiaomi",
+  "series": null,
+  "variant": null,
+  "source_region": "GLOBAL",
+  "official_url": "https://www.mi.com/global/product/xiaomi-smart-band-9-active/",
+  "manual_url": null,
+  "official_price": null,
+  "currency": null,
+  "product_summary": "Xiaomi Smart Band 9 Active是一款配备1.47英寸TFT显示屏的入门级智能手环，支持心率、血氧、睡眠和压力监测，提供50种健身模式，续航最长18天。",
+  "target_users": [],
+  "usage_scenarios": [],
+  "wearable_specs": {
+    "display_size_in": 1.47,
+    "display_type": "TFT",
+    "screen_resolution": "172 × 320",
+    "max_brightness_nits": null,
+    "battery_life_typical_days": 18,
+    "battery_life_heavy_days": 9,
+    "charging_time_minutes": null,
+    "water_resistance": "5ATM",
+    "positioning_type": null,
+    "bluetooth_call": null,
+    "nfc_support": null,
+    "heart_rate_monitoring": true,
+    "blood_oxygen_monitoring": true,
+    "sleep_monitoring": true,
+    "stress_monitoring": true,
+    "sports_modes_count": 50,
+    "sports_features": [],
+    "system_compatibility": "Android 8.0 and above; iOS 14 and above",
+    "weight_g": 16.5,
+    "dimensions_mm": "45.9 × 26.94 × 9.99",
+    "strap_material": "TPU"
+  },
+  "source_records": [
+    {
+      "field_scope": ["basic_info", "wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-9-active/",
+      "source_type": "product_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    },
+    {
+      "field_scope": ["wearable_specs"],
+      "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-9-active/specs/",
+      "source_type": "specs_page",
+      "source_region": "GLOBAL",
+      "accessed_at": "2026-07-21"
+    }
+  ],
+  "data_quality": {
+    "collector": "赵阳",
+    "reviewer": "张静雯",
+    "status": "approved" ,
+    "notes": "1. Active入门版，display_type为TFT（非AMOLED）；2. weight_g=16.5g（无绑带）；3. max_brightness_nits=null，GLOBAL官方规格页未明确标注亮度数值，填写null；4. charging_time_minutes=null，GLOBAL官方规格页表述为\"Less than 120 minutes\"，即充电时间小于120分钟。由于该字段只接受精确数字，无法表达\"<120\"，因此填写null，不代表官方没有提供信息；5. battery_life_typical_days：官方典型使用续航为18天；重度使用续航为9天；6. sports_modes_count：GLOBAL官方表述为50 fitness modes，本字段记录为50；7. sports_features=[]，官方未明确标注符合P2-2字段字典标准枚举的特色运动功能，5ATM防水仅代表防水等级不能直接推断游泳数据追踪，填写空数组并在notes说明。"
+  },
+  "data_updated_at": "2026-07-21"
+}
