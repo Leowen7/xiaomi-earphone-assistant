@@ -1,0 +1,450 @@
+[
+  {
+    "case_id": "T001",
+    "user_demand": "学生，预算100澳元以内，只选手环，仅需要基础健康监测，散步和浅水活动，不强制要求GNSS或NFC",
+    "user_device": "iOS",
+    "max_budget": 100,
+    "currency": "AUD",
+    "hard_filter": [
+      "product_category=smart_band",
+      "display_type=TFT"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "B05",
+        "match_reasons": [
+          "official_price=34.5 AUD，低于100 AUD",
+          "心率、血氧、睡眠、压力四项监测均为true",
+          "water_resistance=5ATM"
+        ]
+      }
+    ],
+    "near_match_product_id": "B08",
+    "unmet_conditions": [
+      "official_price=null，价格未知，无法确认是否满足100 AUD预算"
+    ],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T002",
+    "user_demand": "女生用户，手腕纤细，iPhone，需要支持蓝牙通话和NFC的智能手表",
+    "user_device": "iOS",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_watch",
+      "bluetooth_call=true",
+      "nfc_support=true"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "W01",
+        "match_reasons": [
+          "product_name包含41mm规格",
+          "bluetooth_call=true",
+          "nfc_support=true，具体服务视地区和版本可用性"
+        ]
+      },
+      {
+        "product_id": "W02",
+        "match_reasons": [
+          "bluetooth_call=true",
+          "nfc_support=true，具体服务视地区和版本可用性",
+          "positioning_type=built_in_gnss"
+        ]
+      },
+      {
+        "product_id": "W08",
+        "match_reasons": [
+          "bluetooth_call=true",
+          "nfc_support=true，具体服务视地区和版本可用性",
+          "sports_modes_count=150"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T003",
+    "user_demand": "经常独自户外长跑和滑雪，出门不带手机，需要内置GNSS轨迹记录手表，使用无GMS安卓手机",
+    "user_device": "android_no_gms",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_watch",
+      "positioning_type=built_in_gnss"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "W01",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "sports_features包含专业滑雪模式和跌倒检测",
+          "sports_modes_count=150"
+        ]
+      },
+      {
+        "product_id": "W02",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "sports_features包含专业滑雪模式和滑雪跌倒检测",
+          "battery_life_typical_days=15"
+        ]
+      },
+      {
+        "product_id": "W03",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "battery_life_typical_days=24",
+          "sports_modes_count=150"
+        ]
+      },
+      {
+        "product_id": "W04",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "battery_life_typical_days=18",
+          "sports_modes_count=160"
+        ]
+      },
+      {
+        "product_id": "W08",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "sports_features包含专业滑雪模式和跌倒检测",
+          "battery_life_typical_days=15"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T004",
+    "user_demand": "安卓带GMS手机，需要Wear OS并支持Google Wallet支付的智能手表",
+    "user_device": "android_gms",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_watch",
+      "nfc_support=true",
+      "product_summary contains Wear OS",
+      "usage_scenarios contains Google Wallet银行卡支付"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "W06",
+        "match_reasons": [
+          "product_summary包含Wear OS by Google",
+          "usage_scenarios包含Google Wallet银行卡支付",
+          "sports_modes_count=161"
+        ]
+      },
+      {
+        "product_id": "W07",
+        "match_reasons": [
+          "product_summary包含Wear OS by Google",
+          "usage_scenarios包含Google Wallet银行卡支付",
+          "sports_features包含体成分测量"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T005",
+    "user_demand": "只选手环，不想频繁充电，典型续航20天以上，用于日常慢跑",
+    "user_device": "android",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_band",
+      "battery_life_typical_days>=20"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "B02",
+        "match_reasons": [
+          "battery_life_typical_days=21",
+          "display_type=AMOLED",
+          "心率、血氧、睡眠、压力四项监测均为true"
+        ]
+      },
+      {
+        "product_id": "B03",
+        "match_reasons": [
+          "battery_life_typical_days=21",
+          "positioning_type=built_in_gnss",
+          "sports_features包含running_courses"
+        ]
+      },
+      {
+        "product_id": "B04",
+        "match_reasons": [
+          "battery_life_typical_days=21",
+          "weight_g=15.8",
+          "sports_features包含running_courses和swim_tracking"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T006",
+    "user_demand": "上班族，使用苹果手机，需要支持蓝牙通话和NFC的智能手表",
+    "user_device": "iOS",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_watch",
+      "bluetooth_call=true",
+      "nfc_support=true"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "W01",
+        "match_reasons": [
+          "bluetooth_call=true",
+          "nfc_support=true，具体服务视地区和版本可用性",
+          "display_size_in=1.32"
+        ]
+      },
+      {
+        "product_id": "W02",
+        "match_reasons": [
+          "bluetooth_call=true",
+          "nfc_support=true，具体服务视地区和版本可用性",
+          "battery_life_typical_days=15"
+        ]
+      },
+      {
+        "product_id": "W08",
+        "match_reasons": [
+          "bluetooth_call=true",
+          "nfc_support=true，具体服务视地区和版本可用性",
+          "positioning_type=built_in_gnss"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T007",
+    "user_demand": "长辈使用手环，看重20天以上长续航和完整健康监测功能",
+    "user_device": "android",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_band",
+      "battery_life_typical_days>=20",
+      "heart_rate_monitoring=true",
+      "blood_oxygen_monitoring=true",
+      "sleep_monitoring=true",
+      "stress_monitoring=true"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "B02",
+        "match_reasons": [
+          "battery_life_typical_days=21",
+          "心率、血氧、睡眠、压力四项监测均为true",
+          "weight_g=15.95"
+        ]
+      },
+      {
+        "product_id": "B03",
+        "match_reasons": [
+          "battery_life_typical_days=21",
+          "心率、血氧、睡眠、压力四项监测均为true",
+          "display_type=AMOLED"
+        ]
+      },
+      {
+        "product_id": "B04",
+        "match_reasons": [
+          "battery_life_typical_days=21",
+          "心率、血氧、睡眠、压力四项监测均为true",
+          "weight_g=15.8"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T008",
+    "user_demand": "想要100澳元以内的大屏手表，不需要独立GNSS，仅依靠手机定位记录轻度运动，使用iPhone",
+    "user_device": "iOS",
+    "max_budget": 100,
+    "currency": "AUD",
+    "hard_filter": [
+      "product_category=smart_watch",
+      "positioning_type=connected_phone"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "W05",
+        "match_reasons": [
+          "official_price=79.5 AUD，低于100 AUD",
+          "display_size_in=2.0",
+          "positioning_type=connected_phone"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T009",
+    "user_demand": "只选手环，跑步不带手机，需要内置GNSS并支持游泳记录，使用iOS",
+    "user_device": "iOS",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_band",
+      "positioning_type=built_in_gnss",
+      "sports_features has_positive_swim_tracking=true"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "B01",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "sports_features包含swim_tracking",
+          "sports_modes_count=150"
+        ]
+      },
+      {
+        "product_id": "B03",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "sports_features包含swim_tracking",
+          "battery_life_typical_days=21"
+        ]
+      },
+      {
+        "product_id": "B06",
+        "match_reasons": [
+          "positioning_type=built_in_gnss",
+          "sports_features包含swim_tracking",
+          "sports_modes_count=150"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T010",
+    "user_demand": "iOS智能手表，要求典型续航至少15天，并支持游泳或水上运动记录",
+    "user_device": "iOS",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_watch",
+      "battery_life_typical_days>=15",
+      "sports_features has_positive_swim_tracking=true"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "W02",
+        "match_reasons": [
+          "battery_life_typical_days=15",
+          "sports_features包含泳池游泳与开放水域游泳",
+          "bluetooth_call=true"
+        ]
+      },
+      {
+        "product_id": "W03",
+        "match_reasons": [
+          "battery_life_typical_days=24",
+          "sports_features包含18种水上运动及游泳记录",
+          "weight_g=33.5"
+        ]
+      },
+      {
+        "product_id": "W04",
+        "match_reasons": [
+          "battery_life_typical_days=18",
+          "sports_features包含泳池游泳模式",
+          "weight_g=29.2"
+        ]
+      },
+      {
+        "product_id": "W08",
+        "match_reasons": [
+          "battery_life_typical_days=15",
+          "sports_features包含泳池及近岸浅水运动记录",
+          "bluetooth_call=true"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T011",
+    "user_demand": "使用无GMS国产安卓手机，需要同时支持NFC和独立GNSS的手环",
+    "user_device": "android_no_gms",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_band",
+      "nfc_support=true",
+      "positioning_type=built_in_gnss"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "B01",
+        "match_reasons": [
+          "nfc_support=true",
+          "positioning_type=built_in_gnss",
+          "system_compatibility包含Android 8.0 and above"
+        ]
+      }
+    ],
+    "near_match_product_id": null,
+    "unmet_conditions": [],
+    "backup_product_id": null
+  },
+  {
+    "case_id": "T012",
+    "user_demand": "安卓带GMS手机，需要Wear OS智能手表，并硬性要求体成分监测",
+    "user_device": "android_gms",
+    "max_budget": null,
+    "currency": null,
+    "hard_filter": [
+      "product_category=smart_watch",
+      "product_summary contains Wear OS",
+      "sports_features contains 体成分测量"
+    ],
+    "expected_candidates": [
+      {
+        "product_id": "W07",
+        "match_reasons": [
+          "product_summary包含Wear OS by Google",
+          "sports_features包含体成分测量",
+          "sports_modes_count=161"
+        ]
+      }
+    ],
+    "near_match_product_id": "W06",
+    "unmet_conditions": [
+      "sports_features不包含体成分测量"
+    ],
+    "backup_product_id": null
+  }
+]
