@@ -1,0 +1,97 @@
+2026-07-23 21:09:33,229 | INFO | ================================================================
+2026-07-23 21:09:33,229 | INFO | P2-7：穿戴设备FAISS检索验收
+2026-07-23 21:09:33,230 | INFO | ================================================================
+2026-07-23 21:09:33,231 | INFO | 
+2026-07-23 21:09:33,231 | INFO | [FAQ01] B02连接绑定FAQ
+2026-07-23 21:09:33,232 | INFO | 查询：Xiaomi Smart Band 10怎么连接手机？
+2026-07-23 21:09:39,783 | INFO |   #1 score=0.809101 B02 manual_faq 连接绑定 Xiaomi Smart Band 10第一次使用时如何连接手机？ 下载并打开 Mi Fitness App，登录小米账号并按提示授予权限。在“设备”页点击“+
+2026-07-23 21:09:39,790 | INFO | 结果：PASS
+2026-07-23 21:09:39,790 | INFO | 
+2026-07-23 21:09:39,791 | INFO | [FAQ02] B03充电FAQ
+2026-07-23 21:09:39,791 | INFO | 查询：Xiaomi Smart Band 9 Pro怎么充电？
+2026-07-23 21:09:39,806 | INFO |   #1 score=0.854373 B03 manual_faq 充电续航 Xiaomi Smart Band 9 Pro应该怎样充电？ 建议使用标准5V、至少500mA的USB充电器和该型号专用充电线。先检查手环与充电线金属触点是否干
+2026-07-23 21:09:39,807 | INFO | 结果：PASS
+2026-07-23 21:09:39,807 | INFO | 
+2026-07-23 21:09:39,807 | INFO | [FAQ03] W03系统操作FAQ
+2026-07-23 21:09:39,807 | INFO | 查询：REDMI Watch 5怎么恢复出厂设置？
+2026-07-23 21:09:39,821 | INFO |   #1 score=0.850545 W03 manual_faq 系统操作 REDMI Watch 5如何重启、关机或恢复出厂设置？ 无法添加或连接时，可长按手表电源键约3秒，在系统操作界面选择恢复出厂设置后重新添加。绑定到不同小米账号
+2026-07-23 21:09:39,821 | INFO | 结果：PASS
+2026-07-23 21:09:39,821 | INFO | 
+2026-07-23 21:09:39,821 | INFO | [FAQ04] W02通知FAQ
+2026-07-23 21:09:39,822 | INFO | 查询：Xiaomi Watch S4为什么收不到应用通知？
+2026-07-23 21:09:39,834 | INFO |   #1 score=0.849467 W02 manual_faq 通知功能 Xiaomi Watch S4如何开启应用通知，收不到通知怎么办？ 打开 Mi Fitness App，进入“设备”→“通知与通话”或“应用通知”，开启全部通知
+2026-07-23 21:09:39,834 | INFO | 结果：PASS
+2026-07-23 21:09:39,835 | INFO | 
+2026-07-23 21:09:39,835 | INFO | [FAQ05] W05表盘FAQ
+2026-07-23 21:09:39,835 | INFO | 查询：REDMI Watch 5 Active怎么更换表盘？
+2026-07-23 21:09:39,843 | INFO |   #1 score=0.849200 W05 manual_faq 表盘功能 REDMI Watch 5 Active如何更换、下载或删除表盘？ 可长按REDMI Watch 5 Active当前表盘进入选择界面，或在手表“设置”中的表盘
+2026-07-23 21:09:39,843 | INFO | 结果：PASS
+2026-07-23 21:09:39,843 | INFO | 
+2026-07-23 21:09:39,843 | INFO | [FAQ06] W08健康监测FAQ
+2026-07-23 21:09:39,843 | INFO | 查询：Xiaomi Watch S3心率测量不准怎么办？
+2026-07-23 21:09:39,855 | INFO |   #1 score=0.849248 W08 manual_faq 健康监测 Xiaomi Watch S3心率或睡眠监测不准确时应该怎样处理？ 心率数据偏差可能来自佩戴松动、汗水或污渍、低温、毛发、肤色和纹身。测量时把手表佩戴在腕骨上方
+2026-07-23 21:09:39,855 | INFO | 结果：PASS
+2026-07-23 21:09:39,856 | INFO | 
+2026-07-23 21:09:39,856 | INFO | [PAR01] B02电池参数
+2026-07-23 21:09:39,856 | INFO | 查询：Xiaomi Smart Band 10典型续航多少天？
+2026-07-23 21:09:39,866 | INFO |   #1 score=0.907940 B02 battery battery Xiaomi Smart Band 10典型续航为21天。 重度续航为8天。 充电时间约为60分钟。
+2026-07-23 21:09:39,866 | INFO | 结果：PASS
+2026-07-23 21:09:39,866 | INFO | 
+2026-07-23 21:09:39,866 | INFO | [PAR02] W02显示参数
+2026-07-23 21:09:39,866 | INFO | 查询：Xiaomi Watch S4屏幕最高亮度是多少？
+2026-07-23 21:09:39,876 | INFO |   #1 score=0.840015 W02 display display Xiaomi Watch S4配备1.43英寸AMOLED显示屏。 屏幕分辨率为466×466。 最高亮度可达2200尼特。
+2026-07-23 21:09:39,876 | INFO | 结果：PASS
+2026-07-23 21:09:39,876 | INFO | 
+2026-07-23 21:09:39,876 | INFO | [PAR03] W05定位参数
+2026-07-23 21:09:39,877 | INFO | 查询：REDMI Watch 5 Active是否需要连接手机定位？
+2026-07-23 21:09:39,887 | INFO |   #1 score=0.850609 W05 positioning positioning REDMI Watch 5 Active不支持独立GNSS定位，运动轨迹需要使用手机定位。
+2026-07-23 21:09:39,887 | INFO | 结果：PASS
+2026-07-23 21:09:39,887 | INFO | 
+2026-07-23 21:09:39,887 | INFO | [PAR04] W06兼容性参数
+2026-07-23 21:09:39,887 | INFO | 查询：Xiaomi Watch 2支持iPhone吗？
+2026-07-23 21:09:39,897 | INFO |   #1 score=0.812308 W06 compatibility compatibility Xiaomi Watch 2兼容系统：仅支持Android 8.0及以上且具备GMS/Google Play Store的智能手机；不支持iOS、Android
+2026-07-23 21:09:39,898 | INFO | 结果：PASS
+2026-07-23 21:09:39,898 | INFO | 
+2026-07-23 21:09:39,898 | INFO | [PAR05] B07防水参数
+2026-07-23 21:09:39,898 | INFO | 查询：Xiaomi Smart Band 8支持5ATM防水吗？
+2026-07-23 21:09:39,906 | INFO |   #1 score=0.734200 B07 design design Xiaomi Smart Band 8重量约为27克。 尺寸为48 × 22.5 × 10.99毫米。 表带材质为TPU。 Xiaomi Smart Band 
+2026-07-23 21:09:39,908 | INFO | 结果：PASS
+2026-07-23 21:09:39,908 | INFO | 
+2026-07-23 21:09:39,908 | INFO | [PAR06] W07通信参数
+2026-07-23 21:09:39,908 | INFO | 查询：Xiaomi Watch 2 Pro是否支持NFC？
+2026-07-23 21:09:39,918 | INFO |   #1 score=0.870195 W07 communication communication Xiaomi Watch 2 Pro支持蓝牙通话功能。 Xiaomi Watch 2 Pro支持NFC功能。
+2026-07-23 21:09:39,918 | INFO | 结果：PASS
+2026-07-23 21:09:39,918 | INFO | 
+2026-07-23 21:09:39,918 | INFO | [GEN01] 智能手表类别过滤
+2026-07-23 21:09:39,919 | INFO | 查询：支持NFC的智能手表
+2026-07-23 21:09:39,928 | INFO |   #1 score=0.752198 W06 communication communication Xiaomi Watch 2支持蓝牙通话功能。 Xiaomi Watch 2支持NFC功能。
+2026-07-23 21:09:39,928 | INFO |   #2 score=0.748256 W08 communication communication Xiaomi Watch S3支持蓝牙通话功能。 Xiaomi Watch S3支持NFC功能。
+2026-07-23 21:09:39,928 | INFO |   #3 score=0.739806 W02 communication communication Xiaomi Watch S4支持蓝牙通话功能。 Xiaomi Watch S4支持NFC功能。
+2026-07-23 21:09:39,928 | INFO | 结果：PASS
+2026-07-23 21:09:39,928 | INFO | 
+2026-07-23 21:09:39,928 | INFO | [GEN02] 智能手环类别过滤
+2026-07-23 21:09:39,929 | INFO | 查询：支持5ATM防水的智能手环
+2026-07-23 21:09:39,939 | INFO |   #1 score=0.563579 B07 design design Xiaomi Smart Band 8重量约为27克。 尺寸为48 × 22.5 × 10.99毫米。 表带材质为TPU。 Xiaomi Smart Band 
+2026-07-23 21:09:39,939 | INFO |   #2 score=0.550640 B02 design design Xiaomi Smart Band 10重量约为15.95克。 尺寸为46.57 × 22.54 × 10.95毫米。 表带材质为TPU。 Xiaomi Sma
+2026-07-23 21:09:39,939 | INFO |   #3 score=0.548267 B06 design design Xiaomi Smart Band 8 Pro重量约为22.5克。 尺寸为46 × 33.35 × 9.99毫米。 表带材质为TPU。 Xiaomi Smart
+2026-07-23 21:09:39,940 | INFO | 结果：PASS
+2026-07-23 21:09:39,940 | INFO | 
+2026-07-23 21:09:39,940 | INFO | [GEN03] 手表通知FAQ综合检索
+2026-07-23 21:09:39,940 | INFO | 查询：手表收不到应用通知怎么办？
+2026-07-23 21:09:39,949 | INFO |   #1 score=0.793425 W01 manual_faq 通知功能 Xiaomi Watch S4 41mm如何开启应用通知，收不到通知怎么办？ 打开 Mi Fitness App→“设备”→“通知与通话”→“应用通知”，选择镜
+2026-07-23 21:09:39,949 | INFO |   #2 score=0.771182 W08 manual_faq 通知功能 Xiaomi Watch S3如何开启应用通知，收不到通知怎么办？ 在 Mi Fitness App 中开启消息通知，并保证手机通知栏能够正常显示目标应用消息。
+2026-07-23 21:09:39,950 | INFO |   #3 score=0.760262 W05 manual_faq 通知功能 REDMI Watch 5 Active如何开启应用通知，收不到通知怎么办？ 在 Mi Fitness App 的“设备”页面开启“应用通知”，并可选择仅锁屏时
+2026-07-23 21:09:39,950 | INFO | 结果：PASS
+2026-07-23 21:09:39,950 | INFO | [ERR01] 空查询应抛出ValueError：PASS
+2026-07-23 21:09:39,951 | INFO | [ERR02] top_k=0应抛出ValueError：PASS
+2026-07-23 21:09:39,951 | INFO | [ERR03] 未知product_id应抛出ValueError：PASS
+2026-07-23 21:09:39,951 | INFO | [ERR04] 未知topic应抛出ValueError：PASS
+2026-07-23 21:09:39,955 | INFO | 
+2026-07-23 21:09:39,955 | INFO | ================================================================
+2026-07-23 21:09:39,955 | INFO | 测试汇总
+2026-07-23 21:09:39,955 | INFO | ================================================================
+2026-07-23 21:09:39,955 | INFO | 检索用例：15/15通过
+2026-07-23 21:09:39,955 | INFO | 异常输入测试：4/4通过
+2026-07-23 21:09:39,956 | INFO | 最终结果：全部通过
+2026-07-23 21:09:39,956 | INFO | JSON报告：C:\Users\leowen\Desktop\P2-7\docs\p2_7\retrieval_test_report.json
+2026-07-23 21:09:39,956 | INFO | Markdown报告：C:\Users\leowen\Desktop\P2-7\docs\p2_7\retrieval_test_report.md
