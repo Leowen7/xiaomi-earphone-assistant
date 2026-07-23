@@ -1,102 +1,102 @@
-[10:11:03] =======================================================
-[10:11:03]   P2-6 全流程运行
-[10:11:03]   开始时间: 2026-07-23 10:11:03
-[10:11:03] =======================================================
-[10:11:03] 
+[10:31:00] =======================================================
+[10:31:00]   P2-6 全流程运行
+[10:31:00]   开始时间: 2026-07-23 10:31:00
+[10:31:00] =======================================================
+[10:31:00] 
 [STEP 1/5] 生成参数文本块 (144 条)
-[10:11:03]   执行: F:\sprint二\xiaomi-earphone-assistant\scripts\p2_6\json_to_chunks.py
-[10:11:04]     =======================================================
-[10:11:04]     P2-6 JSON → 参数文本块转换
-[10:11:04]     =======================================================
-[10:11:04]     [1] 检查输入文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\all_wearables.jsonl
-[10:11:04]     文件存在
-[10:11:04]     [2] 加载产品数据
-[10:11:04]     共加载 16 款产品
-[10:11:04]     [3] 生成参数文本块
-[10:11:04]     生成 144 个文本块
-[10:11:04]     [4] 校验
-[10:11:04]     校验通过，16 款产品 × 9 主题 = 144 块
-[10:11:04]     [5] 写入输出: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_parameter_chunks.jsonl
-[10:11:04]     文件大小: 60580 字节
-[10:11:04]     =======================================================
-[10:11:04]     转换完成!
-[10:11:04]     产品数: 16
-[10:11:04]     文本块总数: 144
-[10:11:04]     输出文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_parameter_chunks.jsonl
-[10:11:04]     =======================================================
-[10:11:04]   [OK] json_to_chunks.py 完成
-[10:11:04] 
+[10:31:00]   执行: F:\sprint二\xiaomi-earphone-assistant\scripts\p2_6\json_to_chunks.py
+[10:31:00]     =======================================================
+[10:31:00]     P2-6 JSON → 参数文本块转换
+[10:31:00]     =======================================================
+[10:31:00]     [1] 检查输入文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\all_wearables.jsonl
+[10:31:00]     文件存在
+[10:31:00]     [2] 加载产品数据
+[10:31:00]     共加载 16 款产品
+[10:31:00]     [3] 生成参数文本块
+[10:31:00]     生成 144 个文本块
+[10:31:00]     [4] 校验
+[10:31:00]     校验通过，16 款产品 × 9 主题 = 144 块
+[10:31:00]     [5] 写入输出: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_parameter_chunks.jsonl
+[10:31:00]     文件大小: 60580 字节
+[10:31:00]     =======================================================
+[10:31:00]     转换完成!
+[10:31:00]     产品数: 16
+[10:31:00]     文本块总数: 144
+[10:31:00]     输出文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_parameter_chunks.jsonl
+[10:31:00]     =======================================================
+[10:31:00]   [OK] json_to_chunks.py 完成
+[10:31:00] 
 [STEP 2/5] 生成 FAQ 文本块 (96 条)
-[10:11:04]   执行: F:\sprint二\xiaomi-earphone-assistant\scripts\p2_6\word_faq_to_chunks.py
-[10:11:04]     =======================================================
-[10:11:04]     P2-14 Word → FAQ 文本块转换
-[10:11:04]     =======================================================
-[10:11:04]     [1] 检查输入文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\manuals\raw\P2-14_Wearable_FAQ_Compatible.docx
-[10:11:04]     文件存在
-[10:11:04]     [2] 读取 Word 文档
-[10:11:04]     共 536 个段落
-[10:11:04]     [3] 提取产品和问答
-[10:11:04]     发现 16 个产品标题
-[10:11:04]     B01 Xiaomi Smart Band 10 Pro NFC: 6 条问答
-[10:11:04]     B02 Xiaomi Smart Band 10: 6 条问答
-[10:11:04]     B03 Xiaomi Smart Band 9 Pro: 6 条问答
-[10:11:04]     B04 Xiaomi Smart Band 9: 6 条问答
-[10:11:04]     B05 Xiaomi Smart Band 9 Active: 6 条问答
-[10:11:04]     B06 Xiaomi Smart Band 8 Pro: 6 条问答
-[10:11:04]     B07 Xiaomi Smart Band 8: 6 条问答
-[10:11:04]     B08 Xiaomi Smart Band 8 Active: 6 条问答
-[10:11:04]     W01 Xiaomi Watch S4 41mm: 6 条问答
-[10:11:04]     W02 Xiaomi Watch S4: 6 条问答
-[10:11:04]     W03 REDMI Watch 5: 6 条问答
-[10:11:04]     W04 REDMI Watch 5 Lite: 6 条问答
-[10:11:04]     W05 REDMI Watch 5 Active: 6 条问答
-[10:11:04]     W06 Xiaomi Watch 2: 6 条问答
-[10:11:04]     W07 Xiaomi Watch 2 Pro: 6 条问答
-[10:11:04]     W08 Xiaomi Watch S3: 6 条问答
-[10:11:04]     合计: 16 款产品, 96 条问答
-[10:11:04]     [4] 校验数据完整性
-[10:11:04]     校验通过，0 错误
-[10:11:04]     [5] 构建文本块
-[10:11:04]     生成 96 个文本块
-[10:11:04]     [6] 写入输出: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl
-[10:11:04]     文件大小: 111036 字节
-[10:11:04]     =======================================================
-[10:11:04]     转换完成!
-[10:11:04]     产品数: 16
-[10:11:04]     问答总数: 96
-[10:11:04]     chunk_type 分布: {'manual_faq': 96}
-[10:11:04]     输出文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl
-[10:11:04]     =======================================================
-[10:11:04]   [OK] word_faq_to_chunks.py 完成
-[10:11:04] 
+[10:31:00]   执行: F:\sprint二\xiaomi-earphone-assistant\scripts\p2_6\word_faq_to_chunks.py
+[10:31:00]     =======================================================
+[10:31:00]     P2-14 Word → FAQ 文本块转换
+[10:31:00]     =======================================================
+[10:31:00]     [1] 检查输入文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\manuals\raw\P2-14_Wearable_FAQ_Compatible.docx
+[10:31:00]     文件存在
+[10:31:00]     [2] 读取 Word 文档
+[10:31:00]     共 536 个段落
+[10:31:00]     [3] 提取产品和问答
+[10:31:00]     发现 16 个产品标题
+[10:31:00]     B01 Xiaomi Smart Band 10 Pro NFC: 6 条问答
+[10:31:00]     B02 Xiaomi Smart Band 10: 6 条问答
+[10:31:00]     B03 Xiaomi Smart Band 9 Pro: 6 条问答
+[10:31:00]     B04 Xiaomi Smart Band 9: 6 条问答
+[10:31:00]     B05 Xiaomi Smart Band 9 Active: 6 条问答
+[10:31:00]     B06 Xiaomi Smart Band 8 Pro: 6 条问答
+[10:31:00]     B07 Xiaomi Smart Band 8: 6 条问答
+[10:31:00]     B08 Xiaomi Smart Band 8 Active: 6 条问答
+[10:31:00]     W01 Xiaomi Watch S4 41mm: 6 条问答
+[10:31:00]     W02 Xiaomi Watch S4: 6 条问答
+[10:31:00]     W03 REDMI Watch 5: 6 条问答
+[10:31:00]     W04 REDMI Watch 5 Lite: 6 条问答
+[10:31:00]     W05 REDMI Watch 5 Active: 6 条问答
+[10:31:00]     W06 Xiaomi Watch 2: 6 条问答
+[10:31:00]     W07 Xiaomi Watch 2 Pro: 6 条问答
+[10:31:00]     W08 Xiaomi Watch S3: 6 条问答
+[10:31:00]     合计: 16 款产品, 96 条问答
+[10:31:00]     [4] 校验数据完整性
+[10:31:00]     校验通过，0 错误
+[10:31:00]     [5] 构建文本块
+[10:31:00]     生成 96 个文本块
+[10:31:00]     [6] 写入输出: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl
+[10:31:00]     文件大小: 111036 字节
+[10:31:00]     =======================================================
+[10:31:00]     转换完成!
+[10:31:00]     产品数: 16
+[10:31:00]     问答总数: 96
+[10:31:00]     chunk_type 分布: {'manual_faq': 96}
+[10:31:00]     输出文件: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl
+[10:31:00]     =======================================================
+[10:31:00]   [OK] word_faq_to_chunks.py 完成
+[10:31:00] 
 [STEP 3/5] 读取并合并文本块
-[10:11:04]   参数块: 144 条
-[10:11:04]   FAQ块:   96 条
-[10:11:04]   合并写入: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_all_chunks.jsonl (240 条)
-[10:11:04] 
+[10:31:00]   参数块: 144 条
+[10:31:00]   FAQ块:   96 条
+[10:31:00]   合并写入: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_all_chunks.jsonl (240 条)
+[10:31:00] 
 [STEP 4/5] 全面校验
-[10:11:04] 
+[10:31:00] 
   参数块: 144 条 (预期 144)
-[10:11:04]   FAQ块:   96 条 (预期 96)
-[10:11:04]   合并后共计: 240 条 (预期 240)
-[10:11:04]   产品覆盖: 16/16 款
-[10:11:04]   [OK] 校验通过，0 错误
-[10:11:04] 
+[10:31:00]   FAQ块:   96 条 (预期 96)
+[10:31:00]   合并后共计: 240 条 (预期 240)
+[10:31:00]   产品覆盖: 16/16 款
+[10:31:00]   [OK] 校验通过，0 错误
+[10:31:00] 
 [STEP 5/5] 自动批准: 0 错误 + 0 警告，更新 FAQ 文本块 data_status (draft → approved)
-[10:11:04]   更新了 96 条 FAQ 文本块的 data_status
-[10:11:04]   已更新: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl
-[10:11:04] 
+[10:31:00]   更新了 96 条 FAQ 文本块的 data_status
+[10:31:00]   已更新: F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl
+[10:31:00] 
   生成校验报告...
-[10:11:04]   校验报告: F:\sprint二\xiaomi-earphone-assistant\docs\p2_6\validation_report.md
-[10:11:04] 
+[10:31:00]   校验报告: F:\sprint二\xiaomi-earphone-assistant\docs\p2_6\validation_report.md
+[10:31:00] 
 =======================================================
-[10:11:04]   流程完成: SUCCESS
-[10:11:04]   输出文件:
-[10:11:04]     - F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_parameter_chunks.jsonl (144 条)
-[10:11:04]     - F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl (96 条)
-[10:11:04]     - F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_all_chunks.jsonl (240 条)
-[10:11:04]     - F:\sprint二\xiaomi-earphone-assistant\docs\p2_6\validation_report.md
-[10:11:04]     - F:\sprint二\xiaomi-earphone-assistant\docs\p2_6\run_log.txt
-[10:11:04] =======================================================
+[10:31:00]   流程完成: SUCCESS
+[10:31:00]   输出文件:
+[10:31:00]     - F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_parameter_chunks.jsonl (144 条)
+[10:31:00]     - F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_manualfaq_chunks.jsonl (96 条)
+[10:31:00]     - F:\sprint二\xiaomi-earphone-assistant\data\wearables\processed\chunks\wearable_all_chunks.jsonl (240 条)
+[10:31:00]     - F:\sprint二\xiaomi-earphone-assistant\docs\p2_6\validation_report.md
+[10:31:00]     - F:\sprint二\xiaomi-earphone-assistant\docs\p2_6\run_log.txt
+[10:31:00] =======================================================
 
---- 总耗时: 0.5 秒 ---
+--- 总耗时: 0.3 秒 ---

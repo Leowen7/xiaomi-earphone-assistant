@@ -246,9 +246,7 @@ def validate_all(param_chunks, faq_chunks, logger):
                     f"来源 URL 解析失败: {url}"
                 )
 
-
-
-        return errors, warnings
+    return errors, warnings
 
 
 # ===========================================================
