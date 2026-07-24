@@ -1,0 +1,869 @@
+{
+  "artifact_validation": {
+    "errors": [],
+    "warnings": [],
+    "manifest": {
+      "knowledge_base": "wearables",
+      "version": "p2_7",
+      "embedding_model": "BAAI/bge-small-zh-v1.5",
+      "embedding_dimension": 512,
+      "index_type": "IndexFlatIP",
+      "vector_count": 240,
+      "metadata_count": 240,
+      "product_count": 16,
+      "product_ids": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "W01",
+        "W02",
+        "W03",
+        "W04",
+        "W05",
+        "W06",
+        "W07",
+        "W08"
+      ],
+      "parameter_chunk_count": 144,
+      "faq_chunk_count": 96,
+      "source_file": "data\\wearables\\processed\\chunks\\wearable_all_chunks.jsonl",
+      "source_sha256": "709d80a0000ca77378886934ecaee07a5a87e99d418b53006f638fd27eb88bfb",
+      "index_file": "vector_store\\wearables\\wearable.faiss",
+      "metadata_file": "vector_store\\wearables\\wearable_metadata.jsonl",
+      "normalized_embeddings": true,
+      "similarity": "cosine_via_inner_product",
+      "created_at_utc": "2026-07-23T12:45:18.351432+00:00",
+      "build_elapsed_seconds": 11.741
+    },
+    "metadata_count": 240
+  },
+  "summary": {
+    "retrieval_cases_total": 15,
+    "retrieval_cases_passed": 15,
+    "retrieval_cases_failed": 0,
+    "invalid_input_tests_total": 4,
+    "invalid_input_tests_passed": 4,
+    "all_passed": true
+  },
+  "retrieval_cases": [
+    {
+      "case_id": "FAQ01",
+      "description": "B02连接绑定FAQ",
+      "query": "Xiaomi Smart Band 10怎么连接手机？",
+      "filters": {
+        "product_id": "B02",
+        "device_type": null,
+        "topic": "连接绑定",
+        "chunk_type": "manual_faq",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true,
+        "faq_has_qa_id": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.809101,
+          "vector_id": 150,
+          "chunk_id": "B02_QA_001",
+          "qa_id": "B02_QA_001",
+          "product_id": "B02",
+          "product_name": "Xiaomi Smart Band 10",
+          "device_type": "smart_band",
+          "product_category": "smart_band",
+          "chunk_type": "manual_faq",
+          "topic": "连接绑定",
+          "text": "Xiaomi Smart Band 10第一次使用时如何连接手机？\n下载并打开 Mi Fitness App，登录小米账号并按提示授予权限。在“设备”页点击“+”→“添加设备”，把手环放在手机附近，选择与手环蓝牙地址后四位一致的设备，并在手环上点击“√”确认。iPhone用户还需在系统弹窗中确认蓝牙配对。该型号不支持 Zepp Life App。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-579104",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 6.559
+    },
+    {
+      "case_id": "FAQ02",
+      "description": "B03充电FAQ",
+      "query": "Xiaomi Smart Band 9 Pro怎么充电？",
+      "filters": {
+        "product_id": "B03",
+        "device_type": null,
+        "topic": "充电续航",
+        "chunk_type": "manual_faq",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "any_keyword_found": true,
+        "faq_has_qa_id": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.854373,
+          "vector_id": 157,
+          "chunk_id": "B03_QA_002",
+          "qa_id": "B03_QA_002",
+          "product_id": "B03",
+          "product_name": "Xiaomi Smart Band 9 Pro",
+          "device_type": "smart_band",
+          "product_category": "smart_band",
+          "chunk_type": "manual_faq",
+          "topic": "充电续航",
+          "text": "Xiaomi Smart Band 9 Pro应该怎样充电？\n建议使用标准5V、至少500mA的USB充电器和该型号专用充电线。先检查手环与充电线金属触点是否干净、接触良好，并保证环境温度不低于约10℃。官方说明充电约需1小时；显示100%后可继续保持连接约10分钟。若长时间无响应，应联系售后检测。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-513037",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0166
+    },
+    {
+      "case_id": "FAQ03",
+      "description": "W03系统操作FAQ",
+      "query": "REDMI Watch 5怎么恢复出厂设置？",
+      "filters": {
+        "product_id": "W03",
+        "device_type": null,
+        "topic": "系统操作",
+        "chunk_type": "manual_faq",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "any_keyword_found": true,
+        "faq_has_qa_id": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.850545,
+          "vector_id": 206,
+          "chunk_id": "W03_QA_003",
+          "qa_id": "W03_QA_003",
+          "product_id": "W03",
+          "product_name": "REDMI Watch 5",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "manual_faq",
+          "topic": "系统操作",
+          "text": "REDMI Watch 5如何重启、关机或恢复出厂设置？\n无法添加或连接时，可长按手表电源键约3秒，在系统操作界面选择恢复出厂设置后重新添加。绑定到不同小米账号前也需要重置；若只是同一账号更换手机，可使用连接新手机功能并重新绑定。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-521474",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0141
+    },
+    {
+      "case_id": "FAQ04",
+      "description": "W02通知FAQ",
+      "query": "Xiaomi Watch S4为什么收不到应用通知？",
+      "filters": {
+        "product_id": "W02",
+        "device_type": null,
+        "topic": "通知功能",
+        "chunk_type": "manual_faq",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "any_keyword_found": true,
+        "faq_has_qa_id": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.849467,
+          "vector_id": 201,
+          "chunk_id": "W02_QA_004",
+          "qa_id": "W02_QA_004",
+          "product_id": "W02",
+          "product_name": "Xiaomi Watch S4",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "manual_faq",
+          "topic": "通知功能",
+          "text": "Xiaomi Watch S4如何开启应用通知，收不到通知怎么办？\n打开 Mi Fitness App，进入“设备”→“通知与通话”或“应用通知”，开启全部通知同步或选择指定应用。手机系统也必须允许 Mi Fitness 读取通知并在后台运行。若仍收不到，请检查蓝牙连接、勿扰模式、睡眠模式、“仅佩戴时通知”以及手机是否限制App自启动。需要通知到达时亮屏，可在通知设置中开启“唤醒屏幕”。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-517264",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0135
+    },
+    {
+      "case_id": "FAQ05",
+      "description": "W05表盘FAQ",
+      "query": "REDMI Watch 5 Active怎么更换表盘？",
+      "filters": {
+        "product_id": "W05",
+        "device_type": null,
+        "topic": "表盘功能",
+        "chunk_type": "manual_faq",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true,
+        "faq_has_qa_id": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.8492,
+          "vector_id": 220,
+          "chunk_id": "W05_QA_005",
+          "qa_id": "W05_QA_005",
+          "product_id": "W05",
+          "product_name": "REDMI Watch 5 Active",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "manual_faq",
+          "topic": "表盘功能",
+          "text": "REDMI Watch 5 Active如何更换、下载或删除表盘？\n可长按REDMI Watch 5 Active当前表盘进入选择界面，或在手表“设置”中的表盘选项切换已有表盘。下载新表盘时，在 Mi Fitness App 中进入“设备”→“表盘市场/管理表盘”，选择并安装。已下载表盘通常可在App或手表表盘管理界面删除，但系统预置表盘可能不支持删除。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-483511",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0086
+    },
+    {
+      "case_id": "FAQ06",
+      "description": "W08健康监测FAQ",
+      "query": "Xiaomi Watch S3心率测量不准怎么办？",
+      "filters": {
+        "product_id": "W08",
+        "device_type": null,
+        "topic": "健康监测",
+        "chunk_type": "manual_faq",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "any_keyword_found": true,
+        "faq_has_qa_id": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.849248,
+          "vector_id": 239,
+          "chunk_id": "W08_QA_006",
+          "qa_id": "W08_QA_006",
+          "product_id": "W08",
+          "product_name": "Xiaomi Watch S3",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "manual_faq",
+          "topic": "健康监测",
+          "text": "Xiaomi Watch S3心率或睡眠监测不准确时应该怎样处理？\n心率数据偏差可能来自佩戴松动、汗水或污渍、低温、毛发、肤色和纹身。测量时把手表佩戴在腕骨上方约一指位置，保持贴合且不滑动。若异常，清洁传感器并更新固件。心率、血氧和睡眠结果仅作日常参考。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-91530",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0125
+    },
+    {
+      "case_id": "PAR01",
+      "description": "B02电池参数",
+      "query": "Xiaomi Smart Band 10典型续航多少天？",
+      "filters": {
+        "product_id": "B02",
+        "device_type": null,
+        "topic": "battery",
+        "chunk_type": "battery",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.90794,
+          "vector_id": 11,
+          "chunk_id": "B02_battery",
+          "qa_id": null,
+          "product_id": "B02",
+          "product_name": "Xiaomi Smart Band 10",
+          "device_type": "smart_band",
+          "product_category": "smart_band",
+          "chunk_type": "battery",
+          "topic": "battery",
+          "text": "Xiaomi Smart Band 10典型续航为21天。 重度续航为8天。 充电时间约为60分钟。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-10/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0106
+    },
+    {
+      "case_id": "PAR02",
+      "description": "W02显示参数",
+      "query": "Xiaomi Watch S4屏幕最高亮度是多少？",
+      "filters": {
+        "product_id": "W02",
+        "device_type": null,
+        "topic": "display",
+        "chunk_type": "display",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.840015,
+          "vector_id": 82,
+          "chunk_id": "W02_display",
+          "qa_id": null,
+          "product_id": "W02",
+          "product_name": "Xiaomi Watch S4",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "display",
+          "topic": "display",
+          "text": "Xiaomi Watch S4配备1.43英寸AMOLED显示屏。 屏幕分辨率为466×466。 最高亮度可达2200尼特。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-watch-s4/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0095
+    },
+    {
+      "case_id": "PAR03",
+      "description": "W05定位参数",
+      "query": "REDMI Watch 5 Active是否需要连接手机定位？",
+      "filters": {
+        "product_id": "W05",
+        "device_type": null,
+        "topic": "positioning",
+        "chunk_type": "positioning",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.850609,
+          "vector_id": 111,
+          "chunk_id": "W05_positioning",
+          "qa_id": null,
+          "product_id": "W05",
+          "product_name": "REDMI Watch 5 Active",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "positioning",
+          "topic": "positioning",
+          "text": "REDMI Watch 5 Active不支持独立GNSS定位，运动轨迹需要使用手机定位。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-483511/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0111
+    },
+    {
+      "case_id": "PAR04",
+      "description": "W06兼容性参数",
+      "query": "Xiaomi Watch 2支持iPhone吗？",
+      "filters": {
+        "product_id": "W06",
+        "device_type": null,
+        "topic": "compatibility",
+        "chunk_type": "compatibility",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.812308,
+          "vector_id": 124,
+          "chunk_id": "W06_compatibility",
+          "qa_id": null,
+          "product_id": "W06",
+          "product_name": "Xiaomi Watch 2",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "compatibility",
+          "topic": "compatibility",
+          "text": "Xiaomi Watch 2兼容系统：仅支持Android 8.0及以上且具备GMS/Google Play Store的智能手机；不支持iOS、Android Go及无Google Play Store的设备。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-watch-2/specs/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0111
+    },
+    {
+      "case_id": "PAR05",
+      "description": "B07防水参数",
+      "query": "Xiaomi Smart Band 8支持5ATM防水吗？",
+      "filters": {
+        "product_id": "B07",
+        "device_type": null,
+        "topic": "design",
+        "chunk_type": "design",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.7342,
+          "vector_id": 62,
+          "chunk_id": "B07_design",
+          "qa_id": null,
+          "product_id": "B07",
+          "product_name": "Xiaomi Smart Band 8",
+          "device_type": "smart_band",
+          "product_category": "smart_band",
+          "chunk_type": "design",
+          "topic": "design",
+          "text": "Xiaomi Smart Band 8重量约为27克。 尺寸为48 × 22.5 × 10.99毫米。 表带材质为TPU。 Xiaomi Smart Band 8支持5ATM防水。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.01
+    },
+    {
+      "case_id": "PAR06",
+      "description": "W07通信参数",
+      "query": "Xiaomi Watch 2 Pro是否支持NFC？",
+      "filters": {
+        "product_id": "W07",
+        "device_type": null,
+        "topic": "communication",
+        "chunk_type": "communication",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "top1_product_match": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.870195,
+          "vector_id": 130,
+          "chunk_id": "W07_communication",
+          "qa_id": null,
+          "product_id": "W07",
+          "product_name": "Xiaomi Watch 2 Pro",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "communication",
+          "topic": "communication",
+          "text": "Xiaomi Watch 2 Pro支持蓝牙通话功能。 Xiaomi Watch 2 Pro支持NFC功能。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-watch-2-pro/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0105
+    },
+    {
+      "case_id": "GEN01",
+      "description": "智能手表类别过滤",
+      "query": "支持NFC的智能手表",
+      "filters": {
+        "product_id": null,
+        "device_type": "smart_watch",
+        "topic": "communication",
+        "chunk_type": "communication",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.752198,
+          "vector_id": 121,
+          "chunk_id": "W06_communication",
+          "qa_id": null,
+          "product_id": "W06",
+          "product_name": "Xiaomi Watch 2",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "communication",
+          "topic": "communication",
+          "text": "Xiaomi Watch 2支持蓝牙通话功能。 Xiaomi Watch 2支持NFC功能。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-watch-2/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        },
+        {
+          "rank": 2,
+          "score": 0.748256,
+          "vector_id": 139,
+          "chunk_id": "W08_communication",
+          "qa_id": null,
+          "product_id": "W08",
+          "product_name": "Xiaomi Watch S3",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "communication",
+          "topic": "communication",
+          "text": "Xiaomi Watch S3支持蓝牙通话功能。 Xiaomi Watch S3支持NFC功能。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-watch-s3/specs/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        },
+        {
+          "rank": 3,
+          "score": 0.739806,
+          "vector_id": 85,
+          "chunk_id": "W02_communication",
+          "qa_id": null,
+          "product_id": "W02",
+          "product_name": "Xiaomi Watch S4",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "communication",
+          "topic": "communication",
+          "text": "Xiaomi Watch S4支持蓝牙通话功能。 Xiaomi Watch S4支持NFC功能。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-watch-s4/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0095
+    },
+    {
+      "case_id": "GEN02",
+      "description": "智能手环类别过滤",
+      "query": "支持5ATM防水的智能手环",
+      "filters": {
+        "product_id": null,
+        "device_type": "smart_band",
+        "topic": "design",
+        "chunk_type": "design",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "all_keywords_found": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.563579,
+          "vector_id": 62,
+          "chunk_id": "B07_design",
+          "qa_id": null,
+          "product_id": "B07",
+          "product_name": "Xiaomi Smart Band 8",
+          "device_type": "smart_band",
+          "product_category": "smart_band",
+          "chunk_type": "design",
+          "topic": "design",
+          "text": "Xiaomi Smart Band 8重量约为27克。 尺寸为48 × 22.5 × 10.99毫米。 表带材质为TPU。 Xiaomi Smart Band 8支持5ATM防水。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        },
+        {
+          "rank": 2,
+          "score": 0.55064,
+          "vector_id": 17,
+          "chunk_id": "B02_design",
+          "qa_id": null,
+          "product_id": "B02",
+          "product_name": "Xiaomi Smart Band 10",
+          "device_type": "smart_band",
+          "product_category": "smart_band",
+          "chunk_type": "design",
+          "topic": "design",
+          "text": "Xiaomi Smart Band 10重量约为15.95克。 尺寸为46.57 × 22.54 × 10.95毫米。 表带材质为TPU。 Xiaomi Smart Band 10支持5ATM防水。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-10/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        },
+        {
+          "rank": 3,
+          "score": 0.548267,
+          "vector_id": 53,
+          "chunk_id": "B06_design",
+          "qa_id": null,
+          "product_id": "B06",
+          "product_name": "Xiaomi Smart Band 8 Pro",
+          "device_type": "smart_band",
+          "product_category": "smart_band",
+          "chunk_type": "design",
+          "topic": "design",
+          "text": "Xiaomi Smart Band 8 Pro重量约为22.5克。 尺寸为46 × 33.35 × 9.99毫米。 表带材质为TPU。 Xiaomi Smart Band 8 Pro支持5ATM防水。",
+          "source_url": "https://www.mi.com/global/product/xiaomi-smart-band-8-pro/",
+          "data_status": "approved",
+          "source_domain_verified": false,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0115
+    },
+    {
+      "case_id": "GEN03",
+      "description": "手表通知FAQ综合检索",
+      "query": "手表收不到应用通知怎么办？",
+      "filters": {
+        "product_id": null,
+        "device_type": "smart_watch",
+        "topic": "通知功能",
+        "chunk_type": "manual_faq",
+        "top_k": 3
+      },
+      "passed": true,
+      "checks": {
+        "has_results": true,
+        "rank_is_sequential": true,
+        "required_fields_complete": true,
+        "device_type_filter_enforced": true,
+        "topic_filter_enforced": true,
+        "chunk_type_filter_enforced": true,
+        "any_keyword_found": true,
+        "faq_has_qa_id": true
+      },
+      "details": [],
+      "results": [
+        {
+          "rank": 1,
+          "score": 0.793425,
+          "vector_id": 195,
+          "chunk_id": "W01_QA_004",
+          "qa_id": "W01_QA_004",
+          "product_id": "W01",
+          "product_name": "Xiaomi Watch S4 41mm",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "manual_faq",
+          "topic": "通知功能",
+          "text": "Xiaomi Watch S4 41mm如何开启应用通知，收不到通知怎么办？\n打开 Mi Fitness App→“设备”→“通知与通话”→“应用通知”，选择镜像全部手机通知或指定应用，并确保手机系统已授予相应通知权限。默认收到通知时手表可能只振动；需要自动亮屏时，在应用通知中开启“唤醒屏幕”。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-608032",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        },
+        {
+          "rank": 2,
+          "score": 0.771182,
+          "vector_id": 237,
+          "chunk_id": "W08_QA_004",
+          "qa_id": "W08_QA_004",
+          "product_id": "W08",
+          "product_name": "Xiaomi Watch S3",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "manual_faq",
+          "topic": "通知功能",
+          "text": "Xiaomi Watch S3如何开启应用通知，收不到通知怎么办？\n在 Mi Fitness App 中开启消息通知，并保证手机通知栏能够正常显示目标应用消息。手机网络、蓝牙连接和手表连接状态必须正常，同时允许 Mi Fitness 读取通知和后台运行。若仍收不到，请检查App消息通知开关、勿扰模式和手机系统权限。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-91530",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        },
+        {
+          "rank": 3,
+          "score": 0.760262,
+          "vector_id": 219,
+          "chunk_id": "W05_QA_004",
+          "qa_id": "W05_QA_004",
+          "product_id": "W05",
+          "product_name": "REDMI Watch 5 Active",
+          "device_type": "smart_watch",
+          "product_category": "smart_watch",
+          "chunk_type": "manual_faq",
+          "topic": "通知功能",
+          "text": "REDMI Watch 5 Active如何开启应用通知，收不到通知怎么办？\n在 Mi Fitness App 的“设备”页面开启“应用通知”，并可选择仅锁屏时接收、收到通知时亮屏、仅佩戴时通知等选项。手机系统也需允许目标应用和 Mi Fitness 显示、读取通知。若没有来电或消息提醒，检查蓝牙、勿扰、睡眠模式及后台权限。",
+          "source_url": "https://www.mi.com/global/support/faq/details/KA-483511",
+          "data_status": "approved",
+          "source_domain_verified": true,
+          "source_content_verified": false
+        }
+      ],
+      "elapsed_seconds": 0.0106
+    }
+  ],
+  "invalid_input_tests": [
+    {
+      "test_id": "ERR01",
+      "description": "空查询应抛出ValueError",
+      "passed": true,
+      "actual_exception": "ValueError: query必须是非空字符串"
+    },
+    {
+      "test_id": "ERR02",
+      "description": "top_k=0应抛出ValueError",
+      "passed": true,
+      "actual_exception": "ValueError: top_k必须在1到20之间，实际为0"
+    },
+    {
+      "test_id": "ERR03",
+      "description": "未知product_id应抛出ValueError",
+      "passed": true,
+      "actual_exception": "ValueError: 未知product_id：UNKNOWN；可用值：['B01', 'B02', 'B03', 'B04', 'B05', 'B06', 'B07', 'B08', 'W01', 'W02', 'W03', 'W04', 'W05', 'W06', 'W07', 'W08']"
+    },
+    {
+      "test_id": "ERR04",
+      "description": "未知topic应抛出ValueError",
+      "passed": true,
+      "actual_exception": "ValueError: 未知topic：不存在的主题；可用值：['basic_info', 'battery', 'communication', 'compatibility', 'design', 'display', 'health', 'positioning', 'sports', '健康监测', '充电续航', '兼容性', '故障处理', '系统操作', '表盘功能', '连接绑定', '通知功能']"
+    }
+  ],
+  "elapsed_seconds": 6.722
+}
