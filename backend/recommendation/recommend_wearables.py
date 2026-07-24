@@ -60,6 +60,154 @@ BOOLEAN_FIELDS = {
 }
 
 
+# ========== 预算范围解析 ==========
+def normalize_budget_text(value) -> str:
+    """统一前端预算文本中的横线、空格和货币写法。"""
+    if value is None:
+        return ""
+    return (
+        str(value)
+        .strip()
+        .replace("–", "-")
+        .replace("—", "-")
+        .replace("－", "-")
+        .replace("～", "-")
+        .replace("~", "-")
+        .replace("Ａ＄", "A$")
+        .replace("A＄", "A$")
+        .replace("ａ＄", "A$")
+        .replace("，", ",")
+    )
+
+
+def infer_budget_currency(value=None, currency=None) -> str | None:
+    """根据显式币种或预算文本推断币种。
+
+    前端穿戴设备预算使用 A$，因此即使服务层没有单独传 currency，
+    也能从 ``A$50-120``、``AUD 100以下`` 或 ``100澳元以上`` 中识别 AUD。
+    """
+    if currency:
+        return str(currency).strip().upper()
+
+    text = normalize_budget_text(value).lower()
+    if any(token in text for token in ("a$", "aud", "澳元")):
+        return "AUD"
+    if any(token in text for token in ("cny", "rmb", "人民币", "￥", "¥", "元")):
+        return "CNY"
+    if any(token in text for token in ("usd", "美元", "us$")):
+        return "USD"
+    return None
+
+
+def parse_budget_range(value) -> tuple[float | None, float | None] | None:
+    """解析人民币或澳元预算区间。
+
+    支持示例：
+      - A$50以下
+      - A$50-120
+      - A$120以上
+      - 500元以内
+      - 500-1000元
+
+    返回 ``(min_budget, max_budget)``；None 表示该端不设限制。
+    只有文本明确包含货币或预算语义时才解析，避免把 41mm、
+    150种运动模式等普通数字误判成预算。
+    """
+    text = normalize_budget_text(value)
+    if not text:
+        return None
+
+    lower = text.lower()
+    has_budget_context = any(
+        token in lower
+        for token in (
+            "元", "预算", "价格", "cny", "rmb", "￥", "¥",
+            "a$", "aud", "澳元",
+        )
+    )
+    if not has_budget_context:
+        return None
+
+    compact = re.sub(r"\s+", "", text)
+
+    # 区间：500-1000元
+    match = re.search(
+        r"(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*(?:元|cny|rmb|aud|澳元)?",
+        compact,
+        flags=re.IGNORECASE,
+    )
+    if match:
+        low = float(match.group(1))
+        high = float(match.group(2))
+        if low > high:
+            low, high = high, low
+        return low, high
+
+    # 上限：500元以内 / 500元以下 / 不超过500元
+    match = re.search(
+        r"(?:不超过|低于|小于)?\s*(\d+(?:\.\d+)?)\s*(?:元|cny|rmb|aud|澳元)?\s*(?:以内|以下|及以下|以内均可)?",
+        compact,
+        flags=re.IGNORECASE,
+    )
+    if match and any(token in compact for token in ("以内", "以下", "及以下", "不超过", "低于", "小于")):
+        return None, float(match.group(1))
+
+    # 下限：2000元以上 / 2000元起 / 不低于2000元
+    match = re.search(
+        r"(?:不低于|高于|大于)?\s*(\d+(?:\.\d+)?)\s*(?:元|cny|rmb|aud|澳元)?\s*(?:以上|及以上|起)?",
+        compact,
+        flags=re.IGNORECASE,
+    )
+    if match and any(token in compact for token in ("以上", "及以上", "起", "不低于", "高于", "大于")):
+        return float(match.group(1)), None
+
+    return None
+
+
+def resolve_budget_range(user_demand: str = "", min_budget=None,
+                         max_budget=None, budget_text=None
+                         ) -> tuple[float | None, float | None]:
+    """解析最终预算区间。
+
+    优先级：显式 budget_text → user_demand 中的预算文本 → 数值参数。
+    这样既兼容现有调用，也能直接识别前端传入的“500-1000元”。
+    """
+    parsed = parse_budget_range(budget_text)
+    if parsed is None:
+        parsed = parse_budget_range(user_demand)
+    if parsed is not None:
+        return parsed
+
+    low = float(min_budget) if isinstance(min_budget, (int, float)) else None
+    high = float(max_budget) if isinstance(max_budget, (int, float)) else None
+    if low is not None and high is not None and low > high:
+        low, high = high, low
+    return low, high
+
+
+def format_budget_range(min_budget=None, max_budget=None, currency=None) -> str:
+    """生成用于推荐理由和诊断信息的预算区间文本。"""
+    code = str(currency or "").strip().upper()
+    prefix = {
+        "AUD": "A$",
+        "CNY": "¥",
+        "USD": "$",
+        "EUR": "€",
+    }.get(code, "")
+    suffix = "" if prefix else (f" {code}" if code else "")
+
+    if isinstance(min_budget, (int, float)) and isinstance(max_budget, (int, float)):
+        return (
+            f"{prefix}{_format_money(min_budget)}-"
+            f"{_format_money(max_budget)}{suffix}"
+        )
+    if isinstance(max_budget, (int, float)):
+        return f"{prefix}{_format_money(max_budget)}{suffix}以下"
+    if isinstance(min_budget, (int, float)):
+        return f"{prefix}{_format_money(min_budget)}{suffix}以上"
+    return "未设置"
+
+
 # ============================================================
 # 1. 数据加载
 # ============================================================
@@ -412,7 +560,8 @@ def calc_scene_score(product: dict, user_demand: str) -> tuple[int, list[str]]:
 # ============================================================
 
 def generate_match_reasons(product: dict, max_budget=None, currency=None,
-                          hard_filters=None, user_demand="") -> list[str]:
+                          hard_filters=None, user_demand="",
+                          min_budget=None, budget_text=None) -> list[str]:
     """生成恰好 3 条客观中文推荐理由。
 
     优先顺序：
@@ -443,14 +592,32 @@ def generate_match_reasons(product: dict, max_budget=None, currency=None,
     # 第一优先级 P0：用户明确提出 + 数据直接验证
     # ============================================================
 
-    # 价格在预算内
+    # 价格在预算范围内。支持“500-1000元”双边区间，不再只判断上限。
+    resolved_min, resolved_max = resolve_budget_range(
+        user_demand=user_demand,
+        min_budget=min_budget,
+        max_budget=max_budget,
+        budget_text=budget_text,
+    )
     price = product.get("official_price")
     cur = product.get("currency") or currency or "AUD"
-    if isinstance(price, (int, float)):
-        if max_budget and isinstance(max_budget, (int, float)) and price <= max_budget:
-            add(0, f"价格{_format_money(price)} {cur}，在{int(max_budget)} {cur}预算内")
-        elif max_budget and isinstance(max_budget, (int, float)):
-            add(0, f"价格{_format_money(price)} {cur}")
+    currency_matches = currency is None or cur == currency
+    has_budget = resolved_min is not None or resolved_max is not None
+    if isinstance(price, (int, float)) and has_budget and currency_matches:
+        lower_ok = resolved_min is None or price >= resolved_min
+        upper_ok = resolved_max is None or price <= resolved_max
+        if lower_ok and upper_ok:
+            price_display = {
+                "AUD": "A$",
+                "CNY": "¥",
+                "USD": "$",
+                "EUR": "€",
+            }.get(str(cur).upper(), f"{cur} ")
+            add(
+                0,
+                f"价格{price_display}{_format_money(price)}，符合"
+                f"{format_budget_range(resolved_min, resolved_max, cur)}预算",
+            )
 
     # 蓝牙通话（用户明确提"蓝牙通话"且产品支持）
     if any(k in user_demand for k in ["蓝牙通话", "打电话", "手腕接听"]):
@@ -801,7 +968,8 @@ def sort_candidates(candidates: list[dict]) -> list[dict]:
 
 def _filter_and_score(products: list[dict], user_demand: str, user_device: str,
                      hard_filters: list[str],
-                     max_budget=None, currency=None
+                     max_budget=None, currency=None,
+                     min_budget=None, budget_text=None
                      ) -> tuple[list[dict], dict[str, dict], list[tuple[dict, list[str]]], list[str], str | None]:
     """阶段一：系统兼容 → 硬过滤 → 价格筛选 → 人群/场景打分。
 
@@ -831,12 +999,21 @@ def _filter_and_score(products: list[dict], user_demand: str, user_device: str,
             if not is_compatible_with_device(p, user_device):
                 continue
             missing = [expr for expr in hard_filters
-                       if not evaluate_hard_filter(p, expr)]
+                    if not evaluate_hard_filter(p, expr)]
             if 0 < len(missing) <= 1:
                 near_candidate_pool.append((p, missing))
 
+    # 预算是硬过滤：同时支持下限与上限。
+    # 旧代码只判断 price <= max_budget，导致 A$215 也会进入“500-1000”结果。
+    resolved_min, resolved_max = resolve_budget_range(
+        user_demand=user_demand,
+        min_budget=min_budget,
+        max_budget=max_budget,
+        budget_text=budget_text,
+    )
     budget_near_pid: str | None = None
-    if isinstance(max_budget, (int, float)) and currency:
+    has_budget = resolved_min is not None or resolved_max is not None
+    if has_budget:
         kept: list[dict] = []
         for p in full_pass:
             price = p.get("official_price")
@@ -845,10 +1022,14 @@ def _filter_and_score(products: list[dict], user_demand: str, user_device: str,
                 if budget_near_pid is None:
                     budget_near_pid = str(p.get("product_id"))
                 continue
-            if cur != currency:
+            # 指定币种时必须严格一致，避免把不同币种的数字直接比较。
+            if currency and cur != currency:
                 continue
-            if price <= max_budget:
-                kept.append(p)
+            if resolved_min is not None and price < resolved_min:
+                continue
+            if resolved_max is not None and price > resolved_max:
+                continue
+            kept.append(p)
         full_pass = kept
 
     scored: list[dict] = []
@@ -937,6 +1118,8 @@ def _build_expected_candidates(scored: list[dict],
                                currency=None,
                                hard_filters=None,
                                user_demand: str = "",
+                               min_budget=None,
+                               budget_text=None,
                                ) -> tuple[list[dict], str | None, list[str]]:
     """阶段三：综合排序 → 生成 expected_candidates 与预算型 near_match。
 
@@ -952,6 +1135,7 @@ def _build_expected_candidates(scored: list[dict],
         reasons = generate_match_reasons(
             c["product"], max_budget=max_budget, currency=currency,
             hard_filters=hard_filters, user_demand=user_demand,
+            min_budget=min_budget, budget_text=budget_text,
         )
         expected.append({
             "product_id": pid,
@@ -962,7 +1146,7 @@ def _build_expected_candidates(scored: list[dict],
 
 def recommend(user_demand: str, user_device: str, hard_filters: list[str],
               max_budget=None, currency=None, products=None,
-              top_k: int = 3) -> dict:
+              top_k: int = 3, min_budget=None, budget_text=None) -> dict:
     """主推荐函数（编排三阶段，与耳机 recommend_products 接口对齐）。
 
     参数：
@@ -985,6 +1169,21 @@ def recommend(user_demand: str, user_device: str, hard_filters: list[str],
     if user_device not in VALID_USER_DEVICES:
         return {"success": False, "error": f"未知 user_device：{user_device}"}
 
+    # 穿戴设备前端使用 A$。即使服务层只传 budget_text 而遗漏 currency，
+    # 也从预算文本中自动识别 AUD，防止跨币种直接比较。
+    currency = infer_budget_currency(
+        budget_text if budget_text not in (None, "") else user_demand,
+        currency,
+    )
+
+    # 前端可能只把预算文本拼进 user_demand；这里统一解析成双边区间。
+    resolved_min, resolved_max = resolve_budget_range(
+        user_demand=user_demand,
+        min_budget=min_budget,
+        max_budget=max_budget,
+        budget_text=budget_text,
+    )
+
     # 阶段一：系统兼容 + 硬过滤 + 价格 + 打分
     scored, scoring_summary, near_candidate_pool, excluded_compat_notes, budget_near_pid = \
         _filter_and_score(
@@ -992,15 +1191,18 @@ def recommend(user_demand: str, user_device: str, hard_filters: list[str],
             user_demand=user_demand,
             user_device=user_device,
             hard_filters=hard_filters,
-            max_budget=max_budget,
+            max_budget=resolved_max,
             currency=currency,
+            min_budget=resolved_min,
+            budget_text=budget_text,
         )
 
     # 阶段三：排序 + 生成 expected（按耳机的三层稳定排序）
     # 注意：expected 保留全部候选用于 near_match 逻辑；top_k 仅截断返回
     all_expected, _, _ = _build_expected_candidates(
-        scored, max_budget=max_budget, currency=currency,
+        scored, max_budget=resolved_max, currency=currency,
         hard_filters=hard_filters, user_demand=user_demand,
+        min_budget=resolved_min, budget_text=budget_text,
     )
 
     # expected_candidates 始终保留完整硬过滤候选集合；
@@ -1011,7 +1213,8 @@ def recommend(user_demand: str, user_device: str, hard_filters: list[str],
     budget_unmet: list[str] = []
     if budget_near_pid is not None:
         budget_unmet = [
-            f"official_price=null，价格未知，无法确认是否满足{int(max_budget)} {currency}预算"
+            "official_price=null，价格未知，无法确认是否满足"
+            f"{format_budget_range(resolved_min, resolved_max, currency)}预算"
         ]
     near_match_pid, feature_unmet = _select_near_match(
         all_expected, near_candidate_pool, budget_near_pid,
@@ -1058,6 +1261,11 @@ def recommend(user_demand: str, user_device: str, hard_filters: list[str],
         "unmet_conditions": unmet_conditions,
         "user_device": user_device,
         "hard_filter_applied": list(hard_filters),
+        "budget_applied": {
+            "min": resolved_min,
+            "max": resolved_max,
+            "currency": currency,
+        },
         "scoring_summary": scoring_summary,
     }
 
