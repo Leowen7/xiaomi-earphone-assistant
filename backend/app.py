@@ -25,6 +25,13 @@ def create_app(testing: bool = False) -> Flask:
     app.json.ensure_ascii = False
 
     CORS(app, resources={r"/api/*": {"origins": "*"}})
+    @app.after_request
+    def ensure_utf8_json(response):
+        if response.mimetype == "application/json":
+            response.headers["Content-Type"] = (
+                "application/json; charset=utf-8"
+            )
+        return response
 
     for blueprint in ALL_BLUEPRINTS:
         app.register_blueprint(blueprint)

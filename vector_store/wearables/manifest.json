@@ -33,6 +33,6 @@
   "metadata_file": "vector_store\\wearables\\wearable_metadata.jsonl",
   "normalized_embeddings": true,
   "similarity": "cosine_via_inner_product",
-  "created_at_utc": "2026-07-23T12:45:18.351432+00:00",
-  "build_elapsed_seconds": 11.741
+  "created_at_utc": "2026-07-23T13:45:19.516063+00:00",
+  "build_elapsed_seconds": 10.606
 }
