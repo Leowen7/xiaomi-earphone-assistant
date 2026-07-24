@@ -3,59 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小米智能助手</title>
+    <title>小米智能穿戴设备助手</title>
     <style>
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
             font-family: -apple-system, BlinkMacSystemFont, "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif; 
+            -webkit-font-smoothing: antialiased;
         }
         :root {
-            --brand-primary: #FF6900;
-            --brand-light: #FFF5EE;
-            --brand-hover: #FFF0E5;
+            --mi-orange: #FF6900;
+            --mi-orange-light: #FFF5EE;
+            --mi-orange-hover: #FFF0E5;
             --text-primary: #1D1D1F;
-            --text-secondary: #666666;
+            --text-secondary: #505050;
             --text-tertiary: #8E8E93;
-            --text-quaternary: #C7C7CC;
-            --bg-page: #F2F2F5;
-            --bg-window: #FFFFFF;
-            --bg-sidebar: #F8F8FA;
+            --bg-page: #F5F5F7;
+            --bg-card: #FFFFFF;
             --bg-gray: #F2F2F7;
             --border-light: rgba(0,0,0,0.06);
-            --border-separator: #E5E5EA;
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
-            --radius-xl: 20px;
-            --radius-pill: 24px;
             --shadow-xs: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
-            --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
-            --shadow-window: 0 8px 32px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
         }
         body { 
             background: var(--bg-page); 
-            height: 100vh; 
+            min-height: 100vh;
+            height: auto;
             display: flex; 
             justify-content: center; 
-            align-items: center;
+            align-items: flex-start;
             color: var(--text-primary);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 12px;
         }
 
-    .app-container {
-    width: min(1100px, calc(100vw - 20px));
-    height: min(760px, calc(100vh - 20px));
-    background: var(--bg-window);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-window);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
+        /* 主容器 */
+        .app-container { 
+            width: min(1100px, calc(100vw - 24px));
+            height: min(760px, calc(100vh - 24px));
+            min-height: 560px;
+            background: var(--bg-card); 
+            border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
+        /* Header：毛玻璃效果，全品类标题 */
         .app-header {
             height: 60px;
             padding: 0 24px;
@@ -69,51 +71,54 @@
             position: relative;
             z-index: 10;
         }
-        .app-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, var(--brand-primary), transparent 70%);
-            opacity: 0.3;
-        }
         .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
         .brand-logo {
             width: 32px;
             height: 32px;
-            background: var(--brand-primary);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
+            border-radius: 9px;
+            overflow: hidden;
+            flex: 0 0 auto;
             box-shadow: 0 2px 6px rgba(255, 105, 0, 0.25);
         }
-        .brand-title-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
         }
         .brand-title {
             font-size: 17px;
             font-weight: 600;
             color: var(--text-primary);
         }
-        .category-tag {
-            font-size: 12px;
-            padding: 2px 8px;
-            background: var(--brand-light);
-            color: var(--brand-primary);
-            border-radius: 10px;
+        /* 分类切换：全品类预留 */
+        .category-switch {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-gray);
+            padding: 3px;
+            border-radius: 8px;
+            margin-left: 12px;
+        }
+        .cat-btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+        }
+        .cat-btn.active {
+            background: white;
+            color: var(--mi-orange);
+            box-shadow: var(--shadow-xs);
         }
         .header-right {
             display: flex;
@@ -139,21 +144,26 @@
             50% { opacity: 0.5; transform: scale(1.1); }
         }
 
+        /* 主体布局 */
         .app-body {
-        flex: 1;
-        display: flex;
-        overflow: hidden;
-        min-height: 0;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            overflow: hidden;
         }
 
+        /* 左侧边栏 */
         .sidebar {
             width: 220px;
-            background: var(--bg-sidebar);
+            min-height: 0;
+            background: #FAFAFA;
             border-right: 1px solid var(--border-light);
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+            overscroll-behavior: contain;
         }
-
         .nav-menu {
             padding: 12px 8px;
             display: flex;
@@ -179,9 +189,9 @@
             color: var(--text-primary);
         }
         .nav-item.active {
-            background: var(--brand-light);
-            color: var(--brand-primary);
-            border-left-color: var(--brand-primary);
+            background: var(--mi-orange-light);
+            color: var(--mi-orange);
+            border-left-color: var(--mi-orange);
             font-weight: 600;
         }
         .nav-icon {
@@ -189,7 +199,6 @@
             width: 20px;
             text-align: center;
         }
-
         .sidebar-section {
             padding: 16px 12px;
             border-top: 1px solid var(--border-light);
@@ -203,87 +212,91 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
-        /* P1: 快捷提问图标改成橙色 */
         .quick-question {
-            padding: 10px 12px;
-            background: transparent;
-            border-bottom: 1px solid var(--border-separator);
+            padding: 9px 12px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-sm);
             font-size: 13px;
             color: var(--text-secondary);
+            margin-bottom: 6px;
             cursor: pointer;
             transition: all 0.2s;
             line-height: 1.4;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-radius: 0;
-        }
-        .quick-question:last-child {
-            border-bottom: none;
         }
         .quick-question:hover {
-            background: var(--brand-light);
-            color: var(--brand-primary);
-            padding-left: 16px;
+            background: var(--mi-orange-light);
+            color: var(--mi-orange);
         }
-        .quick-question-icon {
-            font-size: 12px;
-            color: var(--brand-primary);
-            opacity: 0.6;
+        .help-action {
+            user-select: none;
+        }
+        .help-action:focus-visible {
+            outline: 2px solid var(--mi-orange);
+            outline-offset: 2px;
         }
 
+        /* 右侧主内容区 */
         .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: white;
-    position: relative;
-    min-height: 0;
-}
-    .content-panel {
-    flex: 1;
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: all 0.2s ease;
-    min-height: 0;
-}
+            flex: 1;
+            min-width: 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: white;
+        }
+        .content-panel {
+            flex: 1;
+            min-height: 0;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: fadeInUp 0.2s ease;
+        }
         .content-panel.active {
             display: flex;
-            opacity: 1;
-            transform: translateY(0);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 问答模块 */
         .chat-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
-}
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
         .chat-messages {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 28px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    overscroll-behavior: contain;
-}
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 28px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overscroll-behavior: contain;
+            scrollbar-gutter: stable;
+            -webkit-overflow-scrolling: touch;
+        }
         .chat-messages::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
         }
         .chat-messages::-webkit-scrollbar-thumb {
-            background: #D1D1D6;
-            border-radius: 3px;
+            background: #C7C7CC;
+            border-radius: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #AEAEB2;
         }
 
+        /* 开场引导 */
         .welcome-section {
             margin-bottom: 24px;
         }
@@ -294,15 +307,14 @@
             color: var(--text-primary);
             min-height: 32px;
         }
-        /* 打字机光标 */
         .typing-cursor {
             display: inline-block;
             width: 2px;
-            height: 24px;
-            background: var(--brand-primary);
+            height: 22px;
+            background: var(--text-primary);
             margin-left: 2px;
+            animation: blink 1s infinite;
             vertical-align: middle;
-            animation: blink 0.8s infinite;
         }
         @keyframes blink {
             0%, 50% { opacity: 1; }
@@ -311,38 +323,21 @@
         .welcome-subtitle {
             color: var(--text-tertiary);
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 28px;
             line-height: 1.6;
-            opacity: 0;
-            animation: fadeIn 0.5s ease 1.2s forwards;
-        }
-        .welcome-hint {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            margin-bottom: 14px;
-            font-weight: 500;
-            opacity: 0;
-            animation: fadeIn 0.5s ease 1.4s forwards;
         }
         .hot-questions {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 14px;
-            opacity: 0;
-            animation: fadeIn 0.5s ease 1.6s forwards;
         }
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* P1: 卡片hover加橙色边框光晕 */
         .hot-card {
             padding: 18px;
             background: white;
             border-radius: var(--radius-md);
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: var(--shadow-card);
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
             border: 1px solid transparent;
         }
         .hot-card:hover {
@@ -351,49 +346,50 @@
             border-color: rgba(255, 105, 0, 0.15);
         }
         .hot-card-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--brand-light);
+            width: 36px;
+            height: 36px;
+            background: var(--mi-orange-light);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 12px;
-            color: var(--brand-primary);
+            color: var(--mi-orange);
         }
         .hot-card-title {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 4px;
         }
         .hot-card-desc {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-tertiary);
             line-height: 1.5;
         }
 
-        /* P1: 连续消息间距缩小，不重复显示名字 */
+        /* 消息气泡：连续消息不重复名称 */
         .message {
             display: flex;
             gap: 10px;
             max-width: 70%;
-            animation: fadeInUp 0.3s ease;
+            animation: messageIn 0.3s ease;
         }
-        .message + .message.bot {
-            margin-top: -4px;
-        }
-        .message + .message.user {
-            margin-top: -4px;
-        }
-        @keyframes fadeInUp {
+        @keyframes messageIn {
             from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .message.user {
             align-self: flex-end;
             flex-direction: row-reverse;
+        }
+        .message.continuous {
+            margin-top: -12px;
+        }
+        .message.continuous .avatar,
+        .message.continuous .message-name {
+            visibility: hidden;
         }
         .avatar {
             width: 32px;
@@ -408,8 +404,17 @@
             margin-top: 2px;
         }
         .avatar.bot {
-            background: var(--brand-primary);
+            background: transparent;
             color: white;
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(255, 105, 0, 0.18);
+        }
+        .avatar.bot img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
         }
         .avatar.user {
             background: #E5E5EA;
@@ -443,63 +448,96 @@
             color: var(--text-primary);
             border-top-left-radius: 6px;
         }
-        .message.bot.continuous .message-bubble {
-            border-top-left-radius: 18px;
-        }
         .message.user .message-bubble {
-            background: var(--brand-primary);
+            background: var(--mi-orange);
             color: white;
             border-top-right-radius: 6px;
             box-shadow: 0 2px 6px rgba(255, 105, 0, 0.2);
         }
-        .message.user.continuous .message-bubble {
-            border-top-right-radius: 18px;
-        }
         .message-time {
             font-size: 11px;
-            color: var(--text-quaternary);
+            color: var(--text-tertiary);
             text-align: right;
-            padding: 2px 4px 0;
+            margin-top: 2px;
+            padding-right: 4px;
         }
 
-        .skeleton-bubble {
-            padding: 14px;
-            width: 200px;
+        /* Loading动画 */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 4px 2px;
         }
-        .skeleton-line {
-            height: 12px;
-            background: linear-gradient(90deg, #F0F0F0 25%, #E0E0E0 50%, #F0F0F0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 4px;
-            margin-bottom: 8px;
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--mi-orange);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
         }
-        .skeleton-line:last-child {
-            margin-bottom: 0;
-            width: 70%;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-4px); opacity: 1; }
         }
 
+        /* 输入区：动态placeholder */
         .chat-input-area {
+            flex: 0 0 auto;
             padding: 16px 32px 20px;
-            background: #FAFAFA;
-            flex-shrink: 0;
+            border-top: 1px solid var(--border-light);
+            background: white;
+            position: relative;
+            z-index: 2;
         }
-        .input-wrapper {
+        .chat-product-bar {
             display: flex;
             align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 9px 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            background: #FAFAFA;
+        }
+        .chat-product-label {
+            flex: 0 0 auto;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .chat-product-select {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .chat-product-tip {
+            flex: 0 0 auto;
+            color: var(--text-tertiary);
+            font-size: 12px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
             gap: 12px;
-            padding: 8px 8px 8px 16px;
-            background: white;
-            border-radius: var(--radius-pill);
-            box-shadow: var(--shadow-xs);
+            padding: 10px 14px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
             transition: all 0.2s;
+            background: #FAFAFA;
         }
         .input-wrapper:focus-within {
-            box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.1);
+            border-color: var(--mi-orange);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 105, 0, 0.08);
         }
         .input-actions {
             display: flex;
@@ -509,13 +547,13 @@
         }
         .input-actions span {
             cursor: pointer;
-            padding: 6px;
-            border-radius: 50%;
+            padding: 4px;
+            border-radius: 6px;
             transition: all 0.2s;
         }
         .input-actions span:hover {
-            color: var(--brand-primary);
-            background: var(--brand-light);
+            color: var(--mi-orange);
+            background: var(--mi-orange-light);
         }
         #chatInput {
             flex: 1;
@@ -525,15 +563,14 @@
             font-size: 14px;
             resize: none;
             line-height: 1.6;
-            max-height: 100px;
+            max-height: 120px;
             font-family: inherit;
             color: var(--text-primary);
-            padding: 6px 0;
         }
         .send-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
             background: #D1D1D6;
             color: white;
             border: none;
@@ -543,28 +580,45 @@
             justify-content: center;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-size: 14px;
-            flex-shrink: 0;
+            transform: scale(0.9);
         }
         .send-btn.active {
-            background: var(--brand-primary);
+            background: var(--mi-orange);
             cursor: pointer;
-            transform: scale(1);
             box-shadow: 0 2px 6px rgba(255, 105, 0, 0.25);
+            transform: scale(1);
         }
         .send-btn.active:hover {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
         .input-hint {
             font-size: 11px;
             color: var(--text-tertiary);
             margin-top: 8px;
-            text-align: center;
+            text-align: right;
         }
 
+        /* 对比模块 */
         .compare-container {
-            padding: 28px 32px;
+            flex: 1;
+            min-height: 0;
+            height: auto;
+            padding: 28px 32px 40px;
             overflow-y: auto;
-            height: 100%;
+            overflow-x: hidden;
+            overscroll-behavior: contain;
+            scrollbar-gutter: stable;
+            -webkit-overflow-scrolling: touch;
+        }
+        .compare-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .compare-container::-webkit-scrollbar-thumb {
+            background: #C7C7CC;
+            border-radius: 4px;
+        }
+        #compareResult {
+            min-height: 0;
         }
         .compare-selector {
             display: flex;
@@ -574,17 +628,6 @@
             background: var(--bg-gray);
             border-radius: var(--radius-md);
             margin-bottom: 24px;
-        }
-        .category-select {
-            width: 120px;
-            padding: 11px 14px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            outline: none;
-            background: white;
-            box-shadow: var(--shadow-xs);
-            color: var(--text-primary);
         }
         .compare-select {
             flex: 1;
@@ -597,7 +640,7 @@
             box-shadow: var(--shadow-xs);
             color: var(--text-primary);
         }
-        .compare-select:focus, .category-select:focus {
+        .compare-select:focus {
             box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.15);
         }
         .vs-text {
@@ -607,7 +650,7 @@
         }
         .compare-btn {
             padding: 11px 26px;
-            background: var(--brand-primary);
+            background: var(--mi-orange);
             color: white;
             border: none;
             border-radius: var(--radius-sm);
@@ -620,10 +663,10 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(255, 105, 0, 0.25);
         }
-
         .compare-table-wrapper {
             border-radius: var(--radius-md);
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: visible;
             box-shadow: var(--shadow-sm);
             background: white;
         }
@@ -638,8 +681,8 @@
             font-size: 14px;
         }
         .compare-table th {
-            background: var(--brand-light);
-            color: var(--brand-primary);
+            background: var(--mi-orange-light);
+            color: var(--mi-orange);
             font-weight: 600;
             position: sticky;
             top: 0;
@@ -665,21 +708,28 @@
             width: 100%;
             padding: 12px;
             background: white;
-            border: 1px solid var(--brand-primary);
-            color: var(--brand-primary);
+            border: 1px solid var(--mi-orange);
+            color: var(--mi-orange);
             border-radius: var(--radius-sm);
             cursor: pointer;
             font-weight: 500;
             transition: all 0.2s;
         }
         .ai-summary-btn:hover {
-            background: var(--brand-light);
+            background: var(--mi-orange-light);
         }
 
+        /* 推荐模块 */
         .recommend-container {
-            padding: 28px 32px;
+            flex: 1;
+            min-height: 0;
+            height: auto;
+            padding: 28px 32px 40px;
             overflow-y: auto;
-            height: 100%;
+            overflow-x: hidden;
+            overscroll-behavior: contain;
+            scrollbar-gutter: stable;
+            -webkit-overflow-scrolling: touch;
         }
         .recommend-form {
             background: var(--bg-gray);
@@ -715,18 +765,18 @@
             box-shadow: var(--shadow-xs);
         }
         .tag-option:hover {
-            color: var(--brand-primary);
+            color: var(--mi-orange);
             box-shadow: var(--shadow-sm);
         }
         .tag-option.selected {
-            background: var(--brand-primary);
+            background: var(--mi-orange);
             color: white;
             box-shadow: 0 2px 6px rgba(255, 105, 0, 0.25);
         }
         .recommend-submit {
             width: 100%;
             padding: 13px;
-            background: var(--brand-primary);
+            background: var(--mi-orange);
             color: white;
             border: none;
             border-radius: var(--radius-sm);
@@ -741,7 +791,6 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 14px rgba(255, 105, 0, 0.28);
         }
-
         .recommend-results {
             display: flex;
             flex-direction: column;
@@ -761,15 +810,27 @@
             box-shadow: var(--shadow-md);
         }
         .product-image {
-            width: 80px;
-            height: 80px;
-            background: var(--brand-light);
+            width: 96px;
+            height: 96px;
+            padding: 8px;
+            background: #FFF7F2;
+            border: 1px solid #F5E8DF;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
             flex-shrink: 0;
+            overflow: hidden;
+        }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .product-image-fallback {
+            font-size: 34px;
+            line-height: 1;
         }
         .product-info {
             flex: 1;
@@ -783,11 +844,6 @@
         .product-name {
             font-size: 16px;
             font-weight: 600;
-        }
-        .product-category {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            margin-bottom: 4px;
         }
         .match-score {
             display: flex;
@@ -810,7 +866,7 @@
             border-radius: 3px;
         }
         .product-price {
-            color: var(--brand-primary);
+            color: var(--mi-orange);
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 8px;
@@ -843,190 +899,157 @@
             transition: all 0.2s;
         }
         .action-btn.primary {
-            background: var(--brand-primary);
+            background: var(--mi-orange);
             color: white;
         }
         .action-btn:hover {
             opacity: 0.85;
         }
-
         .empty-state {
             text-align: center;
             padding: 80px 20px;
             color: var(--text-tertiary);
             font-size: 14px;
         }
-
-
-        /* ===== 多品类与RAG来源展示 ===== */
-        .category-switcher {
-            display: flex;
-            gap: 8px;
-            padding: 4px;
-            background: rgba(255, 255, 255, 0.72);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            border-radius: 10px;
-        }
-        .category-button {
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            padding: 7px 12px;
-            border-radius: 8px;
+        .coming-soon {
+            color: var(--text-tertiary);
             font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            text-align: center;
+            padding: 12px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-sm);
+            margin-top: 10px;
         }
-        .category-button:hover {
-            background: rgba(255, 105, 0, 0.08);
-            color: var(--brand-primary);
+
+        /* P2-11：接口状态、错误提示与真实数据展示 */
+        .state-card {
+            padding: 42px 20px;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 14px;
+            line-height: 1.8;
+            background: #FAFAFA;
+            border: 1px dashed var(--border-light);
+            border-radius: var(--radius-md);
         }
-        .category-button.active {
-            background: var(--brand-primary);
-            color: #fff;
-            box-shadow: 0 4px 10px rgba(255, 105, 0, 0.2);
+        .state-card.error {
+            color: #D70015;
+            background: #FFF2F2;
+            border-color: rgba(215, 0, 21, 0.16);
         }
-        .category-button .category-state {
-            margin-left: 4px;
-            font-size: 10px;
-            opacity: 0.72;
+        .state-card.loading {
+            color: var(--text-secondary);
         }
-        .nav-item.disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-            pointer-events: none;
+        .state-spinner {
+            width: 22px;
+            height: 22px;
+            margin: 0 auto 10px;
+            border: 3px solid #E5E5EA;
+            border-top-color: var(--mi-orange);
+            border-radius: 50%;
+            animation: stateSpin 0.8s linear infinite;
         }
-        .chat-toolbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
+        @keyframes stateSpin {
+            to { transform: rotate(360deg); }
+        }
+        .api-meta {
+            margin-top: 8px;
+            padding: 9px 11px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.68);
+            border: 1px solid var(--border-light);
+            color: var(--text-tertiary);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+        .api-meta a,
+        .source-link {
+            color: var(--mi-orange);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .api-meta a:hover,
+        .source-link:hover {
+            text-decoration: underline;
+        }
+        .product-extra {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.65;
             margin-bottom: 10px;
         }
-        .chat-product-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            min-width: 0;
-        }
-        .chat-product-label {
-            color: var(--text-secondary);
+        .product-source {
             font-size: 12px;
-            white-space: nowrap;
-        }
-        .chat-product-select {
-            min-width: 240px;
-            max-width: 420px;
-            padding: 8px 34px 8px 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: #fff;
-            color: var(--text-primary);
-            font-size: 13px;
-            outline: none;
-        }
-        .chat-product-select:focus {
-            border-color: var(--brand-primary);
-            box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.08);
-        }
-        .chat-product-hint {
             color: var(--text-tertiary);
-            font-size: 12px;
-            text-align: right;
+            margin-top: 8px;
         }
-        .construction-banner {
-            margin: 48px auto;
-            max-width: 620px;
-            padding: 36px;
-            border: 1px dashed rgba(255, 105, 0, 0.35);
-            border-radius: 18px;
-            background: linear-gradient(135deg, rgba(255, 105, 0, 0.06), rgba(255, 255, 255, 0.9));
+        .compare-source {
             text-align: center;
+            line-height: 1.55;
+            word-break: break-word;
         }
-        .construction-icon {
-            font-size: 48px;
-            margin-bottom: 14px;
+        .compare-source a,
+        .compare-source a:visited {
+            color: var(--mi-orange);
+            font-weight: 500;
+            text-decoration: none;
         }
-        .construction-title {
-            font-size: 20px;
-            font-weight: 650;
-            color: var(--text-primary);
-            margin-bottom: 8px;
+        .compare-source a:hover {
+            text-decoration: underline;
         }
-        .construction-text {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-size: 14px;
+        .compare-table td {
+            max-width: 360px;
+            line-height: 1.55;
+            white-space: normal;
+            overflow-wrap: anywhere;
         }
-        .source-list {
-            display: grid;
-            gap: 10px;
-            margin-top: 12px;
+        .compare-table thead {
+            position: sticky;
+            top: 0;
+            z-index: 3;
         }
-        .source-card {
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.88);
-            overflow: hidden;
+        .compare-table th {
+            z-index: 4;
         }
-        .source-card summary {
-            list-style: none;
-            cursor: pointer;
-            padding: 11px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
+        button:disabled,
+        .compare-btn:disabled,
+        .recommend-submit:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+            transform: none !important;
+            box-shadow: none !important;
         }
-        .source-card summary::-webkit-details-marker {
-            display: none;
-        }
-        .source-score {
-            color: var(--brand-primary);
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        .source-meta {
-            padding: 0 12px 8px;
-            color: var(--text-tertiary);
-            font-size: 11px;
-            line-height: 1.6;
-        }
-        .source-content {
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
-            padding: 11px 12px 13px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            line-height: 1.7;
-            white-space: pre-wrap;
-        }
-        .message-bubble .answer-text {
-            white-space: pre-wrap;
-            line-height: 1.75;
-        }
-        .message-bubble .answer-title {
-            font-size: 12px;
-            font-weight: 650;
-            color: var(--brand-primary);
-            margin: 12px 0 4px;
-        }
-        @media (max-width: 900px) {
-            .category-switcher {
-                display: none;
+
+
+        @media (max-height: 680px) {
+            body {
+                padding: 0;
             }
-            .chat-toolbar {
-                align-items: flex-start;
-                flex-direction: column;
+            .app-container {
+                width: 100vw;
+                height: 100vh;
+                min-height: 520px;
+                border-radius: 0;
             }
-            .chat-product-select {
-                width: 100%;
-                min-width: 0;
+        }
+
+        @media (max-width: 820px) {
+            body {
+                padding: 0;
             }
-            .chat-product-hint {
-                text-align: left;
+            .app-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+            .sidebar {
+                width: 190px;
+            }
+            .compare-selector {
+                flex-wrap: wrap;
+            }
+            .compare-select {
+                min-width: 220px;
             }
         }
 
@@ -1034,20 +1057,19 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- 顶部Header：毛玻璃+全品类分类切换 -->
         <div class="app-header">
             <div class="header-left">
-                <div class="brand-logo">MI</div>
-                <div class="brand-title-group">
-                    <div class="brand-title" id="brandTitle">小米智能产品助手</div>
-                    <div class="category-tag" id="categoryTag">耳机</div>
+                <div class="brand-logo" title="Xiaomi"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAACXBIWXMAAAsTAAALEwEAmpwYAAA58mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoTWFjaW50b3NoKTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8eG1wOkNyZWF0ZURhdGU+MjAyMS0wMy0yOVQxMjo1ODowOCswODowMDwveG1wOkNyZWF0ZURhdGU+CiAgICAgICAgIDx4bXA6TW9kaWZ5RGF0ZT4yMDIxLTA4LTEwVDE1OjMwOjU5KzA4OjAwPC94bXA6TW9kaWZ5RGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAyMS0wOC0xMFQxNTozMDo1OSswODowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHhtcE1NOkluc3RhbmNlSUQ+eG1wLmlpZDozNDg4NzlkNC1mNmQ1LTRkNGQtYmQzYy1lYTBmODA1YzdiZWU8L3htcE1NOkluc3RhbmNlSUQ+CiAgICAgICAgIDx4bXBNTTpEb2N1bWVudElEPmFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1MGI1MjVlYS0zYTNiLTExN2YtOWMzMC1mMzRmZmJiZmQ0OTk8L3htcE1NOkRvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+eG1wLmRpZDo3MjMyNDViYi1iOThlLTQ0ODktOWE0MC05ZjUxZmY3NDM5YzA8L3htcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOkhpc3Rvcnk+CiAgICAgICAgICAgIDxyZGY6U2VxPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jcmVhdGVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6NzIzMjQ1YmItYjk4ZS00NDg5LTlhNDAtOWY1MWZmNzQzOWMwPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDIxLTAzLTI5VDEyOjU4OjA4KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoTWFjaW50b3NoKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6MzQ4ODc5ZDQtZjZkNS00ZDRkLWJkM2MtZWEwZjgwNWM3YmVlPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDIxLTA4LTEwVDE1OjMwOjU5KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoTWFjaW50b3NoKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpYUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOllSZXNvbHV0aW9uPjcyMDAwMC8xMDAwMDwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6UmVzb2x1dGlvblVuaXQ+MjwvdGlmZjpSZXNvbHV0aW9uVW5pdD4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT42NTUzNTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+NzI8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+NzI8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0idyI/PgCAF5wAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAACB1JREFUeNrsnHuMXFUdxz/3MTO73Z3d7WNb7EMWWikrrSmUPxQNaKJoY/QPjQlGTRWMNYJ/IH9ojIooGAjBmihikIdCRBIDPv7w0WhqY4t/SAKUV6ELAltou2XZ3Wl353nv4Y/zuzt3hntn7529s9ud2W9ysnfvzD33zPf8zu/8HuccQynFMsJhA/ANo5Xv6JaSAlYC64B+YAhYL9crAKvuOQfIA5PACeAVYAIYA94CykABmGlZy3+phKDksQ7YKiRsAgaBLLAGeBfQC6wScrrmqKsA5ISUHHASOAWckb+jQt4L8plKXoLmj3OA9wEfBC4FtgEbAqSiGXRJWdvgOw7wBvAs8DhwCDgs9xaVoPcDXwR2AecvoqqwRFI3AZ+Qe68CfwN+BxxstmKzyec+AvwV+Bdw7SKTE4Zzga8D/wT2AR9bCIJWAXfIS3eJcj3bkRFy/gH8XPRhSwjaARwAvjUPyVtMGMB1wH+AnUkTdBXwb1G+Sx1bgf3A7qSU9OeAB8SOaRdkgd+ISfDAfCRoB/Bgm5Hjxz0yEzdF0CDwF1Fy7YoU8Gex42IT9GOxK9oda4Fb4xL0cWBPB/mku4FPxSHoxg503G+MStCHgQ90IEE7g6ztIIK+Sufia3MRtF70T6fiyvqJyQzwztd0MEF96JBNKEGXs4wrwlwNA7gkcjVK6LVINoan6krUaLDtex7fc5XYLbhYfpVTT9DmWM5oCh0xPs384oaG768tJS31G+jIsxtClPK9e0LIMOW73jP9cs+N3KJtwIXo6GQNQcPooHp0uN2Q2aCZUnG6u+5H4oBTgPw0FMu67yygR7RCxuvPAHI9Eo0NkEmDW9R1ptPguFB6TacMoqNHPP4agkx0DDl6kORV4NPXwWdvgEppfkMKF9wylAqQm4KxY3B8FF58DF7cD69PwkYhquzrBxsdtu/fBj95BHqy4FREsixwFdx5NRzep1MF0aVok9ResX2sDcX6YSVgYD0MrEteTV7kuz56BH5/O/z3PjhPhp6fpDJgZ2HjBcF19a6CYuwWDKEzL5PeLNYFrI5VhQUUp1o/p7znQvjBvbD7Vzqx49bNvRagCjCTC+nI082kJvpEE86+qlduNqlhFwBX7YErvqSHth2nHU21cdCzB02fBb3xrLdQvvBtsLthuuV9sxGttWb7IisTYjKYfBMevhWsInRnwQ3Rjq4LhgErBiB7Dpy7A4YvDq9380Ww5RIYOdTq7uxC5j7bdyO5NPSJEbjnDq3VekOm6CDjsNQH7/0ofPcuWBOSSN2yE549VGsUJo+UTFz4Z7F0YtWnu2DIgH6la3YaqAPPqHOBcg4OPgp7bfjRQ3qqrsf6Yd1ql2QS28FYCby7Xgf1JVe/AcqoSoaHgljfBd/1NLWG4XbgiT/AsReCq84O6v51WzrEVotnUUNQf0te5RHkAG4WjAFQvaCyevxZq8GxtSRVxBi0FIw+HSL8Xcn7f8HI+IdYb6I6qN5emgAGL4Xrfw3dGSgXtXI2DOgegD/+DPbtFaH29FjIwozubkib4Yo/Odh+glqX2jFFMroGYeuOEIEe0kPOL3X5kHVR6RRYxkJIkBUUD2oNDMDNa+cxCIWpAIXrLrZxqhaOoLl+mGGGiN7iw1x4n2HJwPATVFzmg8Ax7hGUb7llsfRQ8RN0Eh08XUYVZT9Bo+j1yMvQyAknswRNUWuJdDrGgZf8BJUi+NydhKKncjyCpqUso6p/in6CXvfG3DIAOI7eEzJLUK45JZ2UQ6Ri1K0Woo3HpdTooHgEuUCqN/iznj5wzWp2UwFmBqwQ9yHTqzWglwh0gEw2pO4B3WwvT+kCRhpWhISzUiua0a5nvGne9t14LbaTUjgDxTw4pWqDrQyMn9D/mFRz+JU85CYhZYMrLTYMMG0ozNTGeCz0vcIMuBXJ2iqw0nB6SgfjPOINdNJx4qSOfztlaZ+lPy/mm4k8jgonGEopb7/YZ4BHYlXjDEJqC6h8NXpo9UBpDMyj1dAogJsGYxjMFKhKlSAyUHkZ7LHahQeVtWCfr3WlUrpYXVAZB0aqhBqAkwKGdcbDFa/JsPXnlWcgVYg70j4PPFy/X2wEvTkt2v6LFFA8BeOnanvIQecDVsq1t8BAlWDiqXcuRHDRsUwvrezJdWEM3hqrdeoVOr3QJ8/NrjApw/hh/T6zTvWsknvRh1lZuMA/xACeB55D7/eaGyUhoidEL5Z9OsUjJWzHl8M708mN6vYnATwJXdvAo6rEilccQRYu1BNUBp6MTJA/GxE1/FOJGC6aq27mUffceFKc98CoVNMbz9oIB4MCZh4e87PXoSGOhgSNoLcKdSoOoNeQhBKkgPs7mKD76+e7INP2T6LJOw1HgUeD7OGgcXh7BxL00yD9G5ZbuQ/4eweRsx+4O8yjCsMNYg62Oxzg+jCrqxFBzwFf6QCC9gBPNfLJG+Eh4PttTM5NwL1zBS3mws3Ad9qQnO8BP4wS1YmC20QU2yHzUUIfMHBL1LBXVNwNXIY+MGSpYh/wIeDOqA/EXULxBPBJ4JuixJcKjqCP1NgF/C/Og82sMVHAL9B7PL8svXI25vUV+hCWa6Ste5tp53yW3RWA36KPdtiO3ql3OXq/1WZo2elWjeyZl2TKPkD1kKV5dZ6dUE8dlnIXOoC6HX2m0HlUV9AOUd3c1E/8rZ9volPkXtbzFfn/OPB/4GXgaRJeY9CKXp6SmMpBdNC0Bx1A3QQMoBeMbgC2yLXpK/6wvesr0xKKOYbONuTQWZgZWpwVNpaPCWyMtwcAEp4b7aqAf3UAAAAASUVORK5CYII=" alt="Xiaomi 官方标志"></div>
+                <div class="brand-title">小米智能穿戴设备助手</div>
+                <!-- 全品类分类切换，默认耳机 -->
+                <div class="category-switch">
+                    <button class="cat-btn active" data-cat="earphone">🎧 耳机</button>
+                    <button class="cat-btn" data-cat="band">⌚ 智能手环</button>
+                    <button class="cat-btn" data-cat="watch">🕒 智能手表</button>
                 </div>
             </div>
             <div class="header-right">
-                <div class="category-switcher" id="categorySwitcher" aria-label="产品品类切换">
-                    <button class="category-button active" data-category="earphone">🎧 耳机</button>
-                    <button class="category-button" data-category="smart_band">⌚ 智能手环<span class="category-state">预留</span></button>
-                    <button class="category-button" data-category="smart_watch">🕒 智能手表<span class="category-state">预留</span></button>
-                </div>
                 <div class="online-status">
                     <span class="status-dot"></span>
                     在线服务中
@@ -1055,7 +1077,9 @@
             </div>
         </div>
 
+        <!-- 主体 -->
         <div class="app-body">
+            <!-- 左侧边栏 -->
             <div class="sidebar">
                 <div class="nav-menu">
                     <div class="nav-item active" data-panel="chat">
@@ -1072,52 +1096,77 @@
                     </div>
                 </div>
 
-                <div class="sidebar-section">
+                <div class="sidebar-section" id="quickQuestions">
                     <div class="section-title">快捷提问</div>
-                    <div id="quickQuestionsList"></div>
+                    <div class="quick-question" onclick="quickAsk('这款耳机支持主动降噪吗？')">哪款降噪效果最好？</div>
+                    <div class="quick-question" onclick="quickAsk('这款耳机续航多久？')">Buds 5续航多久？</div>
+                    <div class="quick-question" onclick="quickAsk('这款耳机防水等级是多少？')">运动戴哪款好？</div>
+                    <div class="quick-question" onclick="quickAsk('这款耳机连不上手机怎么办？')">连不上怎么办？</div>
                 </div>
 
                 <div class="sidebar-section">
                     <div class="section-title">使用帮助</div>
-                    <div class="quick-question">
-                        <span class="quick-question-icon">●</span>
-                        <span>产品说明书</span>
-                    </div>
-                    <div class="quick-question">
-                        <span class="quick-question-icon">●</span>
-                        <span>联系人工客服</span>
-                    </div>
+                    <div
+                        class="quick-question help-action"
+                        id="openProductManual"
+                        role="button"
+                        tabindex="0"
+                        aria-label="打开当前产品说明书"
+                    >📖 产品说明书</div>
+                    <div
+                        class="quick-question help-action"
+                        id="openCustomerService"
+                        role="button"
+                        tabindex="0"
+                        aria-label="打开小米官方客服页面"
+                    >📞 联系人工客服</div>
                 </div>
             </div>
 
+            <!-- 右侧主内容 -->
             <div class="main-content">
+                <!-- 问答面板 -->
                 <div class="content-panel active" id="chat">
                     <div class="chat-container">
                         <div class="chat-messages" id="chatBox">
+                            <!-- 开场引导 -->
                             <div class="welcome-section">
                                 <div class="welcome-title" id="welcomeTitle"></div>
-                                <div class="welcome-subtitle" id="welcomeSubtitle">专注于小米耳机产品，帮你解答说明书问题、对比参数、智能选购</div>
-                                <div class="welcome-hint">你可以从下面这些开始：</div>
-                                <div class="hot-questions" id="hotQuestions"></div>
+                                <div class="welcome-subtitle" id="welcomeSubtitle">可以帮你解答产品问题、对比参数、智能推荐合适的产品</div>
+                                <div class="hot-questions" id="hotCards">
+                                    <div class="hot-card" onclick="quickAsk('这款耳机支持主动降噪吗？')">
+                                        <div class="hot-card-icon">🎧</div>
+                                        <div class="hot-card-title">降噪选购</div>
+                                        <div class="hot-card-desc">高性价比降噪推荐</div>
+                                    </div>
+                                    <div class="hot-card" onclick="quickAsk('耳机充不进电怎么办？')">
+                                        <div class="hot-card-icon">🔧</div>
+                                        <div class="hot-card-title">故障排查</div>
+                                        <div class="hot-card-desc">常见问题解决方案</div>
+                                    </div>
+                                    <div class="hot-card" onclick="quickAsk('这款耳机如何连接手机？')">
+                                        <div class="hot-card-icon">💰</div>
+                                        <div class="hot-card-title">预算选购</div>
+                                        <div class="hot-card-desc">不同价位推荐</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="chat-input-area">
-                            <div class="chat-toolbar">
-                                <div class="chat-product-group">
-                                    <span class="chat-product-label">当前产品</span>
-                                    <select class="chat-product-select" id="chatProductSelect" disabled>
-                                        <option value="">正在加载产品...</option>
-                                    </select>
-                                </div>
-                                <div class="chat-product-hint" id="chatProductHint">说明书问答需要先选择具体产品</div>
+                            <div class="chat-product-bar">
+                                <span class="chat-product-label">当前问答模式</span>
+                                <select id="chatProductSelect" class="chat-product-select">
+                                    <option value="">通用对话（不使用产品知识库）</option>
+                                </select>
+                                <span class="chat-product-tip">可选择通用对话或具体产品</span>
                             </div>
                             <div class="input-wrapper">
                                 <div class="input-actions">
                                     <span title="语音输入">🎤</span>
                                     <span title="图片">🖼️</span>
                                 </div>
-                                <textarea id="chatInput" placeholder="输入你的问题，比如：降噪耳机哪款好？" rows="1"></textarea>
+                                <textarea id="chatInput" placeholder="" rows="1"></textarea>
                                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
                             </div>
                             <div class="input-hint">AI 生成内容仅供参考，以官方信息为准</div>
@@ -1125,62 +1174,30 @@
                     </div>
                 </div>
 
+                <!-- 对比面板 -->
                 <div class="content-panel" id="compare">
                     <div class="compare-container">
                         <div class="compare-selector">
-                            <select class="compare-select" id="model1" disabled>
-                                <option value="">加载中...</option>
+                            <select class="compare-select" id="model1">
+                                <option value="">选择第一款产品</option>
                             </select>
                             <span class="vs-text">VS</span>
-                            <select class="compare-select" id="model2" disabled>
-                                <option value="">加载中...</option>
+                            <select class="compare-select" id="model2">
+                                <option value="">选择第二款产品</option>
                             </select>
-                            <button class="compare-btn" id="compareBtn" onclick="compareProducts()">开始对比</button>
+                            <button class="compare-btn" onclick="compareProducts()">开始对比</button>
                         </div>
                         <div id="compareResult">
-                            <div class="empty-state">👆 选择品类和两款产品开始参数对比</div>
+                            <div class="empty-state">👆 请选择两款产品开始参数对比</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- 推荐面板 -->
                 <div class="content-panel" id="recommend">
                     <div class="recommend-container">
-                        <div class="recommend-form">
-                            <div class="form-group">
-                                <div class="form-label">使用场景</div>
-                                <div class="tag-group" data-group="scenario">
-                                    <div class="tag-option selected" data-value="daily">日常使用</div>
-                                    <div class="tag-option" data-value="commuting">通勤办公</div>
-                                    <div class="tag-option" data-value="sports">运动健身</div>
-                                    <div class="tag-option" data-value="gaming">游戏娱乐</div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-label">预算上限（元）</div>
-                                <div class="tag-group" data-group="budget">
-                                    <div class="tag-option" data-value="1000">1000以内</div>
-                                    <div class="tag-option selected" data-value="500">500以内</div>
-                                    <div class="tag-option" data-value="300">300以内</div>
-                                    <div class="tag-option" data-value="">不限制</div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-label">加分偏好（可选）</div>
-                                <div class="tag-group" data-group="preferences">
-                                    <div class="tag-option" data-value="lightweight">轻便优先</div>
-                                    <div class="tag-option" data-value="long_battery">续航优先</div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-label">必须条件（可选）</div>
-                                <div class="tag-group" data-group="must_have">
-                                    <div class="tag-option" data-value="anc">支持降噪</div>
-                                    <div class="tag-option" data-value="waterproof">防水防汗</div>
-                                    <div class="tag-option" data-value="low_latency">低延迟</div>
-                                    <div class="tag-option" data-value="dual_device">双设备</div>
-                                </div>
-                            </div>
-                            <button class="recommend-submit" onclick="getRecommend()">帮我推荐最合适的产品</button>
+                        <div class="recommend-form" id="recommendForm">
+                            <!-- 筛选条件动态根据分类生成 -->
                         </div>
                         <div class="recommend-results" id="recommendResult">
                             <div class="empty-state">👆 选择你的需求，一键获取个性化推荐</div>
@@ -1191,430 +1208,712 @@
         </div>
     </div>
 
+
     <script>
-        // ========== 多品类配置：手环和手表先预留入口 ==========
-        const CATEGORY_CONFIG = {
+        /*
+         * P2-11 接口就绪版
+         * 产品名单只从 /api/products 获取；页面不再维护产品静态名单。
+         * 默认使用同源接口。如后端部署在其他地址，只需修改 API_BASE。
+         */
+        const API_BASE = '';
+        const API_ENDPOINTS = {
+            products: '/api/products',
+            compare: '/api/compare',
+            recommend: '/api/recommend',
+            chat: '/api/chat'
+        };
+
+        const XIAOMI_LOGO_DATA_URL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAACXBIWXMAAAsTAAALEwEAmpwYAAA58mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIKICAgICAgICAgICAgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoTWFjaW50b3NoKTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8eG1wOkNyZWF0ZURhdGU+MjAyMS0wMy0yOVQxMjo1ODowOCswODowMDwveG1wOkNyZWF0ZURhdGU+CiAgICAgICAgIDx4bXA6TW9kaWZ5RGF0ZT4yMDIxLTA4LTEwVDE1OjMwOjU5KzA4OjAwPC94bXA6TW9kaWZ5RGF0ZT4KICAgICAgICAgPHhtcDpNZXRhZGF0YURhdGU+MjAyMS0wOC0xMFQxNTozMDo1OSswODowMDwveG1wOk1ldGFkYXRhRGF0ZT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHhtcE1NOkluc3RhbmNlSUQ+eG1wLmlpZDozNDg4NzlkNC1mNmQ1LTRkNGQtYmQzYy1lYTBmODA1YzdiZWU8L3htcE1NOkluc3RhbmNlSUQ+CiAgICAgICAgIDx4bXBNTTpEb2N1bWVudElEPmFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1MGI1MjVlYS0zYTNiLTExN2YtOWMzMC1mMzRmZmJiZmQ0OTk8L3htcE1NOkRvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+eG1wLmRpZDo3MjMyNDViYi1iOThlLTQ0ODktOWE0MC05ZjUxZmY3NDM5YzA8L3htcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOkhpc3Rvcnk+CiAgICAgICAgICAgIDxyZGY6U2VxPgogICAgICAgICAgICAgICA8cmRmOmxpIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmFjdGlvbj5jcmVhdGVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6NzIzMjQ1YmItYjk4ZS00NDg5LTlhNDAtOWY1MWZmNzQzOWMwPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDIxLTAzLTI5VDEyOjU4OjA4KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoTWFjaW50b3NoKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6MzQ4ODc5ZDQtZjZkNS00ZDRkLWJkM2MtZWEwZjgwNWM3YmVlPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDIxLTA4LTEwVDE1OjMwOjU5KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNyAoTWFjaW50b3NoKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC94bXBNTTpIaXN0b3J5PgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpYUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOllSZXNvbHV0aW9uPjcyMDAwMC8xMDAwMDwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6UmVzb2x1dGlvblVuaXQ+MjwvdGlmZjpSZXNvbHV0aW9uVW5pdD4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT42NTUzNTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+NzI8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+NzI8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAKPD94cGFja2V0IGVuZD0idyI/PgCAF5wAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAACB1JREFUeNrsnHuMXFUdxz/3MTO73Z3d7WNb7EMWWikrrSmUPxQNaKJoY/QPjQlGTRWMNYJ/IH9ojIooGAjBmihikIdCRBIDPv7w0WhqY4t/SAKUV6ELAltou2XZ3Wl353nv4Y/zuzt3hntn7529s9ud2W9ysnfvzD33zPf8zu/8HuccQynFMsJhA/ANo5Xv6JaSAlYC64B+YAhYL9crAKvuOQfIA5PACeAVYAIYA94CykABmGlZy3+phKDksQ7YKiRsAgaBLLAGeBfQC6wScrrmqKsA5ISUHHASOAWckb+jQt4L8plKXoLmj3OA9wEfBC4FtgEbAqSiGXRJWdvgOw7wBvAs8DhwCDgs9xaVoPcDXwR2AecvoqqwRFI3AZ+Qe68CfwN+BxxstmKzyec+AvwV+Bdw7SKTE4Zzga8D/wT2AR9bCIJWAXfIS3eJcj3bkRFy/gH8XPRhSwjaARwAvjUPyVtMGMB1wH+AnUkTdBXwb1G+Sx1bgf3A7qSU9OeAB8SOaRdkgd+ISfDAfCRoB/Bgm5Hjxz0yEzdF0CDwF1Fy7YoU8Gex42IT9GOxK9oda4Fb4xL0cWBPB/mku4FPxSHoxg503G+MStCHgQ90IEE7g6ztIIK+Sufia3MRtF70T6fiyvqJyQzwztd0MEF96JBNKEGXs4wrwlwNA7gkcjVK6LVINoan6krUaLDtex7fc5XYLbhYfpVTT9DmWM5oCh0xPs384oaG768tJS31G+jIsxtClPK9e0LIMOW73jP9cs+N3KJtwIXo6GQNQcPooHp0uN2Q2aCZUnG6u+5H4oBTgPw0FMu67yygR7RCxuvPAHI9Eo0NkEmDW9R1ptPguFB6TacMoqNHPP4agkx0DDl6kORV4NPXwWdvgEppfkMKF9wylAqQm4KxY3B8FF58DF7cD69PwkYhquzrBxsdtu/fBj95BHqy4FREsixwFdx5NRzep1MF0aVok9ResX2sDcX6YSVgYD0MrEteTV7kuz56BH5/O/z3PjhPhp6fpDJgZ2HjBcF19a6CYuwWDKEzL5PeLNYFrI5VhQUUp1o/p7znQvjBvbD7Vzqx49bNvRagCjCTC+nI082kJvpEE86+qlduNqlhFwBX7YErvqSHth2nHU21cdCzB02fBb3xrLdQvvBtsLthuuV9sxGttWb7IisTYjKYfBMevhWsInRnwQ3Rjq4LhgErBiB7Dpy7A4YvDq9380Ww5RIYOdTq7uxC5j7bdyO5NPSJEbjnDq3VekOm6CDjsNQH7/0ofPcuWBOSSN2yE549VGsUJo+UTFz4Z7F0YtWnu2DIgH6la3YaqAPPqHOBcg4OPgp7bfjRQ3qqrsf6Yd1ql2QS28FYCby7Xgf1JVe/AcqoSoaHgljfBd/1NLWG4XbgiT/AsReCq84O6v51WzrEVotnUUNQf0te5RHkAG4WjAFQvaCyevxZq8GxtSRVxBi0FIw+HSL8Xcn7f8HI+IdYb6I6qN5emgAGL4Xrfw3dGSgXtXI2DOgegD/+DPbtFaH29FjIwozubkib4Yo/Odh+glqX2jFFMroGYeuOEIEe0kPOL3X5kHVR6RRYxkJIkBUUD2oNDMDNa+cxCIWpAIXrLrZxqhaOoLl+mGGGiN7iw1x4n2HJwPATVFzmg8Ax7hGUb7llsfRQ8RN0Eh08XUYVZT9Bo+j1yMvQyAknswRNUWuJdDrGgZf8BJUi+NydhKKncjyCpqUso6p/in6CXvfG3DIAOI7eEzJLUK45JZ2UQ6Ri1K0Woo3HpdTooHgEuUCqN/iznj5wzWp2UwFmBqwQ9yHTqzWglwh0gEw2pO4B3WwvT+kCRhpWhISzUiua0a5nvGne9t14LbaTUjgDxTw4pWqDrQyMn9D/mFRz+JU85CYhZYMrLTYMMG0ozNTGeCz0vcIMuBXJ2iqw0nB6SgfjPOINdNJx4qSOfztlaZ+lPy/mm4k8jgonGEopb7/YZ4BHYlXjDEJqC6h8NXpo9UBpDMyj1dAogJsGYxjMFKhKlSAyUHkZ7LHahQeVtWCfr3WlUrpYXVAZB0aqhBqAkwKGdcbDFa/JsPXnlWcgVYg70j4PPFy/X2wEvTkt2v6LFFA8BeOnanvIQecDVsq1t8BAlWDiqXcuRHDRsUwvrezJdWEM3hqrdeoVOr3QJ8/NrjApw/hh/T6zTvWsknvRh1lZuMA/xACeB55D7/eaGyUhoidEL5Z9OsUjJWzHl8M708mN6vYnATwJXdvAo6rEilccQRYu1BNUBp6MTJA/GxE1/FOJGC6aq27mUffceFKc98CoVNMbz9oIB4MCZh4e87PXoSGOhgSNoLcKdSoOoNeQhBKkgPs7mKD76+e7INP2T6LJOw1HgUeD7OGgcXh7BxL00yD9G5ZbuQ/4eweRsx+4O8yjCsMNYg62Oxzg+jCrqxFBzwFf6QCC9gBPNfLJG+Eh4PttTM5NwL1zBS3mws3Ad9qQnO8BP4wS1YmC20QU2yHzUUIfMHBL1LBXVNwNXIY+MGSpYh/wIeDOqA/EXULxBPBJ4JuixJcKjqCP1NgF/C/Og82sMVHAL9B7PL8svXI25vUV+hCWa6Ste5tp53yW3RWA36KPdtiO3ql3OXq/1WZo2elWjeyZl2TKPkD1kKV5dZ6dUE8dlnIXOoC6HX2m0HlUV9AOUd3c1E/8rZ9volPkXtbzFfn/OPB/4GXgaRJeY9CKXp6SmMpBdNC0Bx1A3QQMoBeMbgC2yLXpK/6wvesr0xKKOYbONuTQWZgZWpwVNpaPCWyMtwcAEp4b7aqAf3UAAAAASUVORK5CYII=';
+        const XIAOMI_USER_GUIDE_URL = 'https://www.mi.com/global/support/user-guide/';
+        const XIAOMI_CUSTOMER_SERVICE_URL = 'https://www.mi.com/service/contact';
+
+        let currentCat = 'earphone';
+        let lastMessageRole = null;
+        let placeholderIndex = 0;
+        let productLoadSeq = 0;
+
+        // 接口返回的产品缓存，不在 HTML 内维护另一套产品名单
+        const productCache = {
+            earphone: [],
+            band: [],
+            watch: []
+        };
+
+        const catConfig = {
             earphone: {
                 name: '耳机',
-                assistantName: '小米耳机智能助手',
-                icon: '🎧',
-                enabled: true,
-                backendCategory: 'earphone',
-                subtitle: '专注于小米耳机产品，帮你解答说明书问题、对比参数、智能选购',
-                placeholders: [
-                    '输入说明书问题，比如：怎么恢复出厂设置？',
-                    '输入说明书问题，比如：如何连接手机？',
-                    '输入说明书问题，比如：充电盒怎么充电？',
-                    '输入说明书问题，比如：如何切换降噪模式？'
-                ],
+                greet: '耳机助手',
+                apiCategory: 'earphone',
                 quickQuestions: [
-                    ['怎么恢复出厂设置？', '恢复出厂设置'],
-                    ['如何连接手机？', '连接与配对'],
-                    ['耳机和充电盒怎么充电？', '充电方法'],
-                    ['如何使用触控操作？', '功能与操作']
+                    '这款耳机支持主动降噪吗？',
+                    '这款耳机续航多久？',
+                    '这款耳机防水等级是多少？',
+                    '这款耳机连不上手机怎么办？'
                 ],
-                hotQuestions: [
-                    ['🔄', '恢复出厂设置', '查询重置步骤与指示灯状态', '怎么恢复出厂设置？'],
-                    ['📱', '连接手机', '查询首次配对和自动回连', '如何连接手机？'],
-                    ['🔋', '充电方法', '查询耳机和充电盒充电说明', '耳机和充电盒怎么充电？'],
-                    ['👆', '触控操作', '查询音乐、通话和降噪操作', '如何使用触控操作？']
+                cards: [
+                    {icon: '🎧', title: '降噪选购', desc: '高性价比降噪推荐', action: '这款耳机支持主动降噪吗？'},
+                    {icon: '🔧', title: '故障排查', desc: '常见问题解决方案', action: '耳机充不进电怎么办？'},
+                    {icon: '💰', title: '预算选购', desc: '不同价位推荐', action: '这款耳机如何连接手机？'}
+                ],
+                placeholders: [
+                    '输入你的问题，比如：降噪耳机哪款好？',
+                    '输入你的问题，比如：Buds 5 续航多久？',
+                    '输入你的问题，比如：运动时戴哪款？',
+                    '输入你的问题，比如：低延迟游戏耳机推荐'
+                ],
+                filters: [
+                    {name: '预算范围', key: 'budget', multi: false, options: ['200元以内', '200-500元', '500-1000元', '1000元以上']},
+                    {name: '主要使用场景（可多选）', key: 'scene', multi: true, options: ['通勤听歌', '运动健身', '游戏电竞', '办公降噪', '日常休闲']},
+                    {name: '佩戴方式偏好', key: 'wear', multi: false, options: ['都可以', '入耳式', '半入耳式', '头戴式']}
                 ]
             },
-            smart_band: {
+            band: {
                 name: '智能手环',
-                assistantName: '小米智能手环助手',
-                icon: '⌚',
-                enabled: false,
-                subtitle: '智能手环数据、说明书问答、对比与推荐能力正在接入',
-                placeholders: ['智能手环知识库正在接入中']
+                greet: '手环助手',
+                apiCategory: 'smart_band',
+                quickQuestions: [
+                    '这款手环支持NFC吗？',
+                    '这款手环支持哪些运动功能？',
+                    '这款手环续航多久？',
+                    '这款手环支持血氧监测吗？'
+                ],
+                cards: [
+                    {icon: '🏃', title: '运动手环', desc: '运动与防水参数查询', action: '哪款手环适合运动和游泳？'},
+                    {icon: '❤️', title: '健康手环', desc: '健康监测功能查询', action: '哪款手环健康监测功能更全面？'},
+                    {icon: '🔋', title: '长续航手环', desc: '续航参数查询', action: '哪款手环续航时间最长？'}
+                ],
+                placeholders: [
+                    '输入你的问题，比如：哪款手环支持NFC？',
+                    '输入你的问题，比如：哪款手环适合游泳？',
+                    '输入你的问题，比如：手环续航多久？',
+                    '输入你的问题，比如：手环支持哪些健康监测？'
+                ],
+                filters: [
+                    {name: '功能需求（可多选）', key: 'feature', multi: true, options: ['NFC', '独立GPS', '蓝牙通话', '血氧监测']},
+                    {name: '预算范围', key: 'budget', multi: false, options: [
+                        'A$50以下',
+                        'A$50–120',
+                        'A$120以上'
+                    ]}
+                ]
             },
-            smart_watch: {
+            watch: {
                 name: '智能手表',
-                assistantName: '小米智能手表助手',
-                icon: '🕒',
-                enabled: false,
-                subtitle: '智能手表数据、说明书问答、对比与推荐能力正在接入',
-                placeholders: ['智能手表知识库正在接入中']
+                greet: '手表助手',
+                apiCategory: 'smart_watch',
+                quickQuestions: [
+                    '这款手表支持eSIM吗？',
+                    '这款手表支持独立GPS吗？',
+                    '这款手表续航多久？',
+                    '这款手表兼容GMS吗？'
+                ],
+                cards: [
+                    {icon: '⌚', title: '旗舰手表', desc: '系统与智能功能查询', action: '哪款智能手表功能最全面？'},
+                    {icon: '🏃', title: '运动手表', desc: '专业运动参数查询', action: '哪款手表更适合户外运动？'},
+                    {icon: '❤️', title: '健康手表', desc: '健康监测参数查询', action: '哪款手表健康监测功能更全面？'}
+                ],
+                placeholders: [
+                    '输入你的问题，比如：哪款手表支持eSIM？',
+                    '输入你的问题，比如：哪款手表支持GMS？',
+                    '输入你的问题，比如：手表续航多久？',
+                    '输入你的问题，比如：哪款适合户外运动？'
+                ],
+                filters: [
+                    {name: '功能需求（可多选）', key: 'feature', multi: true, options: ['NFC', '独立GPS', '蓝牙通话', 'eSIM', 'GMS兼容']},
+                    {name: '系统兼容', key: 'os', multi: false, options: ['全部', 'Android', 'iOS', 'Android(GMS)']},
+                    {name: '预算范围', key: 'budget', multi: false, options: [
+                        'A$100以下',
+                        'A$100–200',
+                        'A$200以上'
+                    ]}
+                ]
             }
         };
 
-        // 同源请求：本地、演示和部署时不再修改主机地址。
-        const API_BASE = '/api';
-        let currentCategory = 'earphone';
-        let productList = [];
-        let lastMessageRole = null;
-        let placeholderIndex = 0;
-        let placeholderTimer = null;
-        let isSending = false;
-
         const chatInput = document.getElementById('chatInput');
+        const chatProductSelect = document.getElementById('chatProductSelect');
         const sendBtn = document.getElementById('sendBtn');
         const chatBox = document.getElementById('chatBox');
-        const chatProductSelect = document.getElementById('chatProductSelect');
+        const compareButton = document.querySelector('.compare-btn');
+
+        function apiUrl(path) {
+            return `${API_BASE}${path}`;
+        }
+
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour < 12) return '早上好';
+            if (hour < 18) return '下午好';
+            return '晚上好';
+        }
 
         function escapeHtml(value) {
             return String(value ?? '')
-                .replaceAll('&', '&amp;')
-                .replaceAll('<', '&lt;')
-                .replaceAll('>', '&gt;')
-                .replaceAll('"', '&quot;')
-                .replaceAll("'", '&#039;');
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
 
-        function formatAnswer(answer) {
-            return escapeHtml(answer).replace(/\n/g, '<br>');
-        }
-
-        function formatPage(source) {
-            if (source.page !== undefined && source.page !== null && source.page !== '') {
-                return `第${escapeHtml(source.page)}页`;
+        function displayValue(value) {
+            if (value === null || value === undefined || value === '') {
+                return '暂无官方信息';
             }
-            const start = source.page_start;
-            const end = source.page_end;
-            if (start === undefined || start === null) return '页码未知';
-            return end && end !== start ? `第${start}-${end}页` : `第${start}页`;
+            if (typeof value === 'boolean') {
+                return value ? '支持' : '不支持';
+            }
+            if (Array.isArray(value)) {
+                return value.length ? value.map(displayValue).join('、') : '暂无官方信息';
+            }
+            if (typeof value === 'object') {
+                const objectDisplayText = Object.entries(value)
+                    .map(([key, val]) => `${key}：${displayValue(val)}`)
+                    .join('；');
+                return objectDisplayText || '暂无官方信息';
+            }
+            return String(value);
         }
 
-        function renderSources(sources = []) {
-            if (!Array.isArray(sources) || sources.length === 0) return '';
-            const cards = sources.map((source, index) => {
-                const score = typeof source.score === 'number'
-                    ? `${Math.round(source.score * 100)}%相关`
-                    : '相关片段';
-                return `
-                    <details class="source-card" ${index === 0 ? 'open' : ''}>
-                        <summary>
-                            <span>来源 ${index + 1} · ${escapeHtml(source.section || '说明书片段')}</span>
-                            <span class="source-score">${score}</span>
-                        </summary>
-                        <div class="source-meta">
-                            产品：${escapeHtml(source.product_name || source.product_id || '未知')}<br>
-                            文件：${escapeHtml(source.source_file || '未知')} · ${formatPage(source)}
-                        </div>
-                        <div class="source-content">${escapeHtml(source.content || '暂无原文')}</div>
-                    </details>`;
-            }).join('');
-            return `<div class="answer-title">说明书来源</div><div class="source-list">${cards}</div>`;
+        const COMPARE_VALUE_TRANSLATIONS = {
+            built_in_gnss: '内置GNSS（支持独立定位）',
+            connected_phone: '依赖手机连接定位',
+            no_positioning: '不支持定位',
+            gnss_tracking: 'GNSS轨迹记录',
+            swim_tracking: '游泳追踪',
+            heart_rate_broadcast: '心率广播',
+            running_courses: '跑步课程',
+            pebble_mode: '豆形模式',
+            vlog_mode: '运动Vlog',
+            fall_detection: '跌倒检测',
+            emergency_sos: '紧急求助',
+            pool_swimming: '泳池游泳',
+            open_water_swimming: '开放水域游泳',
+            outdoor_running: '户外跑步',
+            outdoor_cycling: '户外骑行',
+            walking: '健走',
+            TPU: 'TPU（热塑性聚氨酯）',
+            Calfskin: '小牛皮',
+            Fluororubber: '氟橡胶',
+            Silicone: '硅胶',
+            AUD: '澳元（AUD）',
+            CNY: '人民币（CNY）',
+            USD: '美元（USD）'
+        };
+
+        function translateCompareToken(token) {
+            const cleaned = String(token ?? '').trim();
+            if (!cleaned) return '';
+            return COMPARE_VALUE_TRANSLATIONS[cleaned] ?? cleaned;
         }
 
-        function renderWelcome() {
-            const config = CATEGORY_CONFIG[currentCategory];
-            lastMessageRole = null;
-            if (!config.enabled) {
-                chatBox.innerHTML = `
-                    <div class="construction-banner">
-                        <div class="construction-icon">${config.icon}</div>
-                        <div class="construction-title">${config.name}能力正在接入</div>
-                        <div class="construction-text">
-                            已为${config.name}预留问答、产品对比与智能推荐入口。<br>
-                            数据与知识库完成验收后，可直接在本页面开放。
-                        </div>
-                    </div>`;
-                return;
+        function formatCompatibilityText(compatibilityValue) {
+            return String(compatibilityValue)
+                .replace(/\band above\b/gi, '及以上')
+                .replace(/\band below\b/gi, '及以下')
+                .replace(/\bAndroid\b/g, 'Android')
+                .replace(/\biOS\b/g, 'iOS')
+                .replace(/\s*;\s*/g, '；')
+                .replace(/\s*,\s*/g, '，');
+        }
+
+        function formatCompareValue(label, value) {
+            const basic = displayValue(value);
+            if (basic === '暂无官方信息' || basic === '支持' || basic === '不支持') {
+                return basic;
             }
 
-            chatBox.innerHTML = `
-                <div class="welcome-section">
-                    <div class="welcome-title" id="welcomeTitle"></div>
-                    <div class="welcome-subtitle" id="welcomeSubtitle">${escapeHtml(config.subtitle)}</div>
-                    <div class="welcome-hint">你可以从下面这些开始：</div>
-                    <div class="hot-questions" id="hotQuestions"></div>
-                </div>`;
-            renderHotQuestions();
-            initGreeting();
-        }
+            const labelText = String(label ?? '');
+            const compareDisplayText = String(basic).trim();
 
-        function renderQuickQuestions() {
-            const config = CATEGORY_CONFIG[currentCategory];
-            const container = document.getElementById('quickQuestionsList');
-            if (!config.enabled) {
-                container.innerHTML = `
-                    <div class="quick-question" onclick="showConstructionNotice()">
-                        <span class="quick-question-icon">●</span>
-                        <span>${config.name}数据接入中</span>
-                    </div>`;
-                return;
+            if (labelText.includes('定位')) {
+                return translateCompareToken(compareDisplayText);
             }
-            container.innerHTML = config.quickQuestions.map(([question, label]) => `
-                <div class="quick-question" onclick="quickAsk('${escapeHtml(question)}')">
-                    <span class="quick-question-icon">●</span>
-                    <span>${escapeHtml(label)}</span>
-                </div>`).join('');
-        }
 
-        function renderHotQuestions() {
-            const config = CATEGORY_CONFIG[currentCategory];
-            const container = document.getElementById('hotQuestions');
-            if (!container || !config.enabled) return;
-            container.innerHTML = config.hotQuestions.map(([icon, title, desc, question]) => `
-                <div class="hot-card" onclick="quickAsk('${escapeHtml(question)}')">
-                    <div class="hot-card-icon">${icon}</div>
-                    <div class="hot-card-title">${escapeHtml(title)}</div>
-                    <div class="hot-card-desc">${escapeHtml(desc)}</div>
-                </div>`).join('');
-        }
-
-        function typeWriter(element, text, speed = 55) {
-            if (!element) return;
-            element.textContent = '';
-            let i = 0;
-            const cursor = document.createElement('span');
-            cursor.className = 'typing-cursor';
-            element.appendChild(cursor);
-            function type() {
-                if (i < text.length) {
-                    element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
-                    i += 1;
-                    setTimeout(type, speed);
-                } else {
-                    setTimeout(() => cursor.remove(), 900);
-                }
+            if (labelText.includes('运动功能')) {
+                const parts = compareDisplayText
+                    .split(/\s*[,，、;；]\s*/)
+                    .map(translateCompareToken)
+                    .filter(Boolean);
+                return parts.length ? parts.join('、') : '暂无官方信息';
             }
-            setTimeout(type, 180);
-        }
 
-        function initGreeting() {
-            const config = CATEGORY_CONFIG[currentCategory];
-            const hour = new Date().getHours();
-            let greeting = '你好';
-            if (hour < 12) greeting = '早上好';
-            else if (hour < 18) greeting = '下午好';
-            else greeting = '晚上好';
-            typeWriter(document.getElementById('welcomeTitle'), `${greeting}，我是${config.assistantName} 👋`);
-        }
-
-        function startPlaceholderRotation() {
-            clearInterval(placeholderTimer);
-            placeholderIndex = 0;
-            const config = CATEGORY_CONFIG[currentCategory];
-            const placeholders = config.placeholders || ['请输入问题'];
-            chatInput.placeholder = placeholders[0];
-            placeholderTimer = setInterval(() => {
-                placeholderIndex = (placeholderIndex + 1) % placeholders.length;
-                chatInput.placeholder = placeholders[placeholderIndex];
-            }, 4000);
-        }
-
-        function setNavEnabled(enabled) {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.dataset.panel !== 'chat') {
-                    item.classList.toggle('disabled', !enabled);
-                }
-            });
-            if (!enabled) switchPanel('chat');
-        }
-
-        function switchPanel(panelId) {
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.panel === panelId));
-            document.querySelectorAll('.content-panel').forEach(p => p.classList.toggle('active', p.id === panelId));
-        }
-
-        async function switchCategory(category) {
-            if (!CATEGORY_CONFIG[category]) return;
-            currentCategory = category;
-            const config = CATEGORY_CONFIG[category];
-            document.querySelectorAll('.category-button').forEach(button => {
-                button.classList.toggle('active', button.dataset.category === category);
-            });
-            document.getElementById('brandTitle').textContent = '小米智能产品助手';
-            document.getElementById('categoryTag').textContent = config.name;
-            renderQuickQuestions();
-            renderWelcome();
-            startPlaceholderRotation();
-            setNavEnabled(config.enabled);
-            chatInput.disabled = !config.enabled;
-            sendBtn.disabled = !config.enabled;
-            document.getElementById('chatProductHint').textContent = config.enabled
-                ? '说明书问答需要先选择具体产品'
-                : `${config.name}知识库正在接入`;
-
-            if (config.enabled) {
-                await loadProducts();
-            } else {
-                productList = [];
-                populateSelects();
+            if (labelText.includes('系统兼容')) {
+                return formatCompatibilityText(compareDisplayText);
             }
+
+            if (labelText.includes('表带材质') || labelText.includes('腕带材质')) {
+                return compareDisplayText
+                    .split(/\s*[/,，、;；]\s*/)
+                    .map(translateCompareToken)
+                    .filter(Boolean)
+                    .join(' / ');
+            }
+
+            if (labelText.includes('货币')) {
+                return translateCompareToken(compareDisplayText);
+            }
+
+            return translateCompareToken(compareDisplayText);
         }
 
-        function showConstructionNotice() {
-            const config = CATEGORY_CONFIG[currentCategory];
-            alert(`${config.name}数据和知识库正在接入，当前先开放耳机功能。`);
+        function setState(container, type, message) {
+            const icon = type === 'loading'
+                ? '<div class="state-spinner"></div>'
+                : type === 'error' ? '⚠️' : '📭';
+            container.innerHTML = `
+                <div class="state-card ${type}">
+                    ${icon}
+                    <div>${escapeHtml(message)}</div>
+                </div>
+            `;
         }
 
-        async function loadProducts() {
-            const config = CATEGORY_CONFIG[currentCategory];
-            chatProductSelect.disabled = true;
-            chatProductSelect.innerHTML = '<option value="">正在加载产品...</option>';
+        async function requestJson(path, options = {}) {
+            const config = {...options};
+            config.headers = {
+                'Accept': 'application/json',
+                ...(config.body ? {'Content-Type': 'application/json'} : {}),
+                ...(config.headers || {})
+            };
+
+            let response;
             try {
-                const response = await fetch(`${API_BASE}/products?category=${encodeURIComponent(config.backendCategory)}`);
-                const data = await response.json();
-                if (!response.ok || !data.success || !Array.isArray(data.products)) {
-                    throw new Error(data.message || '获取产品列表失败');
-                }
-                productList = data.products;
-                populateSelects();
+                response = await fetch(apiUrl(path), config);
             } catch (error) {
-                console.error(error);
-                productList = [];
-                populateSelects();
-                document.getElementById('chatProductHint').textContent = '产品列表加载失败，请确认后端已启动';
+                throw new Error('无法连接后端服务，请确认 Flask 服务已启动。');
             }
+
+            const contentType = response.headers.get('content-type') || '';
+            let payload = null;
+            if (response.status !== 204) {
+                try {
+                    payload = contentType.includes('application/json')
+                        ? await response.json()
+                        : await response.text();
+                } catch (error) {
+                    payload = null;
+                }
+            }
+
+            if (!response.ok) {
+                const detail = typeof payload === 'object' && payload
+                    ? payload.message || payload.error || payload.detail
+                    : payload;
+                throw new Error(detail || `接口请求失败（HTTP ${response.status}）`);
+            }
+            return payload;
         }
 
-        function populateSelects() {
-            const config = CATEGORY_CONFIG[currentCategory];
-            const productLabel = config.name;
-            const options = productList.map(product =>
-                `<option value="${escapeHtml(product.product_id)}">${escapeHtml(product.product_name)}</option>`
-            ).join('');
-
-            chatProductSelect.innerHTML = `<option value="">请选择具体${productLabel}</option>${options}`;
-            chatProductSelect.disabled = !config.enabled || productList.length === 0;
-
-            const model1 = document.getElementById('model1');
-            const model2 = document.getElementById('model2');
-            model1.innerHTML = `<option value="">选择第一款${productLabel}</option>${options}`;
-            model2.innerHTML = `<option value="">选择第二款${productLabel}</option>${options}`;
-            model1.disabled = !config.enabled || productList.length === 0;
-            model2.disabled = !config.enabled || productList.length === 0;
+        function unwrapPayload(raw) {
+            if (raw && typeof raw === 'object' && !Array.isArray(raw)) {
+                if (raw.data !== undefined) return raw.data;
+                if (raw.result !== undefined) return raw.result;
+            }
+            return raw;
         }
 
-        document.querySelectorAll('.category-button').forEach(button => {
-            button.addEventListener('click', () => switchCategory(button.dataset.category));
-        });
+        function normalizeProducts(raw) {
+            const payload = unwrapPayload(raw);
+            let list = [];
+            if (Array.isArray(payload)) {
+                list = payload;
+            } else if (payload && typeof payload === 'object') {
+                list = payload.products || payload.items || payload.results || payload.list || [];
+            }
 
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                if (item.classList.contains('disabled')) return;
-                switchPanel(item.dataset.panel);
+            return list.map((item, index) => {
+                if (typeof item === 'string') {
+                    return {id: item, name: item, raw: item};
+                }
+                const id = item.id ?? item.product_id ?? item.productId ?? item.code ?? item.sku ?? item.model_id ?? `product-${index}`;
+                const name = item.name ?? item.product_name ?? item.productName ?? item.model ?? item.title ?? id;
+                return {
+                    id: String(id),
+                    name: displayValue(name),
+                    source: item.official_source ?? item.source_url ?? item.source ?? item.url ?? null,
+                    raw: item
+                };
+            }).filter(item => item.id && item.name);
+        }
+
+        function fillProductSelects(products, placeholder = '选择产品') {
+            const select1 = document.getElementById('model1');
+            const select2 = document.getElementById('model2');
+
+            [select1, select2].forEach((select, index) => {
+                const previousValue = select.value;
+                select.innerHTML = '';
+
+                const first = document.createElement('option');
+                first.value = '';
+                first.textContent = index === 0
+                    ? `选择第一款${catConfig[currentCat].name}`
+                    : `选择第二款${catConfig[currentCat].name}`;
+                select.appendChild(first);
+
+                products.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id;
+                    option.textContent = product.name;
+                    select.appendChild(option);
+                });
+
+                if (!products.length) {
+                    first.textContent = placeholder;
+                } else if (products.some(product => product.id === previousValue)) {
+                    select.value = previousValue;
+                }
             });
-        });
 
-        chatInput.addEventListener('input', () => {
-            chatInput.style.height = 'auto';
-            chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
-            sendBtn.classList.toggle('active', !!chatInput.value.trim() && !isSending);
-        });
+            const previousChatValue = chatProductSelect.value;
+            chatProductSelect.innerHTML = '';
 
-        chatInput.addEventListener('keydown', event => {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                event.preventDefault();
-                sendMessage();
+            // 第一项固定为通用对话；value 为空时，后端进入 general 模式。
+            const generalOption = document.createElement('option');
+            generalOption.value = '';
+            generalOption.textContent = '通用对话（不使用产品知识库）';
+            chatProductSelect.appendChild(generalOption);
+
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = `${product.id}｜${product.name}`;
+                chatProductSelect.appendChild(option);
+            });
+
+            // 当前产品仍存在时保留选择，否则回到通用对话。
+            if (
+                previousChatValue
+                && products.some(product => product.id === previousChatValue)
+            ) {
+                chatProductSelect.value = previousChatValue;
+            } else {
+                chatProductSelect.value = '';
             }
-        });
-
-        function quickAsk(question) {
-            if (!CATEGORY_CONFIG[currentCategory].enabled) {
-                showConstructionNotice();
-                return;
-            }
-            chatInput.value = question;
-            chatInput.dispatchEvent(new Event('input'));
-            sendMessage();
         }
 
-        async function sendMessage() {
-            if (isSending) return;
-            const config = CATEGORY_CONFIG[currentCategory];
-            if (!config.enabled) {
-                showConstructionNotice();
-                return;
-            }
-            const question = chatInput.value.trim();
-            if (!question) return;
-            const productId = chatProductSelect.value;
-            if (!productId) {
-                appendMessage('bot', '请先在输入框上方选择一个具体耳机，再进行说明书问答。');
-                chatProductSelect.focus();
+        async function loadProducts(cat, force = false) {
+            const seq = ++productLoadSeq;
+            const config = catConfig[cat];
+            const compareResult = document.getElementById('compareResult');
+
+            if (!force && productCache[cat].length) {
+                fillProductSelects(productCache[cat]);
                 return;
             }
 
-            appendMessage('user', question);
-            chatInput.value = '';
-            chatInput.style.height = 'auto';
-            isSending = true;
-            sendBtn.disabled = true;
-            sendBtn.classList.remove('active');
-            const loadingId = appendSkeletonLoading();
+            fillProductSelects([], '产品名单加载中…');
+            compareButton.disabled = true;
+            setState(compareResult, 'loading', '正在通过 /api/products 加载产品名单…');
+
+            const query = new URLSearchParams({
+                category: config.apiCategory,
+                product_type: config.apiCategory
+            });
 
             try {
-                const response = await fetch(`${API_BASE}/chat`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-                    body: JSON.stringify({ product_id: productId, question, top_k: 3 })
-                });
-                const data = await response.json();
-                removeLoading(loadingId);
-                if (!response.ok || !data.success) {
-                    appendMessage('bot', `抱歉，${data.message || '问答请求失败'}。`);
+                const raw = await requestJson(`${API_ENDPOINTS.products}?${query.toString()}`, {method: 'GET'});
+                if (seq !== productLoadSeq || currentCat !== cat) return;
+
+                const products = normalizeProducts(raw);
+                productCache[cat] = products;
+                fillProductSelects(products);
+
+                if (!products.length) {
+                    setState(compareResult, 'empty', '接口已返回，但当前分类暂无产品数据。');
+                    compareButton.disabled = true;
                     return;
                 }
-                appendAnswer(data.answer || '暂无答案', data.sources || []);
+
+                compareButton.disabled = false;
+                setState(compareResult, 'empty', '请选择两款产品开始参数对比。');
             } catch (error) {
-                console.error(error);
-                removeLoading(loadingId);
-                appendMessage('bot', '无法连接后端服务，请确认 Flask 已在 127.0.0.1:5000 启动。');
-            } finally {
-                isSending = false;
-                sendBtn.disabled = false;
+                if (seq !== productLoadSeq || currentCat !== cat) return;
+                productCache[cat] = [];
+                fillProductSelects([], '产品接口加载失败');
+                compareButton.disabled = true;
+                setState(compareResult, 'error', `产品名单加载失败：${error.message}`);
             }
         }
 
-        function appendMessage(role, content) {
-            const isContinuous = lastMessageRole === role;
-            const config = CATEGORY_CONFIG[currentCategory];
+        function typeText(element, text, callback) {
+            element.innerHTML = '';
+            let i = 0;
+            const cursor = '<span class="typing-cursor"></span>';
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    element.innerHTML = escapeHtml(text.slice(0, i + 1)) + cursor;
+                    i++;
+                } else {
+                    element.textContent = text;
+                    clearInterval(timer);
+                    callback && callback();
+                }
+            }, 55);
+        }
+
+        function rotatePlaceholder() {
+            const placeholders = catConfig[currentCat].placeholders;
+            chatInput.placeholder = placeholders[placeholderIndex % placeholders.length];
+            placeholderIndex++;
+        }
+
+        function renderQuickQuestions(config) {
+            const container = document.getElementById('quickQuestions');
+            container.innerHTML = '<div class="section-title">快捷提问</div>';
+            config.quickQuestions.forEach(question => {
+                const item = document.createElement('div');
+                item.className = 'quick-question';
+                item.textContent = question;
+                item.addEventListener('click', () => quickAsk(question));
+                container.appendChild(item);
+            });
+        }
+
+        function renderHotCards(config) {
+            const container = document.getElementById('hotCards');
+            container.innerHTML = '';
+            config.cards.forEach(card => {
+                const item = document.createElement('div');
+                item.className = 'hot-card';
+                item.innerHTML = `
+                    <div class="hot-card-icon">${escapeHtml(card.icon)}</div>
+                    <div class="hot-card-title">${escapeHtml(card.title)}</div>
+                    <div class="hot-card-desc">${escapeHtml(card.desc)}</div>
+                `;
+                item.addEventListener('click', () => quickAsk(card.action));
+                container.appendChild(item);
+            });
+        }
+
+        function renderRecommendForm(config) {
+            const form = document.getElementById('recommendForm');
+            form.innerHTML = '';
+
+            config.filters.forEach(filter => {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+                group.innerHTML = `<div class="form-label">${escapeHtml(filter.name)}</div>`;
+
+                const tags = document.createElement('div');
+                tags.className = 'tag-group';
+                tags.dataset.multi = String(filter.multi);
+                tags.dataset.key = filter.key;
+
+                filter.options.forEach((option, index) => {
+                    const tag = document.createElement('div');
+                    tag.className = `tag-option${index === 0 ? ' selected' : ''}`;
+                    tag.textContent = option;
+                    tags.appendChild(tag);
+                });
+
+                group.appendChild(tags);
+                form.appendChild(group);
+            });
+
+            const submit = document.createElement('button');
+            submit.className = 'recommend-submit';
+            submit.type = 'button';
+            submit.textContent = '帮我推荐最合适的产品';
+            submit.addEventListener('click', getRecommend);
+            form.appendChild(submit);
+        }
+
+        function clearConversation() {
+            [...chatBox.children].forEach(child => {
+                if (!child.classList.contains('welcome-section')) child.remove();
+            });
+            lastMessageRole = null;
+        }
+
+        async function switchCategory(cat) {
+            currentCat = cat;
+            const config = catConfig[cat];
+
+            document.querySelectorAll('.cat-btn').forEach(button => button.classList.remove('active'));
+            document.querySelector(`[data-cat="${cat}"]`).classList.add('active');
+
+            renderQuickQuestions(config);
+            renderHotCards(config);
+            renderRecommendForm(config);
+
+            typeText(
+                document.getElementById('welcomeTitle'),
+                `${getGreeting()}，我是小米${config.greet} 👋`
+            );
+            document.getElementById('welcomeSubtitle').textContent =
+                '可以帮你解答产品问题、对比参数、智能推荐合适的产品';
+
+            placeholderIndex = 0;
+            rotatePlaceholder();
+            clearConversation();
+
+            setState(
+                document.getElementById('recommendResult'),
+                'empty',
+                '选择你的需求，一键获取个性化推荐。'
+            );
+
+            switchPage('chat');
+            await loadProducts(cat, true);
+        }
+
+        function switchPage(panel) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.content-panel').forEach(item => item.classList.remove('active'));
+            document.querySelector(`[data-panel="${panel}"]`).classList.add('active');
+            document.getElementById(panel).classList.add('active');
+
+            if (panel === 'compare' && !productCache[currentCat].length) {
+                loadProducts(currentCat);
+            }
+        }
+
+        function normalizeSources(value) {
+            if (value === null || value === undefined || value === '') return [];
+            const list = Array.isArray(value) ? value : [value];
+            const seen = new Set();
+
+            return list.map(item => {
+                if (typeof item === 'string') {
+                    const isUrl = /^https?:\/\//i.test(item);
+                    return {
+                        label: isUrl ? '官方来源' : item,
+                        url: isUrl ? item : null
+                    };
+                }
+
+                if (!item || typeof item !== 'object') return null;
+
+                return {
+                    label: displayValue(
+                        item.source_name ??
+                        item.section ??
+                        item.source_file ??
+                        item.title ??
+                        item.name ??
+                        item.label ??
+                        '官方来源'
+                    ),
+                    url:
+                        item.url ??
+                        item.link ??
+                        item.source_url ??
+                        item.official_url ??
+                        null
+                };
+            }).filter(source => {
+                if (!source) return false;
+
+                const key = source.url
+                    ? `url:${source.url}`
+                    : `label:${source.label}`;
+
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+        }
+
+        function sourceHtml(sources) {
+            const normalized = normalizeSources(sources);
+            if (!normalized.length) return '暂无官方信息';
+
+            return normalized.map(source => {
+                const label = escapeHtml(source.label);
+                if (!source.url) return label;
+                return `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+            }).join('；');
+        }
+
+        function normalizeChat(raw) {
+            const payload = unwrapPayload(raw);
+            if (typeof payload === 'string') {
+                return {answer: payload, productName: null, sources: []};
+            }
+            if (!payload || typeof payload !== 'object') {
+                return {answer: null, productName: null, sources: []};
+            }
+
+            return {
+                answer: payload.answer ?? payload.response ?? payload.reply ?? payload.text ?? payload.message ?? null,
+                productName:
+                    payload.product_name ??
+                    payload.productName ??
+                    payload.product?.name ??
+                    payload.matched_product?.name ??
+                    null,
+                sources:
+                    payload.sources ??
+                    payload.official_sources ??
+                    payload.source_records ??
+                    payload.references ??
+                    payload.source ??
+                    null
+            };
+        }
+
+        function appendMessage(role, content, meta = null) {
             const message = document.createElement('div');
-            message.className = `message ${role} ${isContinuous ? 'continuous' : ''}`;
-            const nameHtml = isContinuous ? '' : `<div class="message-name">${role === 'bot' ? escapeHtml(config.assistantName) : '我'}</div>`;
+            message.className = `message ${role}`;
+            if (lastMessageRole === role) message.classList.add('continuous');
+
+            const time = new Date().toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const safeContent = escapeHtml(displayValue(content)).replace(/\n/g, '<br>');
+            const metaHtml = meta ? `
+                <div class="api-meta">
+                    <div><strong>相关产品：</strong>${escapeHtml(displayValue(meta.productName))}</div>
+                    <div><strong>官方来源：</strong>${sourceHtml(meta.sources)}</div>
+                </div>
+            ` : '';
+
             message.innerHTML = `
-                <div class="avatar ${role}">${role === 'bot' ? 'MI' : '我'}</div>
+                <div class="avatar ${role}">${
+                    role === 'bot'
+                        ? `<img src="${XIAOMI_LOGO_DATA_URL}" alt="Xiaomi 助手">`
+                        : '我'
+                }</div>
                 <div class="message-body">
-                    ${nameHtml}
-                    <div class="message-bubble"><div class="answer-text">${formatAnswer(content)}</div></div>
-                </div>`;
+                    <div class="message-name">小米${escapeHtml(catConfig[currentCat].greet)}</div>
+                    <div class="message-bubble">
+                        ${safeContent}
+                        ${metaHtml}
+                    </div>
+                    ${role === 'user' ? `<div class="message-time">${time} ✓✓</div>` : ''}
+                </div>
+            `;
+
             chatBox.appendChild(message);
             chatBox.scrollTop = chatBox.scrollHeight;
             lastMessageRole = role;
         }
 
-        function appendAnswer(answer, sources) {
-            const isContinuous = lastMessageRole === 'bot';
-            const config = CATEGORY_CONFIG[currentCategory];
-            const message = document.createElement('div');
-            message.className = `message bot ${isContinuous ? 'continuous' : ''}`;
-            const nameHtml = isContinuous ? '' : `<div class="message-name">${escapeHtml(config.assistantName)}</div>`;
-            message.innerHTML = `
-                <div class="avatar bot">MI</div>
-                <div class="message-body">
-                    ${nameHtml}
-                    <div class="message-bubble">
-                        <div class="answer-text">${formatAnswer(answer)}</div>
-                        ${renderSources(sources)}
-                    </div>
-                </div>`;
-            chatBox.appendChild(message);
-            chatBox.scrollTop = chatBox.scrollHeight;
-            lastMessageRole = 'bot';
-        }
-
-        function appendSkeletonLoading() {
-            const isContinuous = lastMessageRole === 'bot';
-            const config = CATEGORY_CONFIG[currentCategory];
+        function appendLoading() {
             const id = `loading-${Date.now()}`;
             const message = document.createElement('div');
-            message.className = `message bot ${isContinuous ? 'continuous' : ''}`;
+            message.className = 'message bot';
+            if (lastMessageRole === 'bot') message.classList.add('continuous');
             message.id = id;
-            const nameHtml = isContinuous ? '' : `<div class="message-name">${escapeHtml(config.assistantName)}</div>`;
             message.innerHTML = `
-                <div class="avatar bot">MI</div>
+                <div class="avatar bot">
+                    <img src="${XIAOMI_LOGO_DATA_URL}" alt="Xiaomi 助手">
+                </div>
                 <div class="message-body">
-                    ${nameHtml}
-                    <div class="message-bubble skeleton-bubble">
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line"></div>
-                        <div class="skeleton-line"></div>
+                    <div class="message-name">小米${escapeHtml(catConfig[currentCat].greet)}</div>
+                    <div class="message-bubble">
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
                     </div>
-                </div>`;
+                </div>
+            `;
             chatBox.appendChild(message);
             chatBox.scrollTop = chatBox.scrollHeight;
             lastMessageRole = 'bot';
@@ -1625,181 +1924,917 @@
             document.getElementById(id)?.remove();
         }
 
-        // ========== 对比功能：当前耳机可用，手环/手表入口预留 ==========
-        async function compareProducts() {
-            if (!CATEGORY_CONFIG[currentCategory].enabled) return showConstructionNotice();
-            const firstId = document.getElementById('model1').value;
-            const secondId = document.getElementById('model2').value;
-            if (!firstId || !secondId) return alert(`请选择两款${CATEGORY_CONFIG[currentCategory].name}`);
-            if (firstId === secondId) return alert(`请选择两款不同的${CATEGORY_CONFIG[currentCategory].name}`);
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
 
-            const button = document.getElementById('compareBtn');
-            const resultDiv = document.getElementById('compareResult');
-            button.textContent = '对比中...';
-            button.disabled = true;
-            resultDiv.innerHTML = '<div class="empty-state">加载中...</div>';
+            const selectedProductId = chatProductSelect.value;
+            const isGeneralMode = !selectedProductId;
+
+            const categoryAtSend = currentCat;
+            appendMessage('user', text);
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            sendBtn.classList.remove('active');
+
+            const loadingId = appendLoading();
+
             try {
-                const response = await fetch(`${API_BASE}/compare`, {
+                const requestBody = {
+                    question: text,
+                    message: text
+                };
+
+                // 只有选择具体产品时才发送 product_id 和产品分类信息。
+                // 通用对话不发送 product_id，由后端自动进入 general 模式。
+                if (!isGeneralMode) {
+                    requestBody.product_id = selectedProductId;
+                    requestBody.top_k = 3;
+                    requestBody.category = catConfig[categoryAtSend].apiCategory;
+                    requestBody.product_type = catConfig[categoryAtSend].apiCategory;
+                }
+
+                const raw = await requestJson(API_ENDPOINTS.chat, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-                    body: JSON.stringify({ product_ids: [firstId, secondId] })
+                    body: JSON.stringify(requestBody)
                 });
-                const data = await response.json();
-                if (!response.ok || !data.success) {
-                    resultDiv.innerHTML = `<div class="empty-state">❌ ${escapeHtml(data.message || '对比失败')}</div>`;
+
+                removeLoading(loadingId);
+                const result = normalizeChat(raw);
+
+                if (!result.answer) {
+                    appendMessage(
+                        'bot',
+                        '暂未检索到可用答案。',
+                        isGeneralMode
+                            ? null
+                            : {productName: result.productName, sources: result.sources}
+                    );
                     return;
                 }
-                renderCompareResult(data);
+
+                appendMessage(
+                    'bot',
+                    result.answer,
+                    isGeneralMode
+                        ? null
+                        : {productName: result.productName, sources: result.sources}
+                );
             } catch (error) {
-                resultDiv.innerHTML = '<div class="empty-state">❌ 无法连接后端服务</div>';
-            } finally {
-                button.textContent = '开始对比';
-                button.disabled = false;
+                removeLoading(loadingId);
+                appendMessage('bot', `问答接口请求失败：${error.message}`);
             }
         }
 
-        function renderCompareResult(data) {
-            const { products = [], comparison = [], advantages = {} } = data;
-            if (products.length < 2) {
-                document.getElementById('compareResult').innerHTML = '<div class="empty-state">暂无完整对比结果</div>';
+        function quickAsk(question) {
+            chatInput.value = question;
+            sendMessage();
+        }
+
+        function openExternalUrl(url) {
+            const opened = window.open(url, '_blank', 'noopener,noreferrer');
+            if (opened) opened.opener = null;
+        }
+
+        function firstValidUrl(...values) {
+            for (const value of values) {
+                if (typeof value === 'string' && /^https?:\/\//i.test(value.trim())) {
+                    return value.trim();
+                }
+            }
+            return null;
+        }
+
+        function findManualUrl(product) {
+            const raw = product?.raw && typeof product.raw === 'object'
+                ? product.raw
+                : (product ?? {});
+
+            const directUrl = firstValidUrl(
+                raw.manual_url,
+                raw.manualUrl,
+                raw.user_manual_url,
+                raw.userManualUrl,
+                raw.user_guide_url,
+                raw.userGuideUrl,
+                raw.guide_url,
+                raw.guideUrl,
+                raw.instructions_url,
+                raw.instructionsUrl
+            );
+
+            if (directUrl) return directUrl;
+
+            const records =
+                raw.source_records ??
+                raw.sources ??
+                raw.references ??
+                [];
+
+            if (Array.isArray(records)) {
+                for (const record of records) {
+                    if (!record || typeof record !== 'object') continue;
+
+                    const descriptor = [
+                        record.source_type,
+                        record.type,
+                        record.title,
+                        record.name,
+                        record.label,
+                        record.description
+                    ].filter(Boolean).join(' ').toLowerCase();
+
+                    const looksLikeManual =
+                        descriptor.includes('manual') ||
+                        descriptor.includes('user guide') ||
+                        descriptor.includes('guide') ||
+                        descriptor.includes('说明书') ||
+                        descriptor.includes('用户指南');
+
+                    if (!looksLikeManual) continue;
+
+                    const url = firstValidUrl(
+                        record.url,
+                        record.link,
+                        record.source_url,
+                        record.official_url,
+                        record.manual_url
+                    );
+
+                    if (url) return url;
+                }
+            }
+
+            return null;
+        }
+
+        function openCurrentProductManual() {
+            const selectedProductId = chatProductSelect.value;
+
+            if (!selectedProductId) {
+                appendMessage(
+                    'bot',
+                    '当前处于通用对话模式。请先选择一款具体产品查看对应说明书；已为你打开小米官方用户指南中心。'
+                );
+                openExternalUrl(XIAOMI_USER_GUIDE_URL);
                 return;
             }
-            const [first, second] = products;
-            let html = `<div class="compare-table-wrapper"><table class="compare-table"><thead><tr>
-                <th class="param-name">参数项</th>
-                <th>${escapeHtml(first.product_name)}</th>
-                <th>${escapeHtml(second.product_name)}</th>
-                </tr></thead><tbody>`;
-            comparison.forEach(item => {
-                const firstValue = item.display_values?.[first.product_id] ?? '—';
-                const secondValue = item.display_values?.[second.product_id] ?? '—';
-                const firstBest = advantages?.[first.product_id]?.some(value => value.includes(item.label));
-                const secondBest = advantages?.[second.product_id]?.some(value => value.includes(item.label));
-                html += `<tr>
-                    <td class="param-name">${escapeHtml(item.label)}</td>
-                    <td class="${firstBest ? 'best-value' : ''}">${escapeHtml(firstValue)}${item.unit ? ` ${escapeHtml(item.unit)}` : ''}</td>
-                    <td class="${secondBest ? 'best-value' : ''}">${escapeHtml(secondValue)}${item.unit ? ` ${escapeHtml(item.unit)}` : ''}</td>
-                </tr>`;
-            });
-            html += '</tbody></table></div>';
-            const firstAdvantages = advantages?.[first.product_id] || [];
-            const secondAdvantages = advantages?.[second.product_id] || [];
-            html += `<div style="margin-top:16px;padding:16px;background:#F8F8FA;border-radius:8px;font-size:13px;">
-                <div style="margin-bottom:8px;"><strong>💡 ${escapeHtml(first.product_name)} 优势：</strong>${escapeHtml(firstAdvantages.join('、') || '无明显优势')}</div>
-                <div><strong>💡 ${escapeHtml(second.product_name)} 优势：</strong>${escapeHtml(secondAdvantages.join('、') || '无明显优势')}</div>
-            </div>`;
-            document.getElementById('compareResult').innerHTML = html;
+
+            const product = productCache[currentCat]
+                .find(item => item.id === selectedProductId);
+
+            const manualUrl = findManualUrl(product);
+
+            if (manualUrl) {
+                openExternalUrl(manualUrl);
+                appendMessage(
+                    'bot',
+                    `已为你打开“${product?.name ?? selectedProductId}”的官方说明书。`
+                );
+                return;
+            }
+
+            appendMessage(
+                'bot',
+                `当前数据中尚未配置“${product?.name ?? selectedProductId}”的独立说明书链接，已为你打开小米官方用户指南中心。`
+            );
+            openExternalUrl(XIAOMI_USER_GUIDE_URL);
         }
 
-        // ========== 推荐功能 ==========
-        document.querySelectorAll('.tag-group').forEach(group => {
-            group.querySelectorAll('.tag-option').forEach(tag => {
-                tag.addEventListener('click', () => {
-                    if (!CATEGORY_CONFIG[currentCategory].enabled) return;
-                    const multi = ['preferences', 'must_have'].includes(group.dataset.group);
-                    if (multi) tag.classList.toggle('selected');
-                    else {
-                        group.querySelectorAll('.tag-option').forEach(item => item.classList.remove('selected'));
-                        tag.classList.add('selected');
-                    }
-                });
+        function openXiaomiCustomerService() {
+            appendMessage(
+                'bot',
+                '已为你打开小米官方客服页面，可使用在线咨询或查看官方售后联系方式。'
+            );
+            openExternalUrl(XIAOMI_CUSTOMER_SERVICE_URL);
+        }
+
+        function bindHelpAction(elementId, handler) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            element.addEventListener('click', handler);
+            element.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    handler();
+                }
             });
-        });
+        }
+
+        function getProductById(id) {
+            return productCache[currentCat].find(product => product.id === id) || {
+                id,
+                name: id
+            };
+        }
+
+        function specsObject(product) {
+            if (!product || typeof product !== 'object') return {};
+            return product.specs || product.parameters || product.attributes || product.fields || product.data || {};
+        }
+
+        function normalizeCompareRows(raw, leftProduct, rightProduct) {
+            const payload = unwrapPayload(raw);
+            let leftName = leftProduct.name;
+            let rightName = rightProduct.name;
+            let rows = [];
+            let sources = {
+                left: leftProduct.source ?? null,
+                right: rightProduct.source ?? null
+            };
+
+            const productList =
+                payload && typeof payload === 'object' && Array.isArray(payload.products)
+                    ? payload.products
+                    : [];
+
+            const leftBackendProduct =
+                productList.find(item =>
+                    String(item?.product_id ?? item?.id ?? '') === String(leftProduct.id)
+                ) ?? productList[0] ?? null;
+
+            const rightBackendProduct =
+                productList.find(item =>
+                    String(item?.product_id ?? item?.id ?? '') === String(rightProduct.id)
+                ) ?? productList[1] ?? null;
+
+            if (leftBackendProduct) {
+                leftName = displayValue(
+                    leftBackendProduct.product_name ??
+                    leftBackendProduct.name ??
+                    leftName
+                );
+                sources.left =
+                    leftBackendProduct.official_url ??
+                    leftBackendProduct.official_source ??
+                    leftBackendProduct.source_url ??
+                    leftBackendProduct.source ??
+                    sources.left;
+            }
+
+            if (rightBackendProduct) {
+                rightName = displayValue(
+                    rightBackendProduct.product_name ??
+                    rightBackendProduct.name ??
+                    rightName
+                );
+                sources.right =
+                    rightBackendProduct.official_url ??
+                    rightBackendProduct.official_source ??
+                    rightBackendProduct.source_url ??
+                    rightBackendProduct.source ??
+                    sources.right;
+            }
+
+            if (payload && typeof payload === 'object' && !Array.isArray(payload)) {
+                leftName =
+                    payload.product1_name ??
+                    payload.left_name ??
+                    payload.product1?.product_name ??
+                    payload.product1?.name ??
+                    payload.left_product?.product_name ??
+                    payload.left_product?.name ??
+                    leftName;
+
+                rightName =
+                    payload.product2_name ??
+                    payload.right_name ??
+                    payload.product2?.product_name ??
+                    payload.product2?.name ??
+                    payload.right_product?.product_name ??
+                    payload.right_product?.name ??
+                    rightName;
+
+                sources.left =
+                    payload.product1?.official_url ??
+                    payload.product1?.official_source ??
+                    payload.product1?.source_url ??
+                    payload.product1?.source ??
+                    payload.left_product?.official_url ??
+                    payload.left_product?.official_source ??
+                    payload.left_product?.source_url ??
+                    payload.left_product?.source ??
+                    payload.left_source ??
+                    sources.left;
+
+                sources.right =
+                    payload.product2?.official_url ??
+                    payload.product2?.official_source ??
+                    payload.product2?.source_url ??
+                    payload.product2?.source ??
+                    payload.right_product?.official_url ??
+                    payload.right_product?.official_source ??
+                    payload.right_product?.source_url ??
+                    payload.right_product?.source ??
+                    payload.right_source ??
+                    sources.right;
+
+                const candidateRows =
+                    payload.comparison ??
+                    payload.rows ??
+                    payload.parameters ??
+                    payload.items ??
+                    payload.differences;
+
+                if (Array.isArray(candidateRows)) {
+                    rows = candidateRows.map((row, index) => {
+                        if (!row || typeof row !== 'object') {
+                            return {
+                                label: `参数${index + 1}`,
+                                left: row,
+                                right: null,
+                                best: null
+                            };
+                        }
+
+                        const displayValues =
+                            row.display_values && typeof row.display_values === 'object'
+                                ? row.display_values
+                                : {};
+
+                        const rawValues =
+                            row.values && typeof row.values === 'object'
+                                ? row.values
+                                : {};
+
+                        const leftValue =
+                            displayValues[leftProduct.id] ??
+                            displayValues[String(leftProduct.id)] ??
+                            rawValues[leftProduct.id] ??
+                            rawValues[String(leftProduct.id)] ??
+                            row.product1 ??
+                            row.left ??
+                            row.value1 ??
+                            row.left_value ??
+                            row.values?.[0] ??
+                            row[leftProduct.id] ??
+                            null;
+
+                        const rightValue =
+                            displayValues[rightProduct.id] ??
+                            displayValues[String(rightProduct.id)] ??
+                            rawValues[rightProduct.id] ??
+                            rawValues[String(rightProduct.id)] ??
+                            row.product2 ??
+                            row.right ??
+                            row.value2 ??
+                            row.right_value ??
+                            row.values?.[1] ??
+                            row[rightProduct.id] ??
+                            null;
+
+                        return {
+                            // 后端同时返回 field 和中文 label，优先显示中文 label。
+                            label:
+                                row.label ??
+                                row.parameter ??
+                                row.name ??
+                                row.key ??
+                                row.field ??
+                                `参数${index + 1}`,
+                            left: leftValue,
+                            right: rightValue,
+                            best:
+                                row.best ??
+                                row.best_side ??
+                                row.best_product_id ??
+                                null,
+                            conclusion: row.conclusion ?? null
+                        };
+                    });
+                }
+
+                if (!rows.length) {
+                    const leftObject =
+                        payload.product1 ??
+                        payload.left_product ??
+                        leftBackendProduct;
+
+                    const rightObject =
+                        payload.product2 ??
+                        payload.right_product ??
+                        rightBackendProduct;
+
+                    const leftSpecs = specsObject(leftObject);
+                    const rightSpecs = specsObject(rightObject);
+                    const keys = [
+                        ...new Set([
+                            ...Object.keys(leftSpecs),
+                            ...Object.keys(rightSpecs)
+                        ])
+                    ];
+
+                    rows = keys.map(key => ({
+                        label: key,
+                        left: leftSpecs[key],
+                        right: rightSpecs[key],
+                        best: null
+                    }));
+                }
+
+                if (
+                    !rows.length &&
+                    payload.comparison &&
+                    typeof payload.comparison === 'object'
+                ) {
+                    rows = Object.entries(payload.comparison).map(
+                        ([key, value]) => ({
+                            label: value?.label ?? key,
+                            left:
+                                value?.display_values?.[leftProduct.id] ??
+                                value?.values?.[leftProduct.id] ??
+                                value?.product1 ??
+                                value?.left ??
+                                value?.[0] ??
+                                null,
+                            right:
+                                value?.display_values?.[rightProduct.id] ??
+                                value?.values?.[rightProduct.id] ??
+                                value?.product2 ??
+                                value?.right ??
+                                value?.[1] ??
+                                null,
+                            best: value?.best ?? null,
+                            conclusion: value?.conclusion ?? null
+                        })
+                    );
+                }
+            }
+
+            if (Array.isArray(payload)) {
+                rows = payload.map((row, index) => ({
+                    label:
+                        row?.label ??
+                        row?.parameter ??
+                        row?.name ??
+                        row?.field ??
+                        `参数${index + 1}`,
+                    left:
+                        row?.display_values?.[leftProduct.id] ??
+                        row?.values?.[leftProduct.id] ??
+                        row?.product1 ??
+                        row?.left ??
+                        row?.value1 ??
+                        null,
+                    right:
+                        row?.display_values?.[rightProduct.id] ??
+                        row?.values?.[rightProduct.id] ??
+                        row?.product2 ??
+                        row?.right ??
+                        row?.value2 ??
+                        null,
+                    best: row?.best ?? null,
+                    conclusion: row?.conclusion ?? null
+                }));
+            }
+
+            return {
+                leftName,
+                rightName,
+                rows,
+                sources
+            };
+        }
+
+        function isBest(best, side, productId) {
+            if (best === null || best === undefined || best === '') return false;
+            const value = String(best).toLowerCase();
+            if (side === 'left') {
+                return ['1', 'left', 'product1'].includes(value) || String(productId) === String(best);
+            }
+            return ['2', 'right', 'product2'].includes(value) || String(productId) === String(best);
+        }
+
+        function renderComparison(result, leftProduct, rightProduct) {
+            const container = document.getElementById('compareResult');
+            if (!result.rows.length) {
+                setState(container, 'empty', '接口已返回，但没有可展示的对比数据。');
+                return;
+            }
+
+            const rowsHtml = result.rows.map(row => `
+                <tr title="${escapeHtml(row.conclusion ?? '')}">
+                    <td class="param-name">${escapeHtml(displayValue(row.label))}</td>
+                    <td class="${isBest(row.best, 'left', leftProduct.id) ? 'best-value' : ''}">
+                        ${escapeHtml(formatCompareValue(row.label, row.left))}
+                    </td>
+                    <td class="${isBest(row.best, 'right', rightProduct.id) ? 'best-value' : ''}">
+                        ${escapeHtml(formatCompareValue(row.label, row.right))}
+                    </td>
+                </tr>
+            `).join('');
+
+            const sourceRow = `
+                <tr>
+                    <td class="param-name">官方来源</td>
+                    <td class="compare-source">${sourceHtml(result.sources.left ?? leftProduct.source)}</td>
+                    <td class="compare-source">${sourceHtml(result.sources.right ?? rightProduct.source)}</td>
+                </tr>
+            `;
+
+            container.innerHTML = `
+                <div class="compare-table-wrapper">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th class="param-name">参数项</th>
+                                <th>${escapeHtml(displayValue(result.leftName))}</th>
+                                <th>${escapeHtml(displayValue(result.rightName))}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                            ${sourceRow}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        async function compareProducts() {
+            const leftId = document.getElementById('model1').value;
+            const rightId = document.getElementById('model2').value;
+            const container = document.getElementById('compareResult');
+
+            if (!leftId || !rightId) {
+                setState(container, 'error', '请先选择两款产品。');
+                return;
+            }
+            if (leftId === rightId) {
+                setState(container, 'error', '请选择两款不同的产品。');
+                return;
+            }
+
+            const leftProduct = getProductById(leftId);
+            const rightProduct = getProductById(rightId);
+            compareButton.disabled = true;
+            setState(container, 'loading', '正在调用 /api/compare 获取真实对比结果…');
+
+            try {
+                const raw = await requestJson(API_ENDPOINTS.compare, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        category: catConfig[currentCat].apiCategory,
+                        product_type: catConfig[currentCat].apiCategory,
+                        product_ids: [leftId, rightId],
+                        product_id_1: leftId,
+                        product_id_2: rightId,
+                        left_product_id: leftId,
+                        right_product_id: rightId
+                    })
+                });
+
+                const result = normalizeCompareRows(raw, leftProduct, rightProduct);
+                renderComparison(result, leftProduct, rightProduct);
+            } catch (error) {
+                console.error('compareProducts failed:', error);
+                setState(
+                    container,
+                    'error',
+                    `对比页面处理失败：${error?.message ?? '未知错误'}`
+                );
+            } finally {
+                compareButton.disabled = !productCache[currentCat].length;
+            }
+        }
+
+        function collectPreferences() {
+            const preferences = {};
+            document.querySelectorAll('#recommendForm .tag-group').forEach(group => {
+                const selected = [...group.querySelectorAll('.tag-option.selected')]
+                    .map(item => item.textContent.trim());
+                preferences[group.dataset.key] = group.dataset.multi === 'true'
+                    ? selected
+                    : (selected[0] ?? null);
+            });
+            return preferences;
+        }
+
+        function productFallbackIcon() {
+            return currentCat === 'earphone'
+                ? '🎧'
+                : currentCat === 'band'
+                    ? '⌚'
+                    : '🕒';
+        }
+
+        function localProductImageUrl(productId) {
+            const safeId = String(productId ?? '')
+                .trim()
+                .toUpperCase()
+                .replace(/[^A-Z0-9_-]/g, '');
+
+            return safeId
+                ? `/static/images/products/${safeId}.webp`
+                : null;
+        }
+
+        function productImageHtml(item) {
+            const imageUrl =
+                item.imageUrl ??
+                localProductImageUrl(item.id);
+
+            const fallback = productFallbackIcon();
+
+            if (!imageUrl) {
+                return `
+                    <div class="product-image">
+                        <span class="product-image-fallback">${fallback}</span>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="product-image">
+                    <img
+                        src="${escapeHtml(imageUrl)}"
+                        alt="${escapeHtml(displayValue(item.name))}"
+                        loading="lazy"
+                        onerror="
+                            this.style.display='none';
+                            this.nextElementSibling.style.display='inline';
+                        "
+                    >
+                    <span
+                        class="product-image-fallback"
+                        style="display:none"
+                    >${fallback}</span>
+                </div>
+            `;
+        }
+
+        function normalizeRecommendations(raw) {
+            const payload = unwrapPayload(raw);
+            let list = [];
+            if (Array.isArray(payload)) {
+                list = payload;
+            } else if (payload && typeof payload === 'object') {
+                list =
+                    payload.recommendations ??
+                    payload.products ??
+                    payload.items ??
+                    payload.results ??
+                    payload.list ??
+                    [];
+            }
+
+            return list.map((item, index) => {
+                if (typeof item === 'string') {
+                    return {
+                        id: `recommend-${index}`,
+                        name: item,
+                        price: null,
+                        score: null,
+                        reasons: [],
+                        sources: []
+                    };
+                }
+
+                const product = item.product && typeof item.product === 'object' ? item.product : item;
+                return {
+                    id: String(product.id ?? product.product_id ?? item.id ?? `recommend-${index}`),
+                    name:
+                        product.name ??
+                        product.product_name ??
+                        product.model ??
+                        item.product_name ??
+                        item.name ??
+                        null,
+                    price:
+                        product.price ??
+                        product.official_price ??
+                        item.price ??
+                        item.official_price ??
+                        null,
+                    score:
+                        item.match_score ??
+                        item.score ??
+                        item.similarity ??
+                        item.match_rate ??
+                        product.match_score ??
+                        null,
+                    reasons:
+                        item.reasons ??
+                        item.reason ??
+                        item.features ??
+                        item.highlights ??
+                        product.features ??
+                        [],
+                    sources:
+                        item.sources ??
+                        item.official_sources ??
+                        item.source_records ??
+                        item.source ??
+                        product.official_source ??
+                        product.source ??
+                        null,
+                    summary:
+                        item.summary ??
+                        item.description ??
+                        item.recommendation_reason ??
+                        null,
+                    imageUrl:
+                        product.image_url ??
+                        product.imageUrl ??
+                        item.image_url ??
+                        item.imageUrl ??
+                        null,
+                    currency:
+                        product.currency ??
+                        item.currency ??
+                        null
+                };
+            });
+        }
+
+        function formatProductPrice(price, currency) {
+            if (price === null || price === undefined || price === '') {
+                return '暂无官方信息';
+            }
+
+            const value = escapeHtml(displayValue(price));
+            const code = String(currency ?? '').trim().toUpperCase();
+
+            if (code === 'CNY') return `¥${value}`;
+            if (code === 'AUD') return `A$${value}`;
+            if (code === 'USD') return `$${value}`;
+            if (code === 'EUR') return `€${value}`;
+
+            return code
+                ? `${value} ${escapeHtml(code)}`
+                : `¥${value}`;
+        }
+
+        function formatScore(score) {
+            if (score === null || score === undefined || score === '') return null;
+            const number = Number(score);
+            if (!Number.isFinite(number)) return String(score);
+            const percent = number <= 1 ? number * 100 : number;
+            return `${Math.round(percent)}% 匹配`;
+        }
+
+        function normalizeReasonList(value) {
+            if (value === null || value === undefined || value === '') return [];
+            if (Array.isArray(value)) return value.map(displayValue);
+            if (typeof value === 'string') return [value];
+            if (typeof value === 'object') {
+                return Object.entries(value).map(([key, val]) => `${key}：${displayValue(val)}`);
+            }
+            return [displayValue(value)];
+        }
+
+        function renderRecommendations(items) {
+            const container = document.getElementById('recommendResult');
+            if (!items.length) {
+                setState(container, 'empty', '接口已返回，但没有匹配到推荐结果。');
+                return;
+            }
+
+            container.innerHTML = '';
+            items.forEach(item => {
+                const score = formatScore(item.score);
+                const reasons = normalizeReasonList(item.reasons);
+                const reasonHtml = reasons.length
+                    ? reasons.map(reason => `<span class="feature-tag">✅ ${escapeHtml(reason)}</span>`).join('')
+                    : '<span class="feature-tag">暂无官方信息</span>';
+
+                const source = normalizeSources(item.sources)[0];
+                const sourceAction = source?.url
+                    ? `<a class="action-btn primary source-link" href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">查看官方来源 →</a>`
+                    : '';
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    ${productImageHtml(item)}
+                    <div class="product-info">
+                        <div class="product-header">
+                            <div class="product-name">${escapeHtml(displayValue(item.name))}</div>
+                            ${score ? `<div class="match-score">${escapeHtml(score)}</div>` : ''}
+                        </div>
+                        <div class="product-price">${formatProductPrice(item.price, item.currency)}</div>
+                        ${item.summary ? `<div class="product-extra">${escapeHtml(displayValue(item.summary))}</div>` : ''}
+                        <div class="product-features">${reasonHtml}</div>
+                        <div class="product-actions">
+                            <button class="action-btn" type="button" data-compare-id="${escapeHtml(item.id)}">加入对比</button>
+                            ${sourceAction}
+                        </div>
+                        <div class="product-source"><strong>官方来源：</strong>${sourceHtml(item.sources)}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
 
         async function getRecommend() {
-            if (!CATEGORY_CONFIG[currentCategory].enabled) return showConstructionNotice();
-            const scenario = document.querySelector('[data-group="scenario"] .tag-option.selected')?.dataset.value || 'daily';
-            const budgetValue = document.querySelector('[data-group="budget"] .tag-option.selected')?.dataset.value;
-            const budget_max = budgetValue ? Number.parseInt(budgetValue, 10) : null;
-            const preferences = [...document.querySelectorAll('[data-group="preferences"] .tag-option.selected')].map(item => item.dataset.value);
-            const must_have = [...document.querySelectorAll('[data-group="must_have"] .tag-option.selected')].map(item => item.dataset.value);
-            const resultDiv = document.getElementById('recommendResult');
-            resultDiv.innerHTML = '<div class="empty-state">推荐中...</div>';
+            const container = document.getElementById('recommendResult');
+            const submit = document.querySelector('#recommendForm .recommend-submit');
+            const preferences = collectPreferences();
+
+            submit.disabled = true;
+            setState(container, 'loading', '正在调用 /api/recommend 获取真实推荐结果…');
+
             try {
-                const response = await fetch(`${API_BASE}/recommend`, {
+                const raw = await requestJson(API_ENDPOINTS.recommend, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-                    body: JSON.stringify({ scenario, budget_max, preferences, must_have, top_k: 3 })
+                    body: JSON.stringify({
+                        category: catConfig[currentCat].apiCategory,
+                        product_type: catConfig[currentCat].apiCategory,
+                        preferences,
+                        filters: preferences
+                    })
                 });
-                const data = await response.json();
-                if (!response.ok || !data.success) {
-                    const suggestion = Array.isArray(data.suggestions) && data.suggestions.length
-                        ? `<div style="margin-top:12px;color:#8E8E93;">💡 建议：${escapeHtml(data.suggestions.join('、'))}</div>`
-                        : '';
-                    resultDiv.innerHTML = `<div class="empty-state">❌ ${escapeHtml(data.message || '暂无符合条件的产品')}${suggestion}</div>`;
-                    return;
-                }
-                renderRecommendResult(data);
+
+                const recommendations = normalizeRecommendations(raw);
+                renderRecommendations(recommendations);
             } catch (error) {
-                resultDiv.innerHTML = '<div class="empty-state">❌ 无法连接后端服务</div>';
+                setState(container, 'error', `推荐接口请求失败：${error.message}`);
+            } finally {
+                submit.disabled = false;
             }
         }
 
-        function renderRecommendResult(data) {
-            const recommendations = data.recommendations || [];
-            if (!recommendations.length) {
-                document.getElementById('recommendResult').innerHTML = '<div class="empty-state">暂无推荐结果</div>';
+        function addRecommendationToCompare(productId) {
+            const products = productCache[currentCat];
+            const found = products.find(product => product.id === productId);
+            if (!found) {
+                setState(
+                    document.getElementById('compareResult'),
+                    'error',
+                    '该推荐产品未出现在 /api/products 返回的产品名单中，暂时无法加入对比。'
+                );
+                switchPage('compare');
                 return;
             }
-            const html = recommendations.map(recommendation => {
-            const rawScore = Number(recommendation.score ?? 0);
 
-const scorePercent = Math.max(
-    0,
-    Math.min(
-        100,
-        rawScore <= 1 ? rawScore * 100 : rawScore
-    )
-);
-
-const scoreText = scorePercent.toFixed(1);
-
-const scoreColor = scorePercent >= 80
-    ? '#34C759'
-    : scorePercent >= 60
-        ? '#FF9500'
-        : '#8E8E93';
-                const tags = [
-                    ...(recommendation.reasons || []).slice(0, 3).map(reason => `<span class="feature-tag">✅ ${escapeHtml(reason)}</span>`),
-                    ...(recommendation.limitations || []).slice(0, 2).map(limit => `<span class="feature-tag" style="background:#FFF5F5;color:#FF3B30;">⚠️ ${escapeHtml(limit)}</span>`)
-                ].join('');
-                const badges = ['🥇', '🥈', '🥉'];
-                return `<div class="product-card" style="border-left:4px solid ${scoreColor};">
-                    <div class="product-image">${CATEGORY_CONFIG[currentCategory].icon}</div>
-                    <div class="product-info">
-                        <div class="product-header"><div>
-                            <div class="product-name">${badges[recommendation.rank - 1] || '⭐'} ${escapeHtml(recommendation.product_name)}</div>
-                            <div class="product-category">¥${escapeHtml(recommendation.reference_price ?? '—')} · ${escapeHtml(recommendation.wearing_type || '未知佩戴方式')}</div>
-                        </div><div class="match-score" style="color:${scoreColor};">
-                            <div class="score-bar"><div class="score-fill" style="width:${scorePercent}%;background:linear-gradient(90deg,${scoreColor},${scoreColor}88);"></div></div>
-                            ${scoreText}% 匹配
-                        </div></div>
-                        <div class="product-features">${tags}</div>
-                        <div class="product-actions">
-                            <button class="action-btn primary" onclick="askAboutProduct('${escapeHtml(recommendation.product_id)}')">问说明书</button>
-                            <button class="action-btn" onclick="switchToCompare('${escapeHtml(recommendation.product_id)}')">加入对比</button>
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
-            document.getElementById('recommendResult').innerHTML = html;
+            const first = document.getElementById('model1');
+            const second = document.getElementById('model2');
+            if (!first.value) first.value = productId;
+            else if (!second.value && first.value !== productId) second.value = productId;
+            else {
+                first.value = productId;
+                second.value = '';
+            }
+            switchPage('compare');
         }
 
-        function askAboutProduct(productId) {
-            switchPanel('chat');
-            chatProductSelect.value = productId;
-            chatInput.focus();
-        }
+        document.querySelectorAll('.cat-btn').forEach(button => {
+            button.addEventListener('click', () => switchCategory(button.dataset.cat));
+        });
 
-        function switchToCompare(productId) {
-            switchPanel('compare');
-            document.getElementById('model1').value = productId;
-            const other = productList.find(product => product.product_id !== productId);
-            if (other) document.getElementById('model2').value = other.product_id;
-        }
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => switchPage(item.dataset.panel));
+        });
 
-        // 初始化耳机品类；手环、手表入口已保留。
-        switchCategory('earphone');
+        chatInput.addEventListener('input', () => {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = `${Math.min(chatInput.scrollHeight, 120)}px`;
+            sendBtn.classList.toggle('active', Boolean(chatInput.value.trim()));
+        });
+
+        chatInput.addEventListener('keydown', event => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        document.addEventListener('click', event => {
+            if (event.target.classList.contains('tag-option')) {
+                const group = event.target.parentElement;
+                const isMulti = group.dataset.multi === 'true';
+                if (!isMulti) {
+                    group.querySelectorAll('.tag-option').forEach(tag => tag.classList.remove('selected'));
+                }
+                event.target.classList.toggle('selected');
+            }
+
+            const compareId = event.target.dataset?.compareId;
+            if (compareId) addRecommendationToCompare(compareId);
+        });
+
+        window.addEventListener('load', async () => {
+            bindHelpAction('openProductManual', openCurrentProductManual);
+            bindHelpAction('openCustomerService', openXiaomiCustomerService);
+
+            typeText(
+                document.getElementById('welcomeTitle'),
+                `${getGreeting()}，我是小米${catConfig.earphone.greet} 👋`
+            );
+            renderQuickQuestions(catConfig.earphone);
+            renderHotCards(catConfig.earphone);
+            renderRecommendForm(catConfig.earphone);
+            rotatePlaceholder();
+            setInterval(rotatePlaceholder, 3000);
+            setState(
+                document.getElementById('recommendResult'),
+                'empty',
+                '选择你的需求，一键获取个性化推荐。'
+            );
+            await loadProducts('earphone', true);
+        });
     </script>
+
 </body>
 </html>
